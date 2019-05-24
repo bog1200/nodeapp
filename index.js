@@ -18,6 +18,23 @@ client.on('message', msg => {
 
 client.login('NDc2NDQxMjQ5NzM4NjUzNzA2.D0b9VQ.xCuQh85vjFI67rS2Az-B3PUXIzg')
 ///
+const http = require('http')
+const port = 80
+
+const requestHandler = (request, response) => {
+  console.log(request.url)
+  response.end('Hello Node.js Server!')
+}
+
+const server = http.createServer(requestHandler)
+
+server.listen(port, (err) => {
+  if (err) {
+    return console.log('something bad happened', err)
+  }
+
+  console.log(`[HTTP] server is listening on ${port}`)
+})
 var token2=" ";
 //
 var fs = require('fs');
@@ -51,7 +68,7 @@ jwtClient.authorize(function (err, tokens) {
    return;
  } else {
 	dd=tokens.access_token;
-   console.log("Successfully connected!");
+   console.log("[Google API] Successfully connected!");
  }
 });
 
