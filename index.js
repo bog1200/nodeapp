@@ -275,7 +275,17 @@ aPromise
 	  msg.channel.send(Embed);
 	  console.log("C1",sa);
 msg.delete(1);})
-.catch(
+.catch(function(value){
+	const Embed = new Discord.RichEmbed()
+	.setColor('#000fff')
+	.setTitle('Subscriber Count')
+  .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
+  .addField("Subscribers: ",`${sa}`)
+	.setTimestamp()
+	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	  msg.channel.send(Embed);
+	  console.log("C1",sa);
+msg.delete(1);}
 	
 //https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
   )}}
