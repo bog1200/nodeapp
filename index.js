@@ -208,12 +208,13 @@ client.on('message', msg => {
 	var alive=(Date.now()-started)/1000;
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#800080')
-	.setTitle('PewDiePie vs T-Series')
+	.setTitle('Uptime')
 	.setDescription(`Bot is up for ${alive} s`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
+	  msg.delete(1);
   }}
   )
 
