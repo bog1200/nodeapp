@@ -215,6 +215,7 @@ client.on('message', msg => {
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
+	  msg.delete(1);
   }}
   )
  client.on('message', msg => {
