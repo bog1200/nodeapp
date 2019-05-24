@@ -10,7 +10,7 @@ client.on('ready', () => {
 client.on('message', msg => {
   if (msg.content === '.ping') {
 	  var date = new Date();
-	  console.log(`Command .ping triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       msg.channel.send('Pong!');
   }
   }
@@ -47,6 +47,7 @@ var check=-1;
 var dd=" ";
 var d=-1;
 var h2=" "
+var min=0;
 var p=-1;
 var t=-1;
 var a=-1;
@@ -205,11 +206,12 @@ client.on('message', msg => {
   if (msg.content === '.uptime') {
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	var alive=(Date.now()-started)/1000;
+	var alive=((Date.now()-started)/1000).toFixed(0);
+  if (alive >60) {min+=1; alive-=60;}
 	  const Embed = new Discord.RichEmbed()
-	.setColor('#800080')
+	.setColor('#ffff00')
 	.setTitle('Uptime')
-	.setDescription(`Bot is up for ${alive} s`)
+	.setDescription(`Bot is up for ${min} m, ${alive} s`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
