@@ -237,7 +237,7 @@ client.on('message', msg => {
  client.on('message', msg => {
   if (msg.content.substr(0,5) === '.subs') {
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	 // if (msg.content.substr(6,31).length()!=24){https://www.googleapis.com/youtube/v3/channels?key=AIzaSyDsGZDPI461UR5JvTysAqv7PW7HSzj50KU&forUsername=Zaiafet&part=id
+	 // if (msg.content.substr(6,31).length()!=24){https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
 	  uri_t="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
 	request(options_s, callback_s);
 	console.error("T3: ",uri_t);
@@ -249,6 +249,7 @@ client.on('message', msg => {
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
+	  console.lor("C1",sa);
 	  msg.delete(1);
   }}
   )  
