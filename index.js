@@ -240,31 +240,28 @@ client.on('message', msg => {
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	 // if (msg.content.substr(6,31).length()!=24){https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
 	  uri_t="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	request(options_s, callback_s);
+	
 	console.error("T3: ",uri_t);
 	
-var promise1 = new Promise(function(resolve, reject) {
-  setTimeout(function() {
-    resolve(emb();
-	  msg.channel.send(Embed);
-	  console.log("C1",sa);
-	  msg.delete(1););
-  }, 3000);
-});
-
-  }}
-  )  
-  //dd=token2.substr(0,129);
-function emb(){
+	var aPromise = new Promise(function(resolve, reject) {
+		request(options_s, callback_s);
+		if (sa!=-1){
+    resolve(sa););
+  };
+  
 	const Embed = new Discord.RichEmbed()
 	.setColor('#000fff')
 	.setTitle('Subscriber Count')
   .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
   .addField("Subscribers: ",`${sa}`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` )
-	return Embed;
-}
+	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	  msg.channel.send(Embed);
+	  console.log("C1",sa);
+	  msg.delete(1);
+  }}
+  )  
+  //dd=token2.substr(0,129);
 function repeat(){
 //console.log('Diferenta:', d);
 ///lient.channels.find("id","545918988409110548").setName(pvt2);
