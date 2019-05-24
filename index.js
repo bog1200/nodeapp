@@ -91,6 +91,9 @@ var options_t = {
 var options_a = {
   url: '',
 };
+var options_i = {
+  url: '',
+};
 
 
 function callback_p(error, responsep, bodyp) {
@@ -141,6 +144,16 @@ function callback_s(error4, responses, bodys) {
   var ssub= infos.items[0].statistics.subscriberCount
 sa=parseInt(ssub, 10); console.log("C1:",sa)}
 else {console.error("Error:",responses.statuscode);}}
+
+function callback_i(error4, responses, bodys) {
+	//console.error("ER ",options_p)
+  if (!error4 && responses.statusCode == 200) {
+  const infos = JSON.parse(bodys);
+  // const subs = JSON.parse(stat);
+  var iid= infos.items[0].id;
+  return iid;
+else {console.error("Error:",responses.statuscode);}}
+
 
   
 	request(options_a, callback_a); 
@@ -238,8 +251,11 @@ client.on('message', msg => {
  client.on('message', msg => {
   if (msg.content.substr(0,5) === '.subs') {
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	 // if (msg.content.substr(6,31).length()!=24){https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
-	  options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
+	  if (msg.content.substr(6,31).length()!=24){
+	var idd =convertToID(msg.content.substr(6,31));
+	options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${idd}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
+	  }
+	  else {options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;}
 
 	console.error("T3: ",options_s);
 	
@@ -262,9 +278,14 @@ aPromise
 msg.delete(1);})
 .catch(
 	
-)
+//https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
   }}
-  )  
+  ) 
+function convertToID(var name){
+	options_i.url="https://www.googleapis.com/youtube/v3/channels?&forUsername="+`${name}`+"&part=id&access_token="+`${dd}`;
+	var id = request(options_i, callback_i);
+	return id;
+}  
   //dd=token2.substr(0,129);
 function repeat(){
 //console.log('Diferenta:', d);
