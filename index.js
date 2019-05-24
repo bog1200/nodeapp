@@ -19,7 +19,7 @@ client.on('message', msg => {
 client.login('NDc2NDQxMjQ5NzM4NjUzNzA2.D0b9VQ.xCuQh85vjFI67rS2Az-B3PUXIzg')
 ///
 const http = require('http')
-const port = 80
+const port=process.env.PORT || 3000
 
 const requestHandler = (request, response) => {
   console.log(request.url)
