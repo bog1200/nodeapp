@@ -245,13 +245,7 @@ client.on('message', msg => {
 	
 var promise1 = new Promise(function(resolve, reject) {
   setTimeout(function() {
-    resolve(const Embed = new Discord.RichEmbed()
-	.setColor('#000fff')
-	.setTitle('Subscriber Count')
-  .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
-  .addField("Subscribers: ",`${sa}`)
-	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+    resolve(emb();
 	  msg.channel.send(Embed);
 	  console.log("C1",sa);
 	  msg.delete(1););
@@ -261,6 +255,16 @@ var promise1 = new Promise(function(resolve, reject) {
   }}
   )  
   //dd=token2.substr(0,129);
+function emb(){
+	const Embed = new Discord.RichEmbed()
+	.setColor('#000fff')
+	.setTitle('Subscriber Count')
+  .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
+  .addField("Subscribers: ",`${sa}`)
+	.setTimestamp()
+	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` )
+	return Embed;
+}
 function repeat(){
 //console.log('Diferenta:', d);
 ///lient.channels.find("id","545918988409110548").setName(pvt2);
