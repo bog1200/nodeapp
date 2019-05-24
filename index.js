@@ -47,6 +47,7 @@ var check=-1;
 var dd=" ";
 var d=-1;
 var h2=" "
+var min=0;
 var p=-1;
 var t=-1;
 var a=-1;
@@ -184,7 +185,7 @@ else pvt2="Win: T+"+d;
 //
 alm="Subscribers: "+`${a}`;
 
-setTimeout(repeat, 60000);}
+setTimeout(repeat, 30000);}
 
 client.on('message', msg => {
   if (msg.content === '.pvt') {
@@ -203,15 +204,13 @@ client.on('message', msg => {
   )
  client.on('message', msg => {
   if (msg.content === '.uptime') {
-	  var min=0,sec=0;
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	var alive=((Date.now()-started)/1000).toFixed(0);
-  sec=((alive%60).toFixed(0));min+=alive/60;
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#ffff00')
 	.setTitle('Uptime')
-	.setDescription(`Bot is up for ${min} m, ${sec} s`)
+	.setDescription(`Bot is up for ${alive} s`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
