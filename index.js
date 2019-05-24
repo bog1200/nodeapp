@@ -249,7 +249,7 @@ client.on('message', msg => {
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
-	  console.lor("C1",sa);
+	  console.log("C1",sa);
 	  msg.delete(1);
   }}
   )  
