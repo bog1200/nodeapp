@@ -205,11 +205,11 @@ client.on('message', msg => {
   if (msg.content === '.uptime') {
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	var alive=Date.now()-started;
+	var alive=(Date.now()-started)/1000;
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#800080')
 	.setTitle('PewDiePie vs T-Series')
-	.setDescription(`Server is up for ${alive}`)
+	.setDescription(`Bot is up for ${alive} s`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
