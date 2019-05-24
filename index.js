@@ -248,53 +248,9 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
- client.on('message', msg => {
-  if (msg.content.substr(0,5) === '.subs') {
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  if ((msg.content.substr(6,31).length)!=24){
-	var idd =convertToID(msg.content.substr(6,31));
-	options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${idd}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	  } else {options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;}
 
-	//console.error("T3: ",options_s);
-	
-	var aPromise = new Promise(function(resolve, reject) {
-		request(options_s, callback_s);
-		if (sa!=-1){
-	resolve(`${sa}`)}
-	});
-aPromise
-.then(function(value){
-	const Embed = new Discord.RichEmbed()
-	.setColor('#000fff')
-	.setTitle('Subscriber Count')
-  .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
-  .addField("Subscribers: ",`${sa}`)
-	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  console.log("C1",sa);
-msg.delete(1);})
-.catch(function(value){
-	const Embed = new Discord.RichEmbed()
-	.setColor('#000fff')
-	.setTitle('Subscriber Count')
-  .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
-  .addField("Subscribers: ",`${sa}`)
-	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  console.log("C1",sa);
-msg.delete(1);}
-	
-//https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
-  )}}
-  ) 
-function convertToID(name){
-	options_i.url="https://www.googleapis.com/youtube/v3/channels?&forUsername="+`${name}`+"&part=id&access_token="+`${dd}`;
-	var id = request(options_i, callback_i);
-	return id;
-}  
+   
+ 
   //dd=token2.substr(0,129);
 function repeat(){
 //console.log('Diferenta:', d);
