@@ -139,7 +139,8 @@ function callback_s(error4, responses, bodys) {
   const infos = JSON.parse(bodys);
   // const subs = JSON.parse(stat);
   var ssub= infos.items[0].statistics.subscriberCount
-sa=parseInt(ssub, 10);}}
+sa=parseInt(ssub, 10); console.log("C1:"+sa)}}
+
   
 	request(options_a, callback_a); 
 function callback_r(error3, responser, bodyr) { token2=bodyr.access_token; console.log("Renew",bodyr);}
