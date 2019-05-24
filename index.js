@@ -249,7 +249,7 @@ client.on('message', msg => {
 	resolve(`${sa}`)}
 	});
 aPromise
-.then{ 
+.then(function(value){
 	const Embed = new Discord.RichEmbed()
 	.setColor('#000fff')
 	.setTitle('Subscriber Count')
