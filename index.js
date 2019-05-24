@@ -227,7 +227,7 @@ client.on('message', msg => {
 	const Embed = new Discord.RichEmbed()
 	.setColor('#0099ff')
 	.setTitle('Time')
-	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
