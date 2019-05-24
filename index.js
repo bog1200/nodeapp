@@ -246,8 +246,8 @@ client.on('message', msg => {
 	var aPromise = new Promise(function(resolve, reject) {
 		request(options_s, callback_s);
 		if (sa!=-1){
-    resolve(sa););
-  };
+	resolve(sa)}
+	});
   
 	const Embed = new Discord.RichEmbed()
 	.setColor('#000fff')
