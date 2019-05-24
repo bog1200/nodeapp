@@ -280,7 +280,7 @@ msg.delete(1);})
 //https://www.googleapis.com/youtube/v3/channels?&forUsername=`${msg.content.substr(6,31)}`&part=id&access_token="+`${dd}`
   )}}
   ) 
-function convertToID(var name){
+function convertToID(name){
 	options_i.url="https://www.googleapis.com/youtube/v3/channels?&forUsername="+`${name}`+"&part=id&access_token="+`${dd}`;
 	var id = request(options_i, callback_i);
 	return id;
