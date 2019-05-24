@@ -259,10 +259,10 @@ aPromise
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  console.log("C1",sa);
-msg.delete(1);}
-.catch{
+msg.delete(1);})
+.catch(
 	
-}
+)
   }}
   )  
   //dd=token2.substr(0,129);
