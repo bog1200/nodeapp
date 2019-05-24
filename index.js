@@ -166,7 +166,7 @@ options_a.url=uri3;
 request(options_p, callback_p);
 }
 var date = new Date()
-var started = date.now();
+var started = Date.now();
 var alm="";
 function lol(){
 	//console.log
