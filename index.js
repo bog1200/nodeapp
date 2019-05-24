@@ -207,7 +207,7 @@ client.on('message', msg => {
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	var alive=((Date.now()-started)/1000).toFixed(0);
-  sec=alive%60;min+=alive/60;
+  sec=(alive%60.toFixed(0));min+=alive/60;
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#ffff00')
 	.setTitle('Uptime')
