@@ -166,6 +166,7 @@ options_a.url=uri3;
 request(options_p, callback_p);
 }
 var date = new Date()
+var started = date.now();
 var alm="";
 function lol(){
 	//console.log
@@ -194,6 +195,21 @@ client.on('message', msg => {
 	.setColor('#800080')
 	.setTitle('PewDiePie vs T-Series')
 	.setDescription(pvt)
+	.setTimestamp()
+	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	//  channel.setName('not_general')
+	  msg.channel.send(Embed);
+  }}
+  )
+ client.on('message', msg => {
+  if (msg.content === '.uptime') {
+	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	var alive=Date.now()-started;
+	  const Embed = new Discord.RichEmbed()
+	.setColor('#800080')
+	.setTitle('PewDiePie vs T-Series')
+	.setDescription(`Server is up for ${alive}`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
