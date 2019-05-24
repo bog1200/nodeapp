@@ -251,11 +251,10 @@ client.on('message', msg => {
  client.on('message', msg => {
   if (msg.content.substr(0,5) === '.subs') {
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  if (msg.content.substr(6,31).length()!=24){
+	  if ((msg.content.substr(6,31).length())!=24){
 	var idd =convertToID(msg.content.substr(6,31));
 	options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${idd}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	  }
-	  else {options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;}
+	  } else {options_s.url="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;}
 
 	//console.error("T3: ",options_s);
 	
