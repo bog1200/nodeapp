@@ -139,7 +139,8 @@ function callback_s(error4, responses, bodys) {
   const infos = JSON.parse(bodys);
   // const subs = JSON.parse(stat);
   var ssub= infos.items[0].statistics.subscriberCount
-sa=parseInt(ssub, 10); console.log("C1:"+sa)}}
+sa=parseInt(ssub, 10); console.log("C1:",sa)}
+else {console.error("Error:",responses.statuscode);}}
 
   
 	request(options_a, callback_a); 
@@ -241,7 +242,10 @@ client.on('message', msg => {
 	  uri_t="https://www.googleapis.com/youtube/v3/channels?id="+`${msg.content.substr(6,31)}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
 	request(options_s, callback_s);
 	console.error("T3: ",uri_t);
-	const Embed = new Discord.RichEmbed()
+	
+var promise1 = new Promise(function(resolve, reject) {
+  setTimeout(function() {
+    resolve(const Embed = new Discord.RichEmbed()
 	.setColor('#000fff')
 	.setTitle('Subscriber Count')
   .addField("Channel ID: ",`${msg.content.substr(6,31)}`)
@@ -250,7 +254,10 @@ client.on('message', msg => {
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  console.log("C1",sa);
-	  msg.delete(1);
+	  msg.delete(1););
+  }, 3000);
+});
+
   }}
   )  
   //dd=token2.substr(0,129);
