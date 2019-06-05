@@ -249,6 +249,21 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
+
+ client.on('message', msg => {
+  if (msg.content.substr(0,5) === '.quote') {
+	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	const Embed = new Discord.RichEmbed()
+	.setColor('#0099ff')
+	.setTitle('Quote')
+	.setDescription(`msg.content.substr(6,56)`)
+	.setTimestamp()
+	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	  msg.channel.send(Embed);
+	  msg.delete(1);
+  }}
+  )
   
   client.on('message', msg => {
   if (msg.content === '.help') {
