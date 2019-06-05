@@ -257,7 +257,7 @@ client.on('message', msg => {
 	const Embed = new Discord.RichEmbed()
 	.setColor('#0099ff')
 	.setTitle('Quote')
-	.setDescription(`msg.content.substr(6,56)`)
+	.setDescription(msg.content.substr(6,56))
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
