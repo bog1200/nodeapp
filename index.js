@@ -204,6 +204,7 @@ setTimeout(repeat, 30000);}
 
 client.on('message', msg => {
   if (msg.content === '.pvt') {
+	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       request(options_p, callback_p);
@@ -223,6 +224,7 @@ client.on('message', msg => {
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	var alive=((Date.now()-started)/1000).toFixed(0);
+	  	  var date = new Date();
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#ffff00')
 	.setTitle('Uptime')
@@ -237,6 +239,7 @@ client.on('message', msg => {
 
   client.on('message', msg => {
   if (msg.content === '.time') {
+	 var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	const Embed = new Discord.RichEmbed()
@@ -252,6 +255,7 @@ client.on('message', msg => {
 
  client.on('message', msg => {
   if (msg.content.substr(0,6) === '.quote') {
+	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	const Embed = new Discord.RichEmbed()
@@ -267,6 +271,7 @@ client.on('message', msg => {
   
   client.on('message', msg => {
   if (msg.content === '.help') {
+	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	const Embed = new Discord.RichEmbed()
