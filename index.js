@@ -5,6 +5,7 @@ client.on('ready', () => {
  client.user.setActivity("Google API", {
   type: "LISTENING",
 });
+console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
 client.on('message', msg => {
@@ -16,7 +17,7 @@ client.on('message', msg => {
   }
 )
 
-client.login('NDc2NDQxMjQ5NzM4NjUzNzA2.D0b9VQ.xCuQh85vjFI67rS2Az-B3PUXIzg')
+client.login(process.env.DISCORD_KEY)
 ///
 const http = require('http')
 const port=process.env.PORT || 3000
@@ -69,7 +70,7 @@ jwtClient.authorize(function (err, tokens) {
    return;
  } else {
 	dd=tokens.access_token;
-   console.log("[Google API] Successfully connected!");
+   console.log("[Google] API Successfully connected!");
  }
 });
 
