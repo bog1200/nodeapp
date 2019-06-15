@@ -306,6 +306,14 @@ client.on('message', msg => {
   }}
   )
 
+client.on('message', msg => {
+  if ((msg.content === ".test") {
+	  var date = new Date();
+	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	if (message.guild.me.hasPermission("MANAGE_CHANNELS" == true) console.log("[Discord] Admin Found"); else console.log("[Discord] Admin not found");
+	  }}
+  )
 
    
  
