@@ -221,6 +221,7 @@ client.on('message', msg => {
   )
  client.on('message', msg => {
   if (msg.content === '.uptime') {
+	  	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	var alive=((Date.now()-started)/1000).toFixed(0);
@@ -288,7 +289,7 @@ client.on('message', msg => {
   )
 
 client.on('message', msg => {
-  if (msg.content.substr(0,9) === 'romail.ml/') {
+  if ((msg.content).substr(0,10) === 'romail.ml/') {
 	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
