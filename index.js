@@ -295,8 +295,8 @@ client.on('message', msg => {
 	const Embed = new Discord.RichEmbed()
 	.setColor('#000000')
 	.setTitle('Romail.ml')
-	.setDescription("Visit "+msg.content.substr(10,100)+" on romail.ml)
-	.addField("Link:","https://romail.ml/"+msg.content.substr(10,100))
+	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
+	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
