@@ -543,7 +543,7 @@ client.on('message', msg => {
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#ffff00')
 	.setTitle('Uptime')
-	.setDescription(`Bot is up for ${alive} s`)
+	.setDescription(`Bot is up for ${alive/60} min`)
 	.setTimestamp()
 	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
