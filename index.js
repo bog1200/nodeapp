@@ -24,7 +24,7 @@ const port=process.env.PORT || 3000
 
 const requestHandler = (request, response) => {
   console.log(request.url)
-if (request.url == "/"]){ window.location.replace("http://www.w3schools.com");
+if (request.url == "/"){ window.location.replace('/api');
 }
   response.end('Bot is online!')
 }
