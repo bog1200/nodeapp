@@ -606,7 +606,7 @@ client.on('message', msg => {
 	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  var id = msg.content.substr(7,32);
+	  var id = msg.content.substr(5,32);
 	  var uri3="https://www.googleapis.com/youtube/v3/channels?id="+`${id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
 	options_a.url=uri3;
 	request(options_a, callback_a); 
