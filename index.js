@@ -602,7 +602,7 @@ client.on('message', msg => {
   )
   
   client.on('message', msg => {
-  if (msg.content.substr(0,5) === '.subs') {
+  if ((msg.content).substr(0,5)) === '.subs') {
 	  var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
