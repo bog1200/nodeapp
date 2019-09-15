@@ -25,7 +25,7 @@ const port=process.env.PORT || 3000
 const requestHandler = (request, response) => {
   console.log(request.url)
 if (request.url == "/"){ response.writeHead(301, { Location: '/api' }); response.end();};
-else if (request.url == "/api"){
+else if (request.url == "/api/"){
   response.end('Bot is online!')
 else response.end();
 }}
