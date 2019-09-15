@@ -214,7 +214,7 @@ client.on('message', msg => {
 	.setTitle('PewDiePie vs T-Series')
 	.setDescription(pvt)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
 	  msg.delete(1);
@@ -232,7 +232,7 @@ client.on('message', msg => {
 	.setTitle('Uptime')
 	.setDescription(`Bot is up for ${alive} s`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
 	  msg.delete(1);
@@ -249,7 +249,7 @@ client.on('message', msg => {
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -265,7 +265,7 @@ client.on('message', msg => {
 	.setTitle('Quote')
 	.setDescription(msg.content.substr(6,56))
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -283,7 +283,7 @@ client.on('message', msg => {
 	.addField(".uptime","Shows bot online time")
 	.addField(".pvt","PewDiePie vs T-Series Subscribers difference")
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -300,7 +300,7 @@ client.on('message', msg => {
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
 	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -527,7 +527,7 @@ client.on('message', msg => {
 	.setTitle('PewDiePie vs T-Series')
 	.setDescription(pvt)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
 	  msg.delete(1);
@@ -545,7 +545,7 @@ client.on('message', msg => {
 	.setTitle('Uptime')
 	.setDescription(`Bot is up for ${alive/60} min`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	  msg.channel.send(Embed);
 	  msg.delete(1);
@@ -562,7 +562,7 @@ client.on('message', msg => {
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -578,7 +578,7 @@ client.on('message', msg => {
 	.setTitle('Quote')
 	.setDescription(msg.content.substr(6,56))
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -596,7 +596,7 @@ client.on('message', msg => {
 	.addField(".uptime","Shows bot online time")
 	.addField(".pvt","PewDiePie vs T-Series Subscribers difference")
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
@@ -613,7 +613,7 @@ client.on('message', msg => {
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
 	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`)
 	.setTimestamp()
-	.setFooter(`Message requested by ${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
