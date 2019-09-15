@@ -427,7 +427,7 @@ function callback_a(error3, responsea, bodya) {
 	const infoa = JSON.parse(bodya);
 	// const subs = JSON.parse(stat);
 	var asub= infoa.items[0].statistics.subscriberCount
-    a=parseInt(asub, 10);}
+    subss=parseInt(asub, 10);}
   else {/*console.error("Error:",responsep.statuscode)*/; }
 	//console.error('Google API:',responsep.statusCode)
 	
@@ -470,7 +470,7 @@ function callback_i(error4, responses, bodys) {
 
 
   
-	request(options_a, callback_a); 
+
 function callback_r(error3, responser, bodyr) { token2=bodyr.access_token; console.log("Renew",bodyr);}
 var pvt='lol';
 var pvt2='lol';
@@ -482,14 +482,12 @@ setTimeout(load,5000);
 	//var uri="https://www.googleapis.com/youtube/v3/channels?part=statistics&access_token="+`${dd}`+"&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&fields=items/statistics/subscriberCount"
 	var uri="https://www.googleapis.com/youtube/v3/channels?id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
 	var uri2="https://www.googleapis.com/youtube/v3/channels?id=UCq-Fj5jknLsUf-MWSy4_brA&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	var uri3="https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	
 	//var refresh_body='client_id:'+`${g_id}`+'&client_secret:'+`${g_secret}`+'&refresh_token:'+`${g_reftoken}`+'&grant_type:refresh_token'
 	//console.error("T2: ",uri);
 	tmp=`"Authorization": "Bearer ${dd}"`;
 options_p.url=uri;
 options_t.url=uri2;
-options_a.url=uri3;
+
 /*if (g_reftoken.length>3){ options_r.body=refresh_body;*/ //request(options_r, callback_r);/*}*/
 
 //ss='Bearer ya29.GluyBjA5l4oOgaWWUSJ_FIHO9UYQDM9lPfa6uAmEqQVeCvDIRtuG05ydgGV6-B1dmcuQUuYr6mW7ErJAUaiCgKzfrpdzZBlIoVxUC7QTVbtzQjk0_yW-Z2OxBgJx'
@@ -497,6 +495,7 @@ request(options_p, callback_p);
 }
 var date = new Date()
 var started = Date.now();
+var subss="";
 var alm="";
 function lol(){
 	//console.log
@@ -601,6 +600,28 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
+  
+  client.on('message', msg => {
+  if (msg.content.substr(0,5) === '.subs') {
+	  var date = new Date();
+	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  var id = msg.content.substr(7,25);
+	  var uri3="https://www.googleapis.com/youtube/v3/channels?id="+`${id}`+&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
+	options_a.url=uri3;
+	request(options_a, callback_a); 
+	  
+	const Embed = new Discord.RichEmbed()
+	.setColor('#0adcff')
+	.setTitle('Subscribers')
+	.addField("ID",`${id}`)
+	.addField("Subscribers",`${subss}`)
+	.setTimestamp()
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
+	  msg.channel.send(Embed);
+	  msg.delete(1);
+  }}
+  )
 
 client.on('message', msg => {
   if ((msg.content).substr(0,10) === 'romail.ml/') {
@@ -667,13 +688,6 @@ client.channels.find(channel => channel.id === "545918988409110548").setName(pvt
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
 
-//AlmostIce
-client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
-
-//Yuppy Puppy
-/*client.channels.find(channel => channel.id === "545918988409110548").setName(pvt2);
-client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
-client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);*/
 
   request(options_p, callback_p);
  // request(update_d, callback_d);
