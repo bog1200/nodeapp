@@ -27,7 +27,8 @@ const requestHandler = (request, response) => {
 if (request.url == "/"){ response.writeHead(302, { Location: '/api/' }); response.end();}; 
 if (request.url == "/api/"){response.end('Bot is online!')}
 if (request.url == "/api/time"){response.end(`${Date.now()}`);}
-if (request.url == "/api/time.gmt"){response.end(`${Date.now().toGMT()}`);}lse {response.writeHead(404); response.end();}; 
+if (request.url == "/api/time/gmt"){response.end(`${Date.now().toGMT()}`);}
+else {response.writeHead(404); response.end();}; 
 }
 
 const server = http.createServer(requestHandler)
