@@ -506,12 +506,12 @@ function lol(){
 d=p-t;
 if (d<0) {d=t-p;tw=1;}
 else tw=0;
-if (d>1000000 || d<-1000000) d=(d/1000000).toFixed(0)+'M';
+if (d>1000000 || d<-1000000) d=(d/1000000)+'M';
 pvt='PewDiePie e in fata T-Series cu '+d+' abonati';
 if (tw==1) pvt='T-Series e in fata PewDiePie cu '+d+' abonati'
 if (d == -1) {console.log('!!!'); pvt="Data not avaliable!"}
-pew="PewDiePie: "+(p/1000000).toFixed(0)+'M';
-tsr="T-Series: "+(t/1000000).toFixed(0)+'M';
+pew="PewDiePie: "+(p/1000000)+'M';
+tsr="T-Series: "+(t/1000000)+'M';
 if (tw==0)pvt2='Win: P+'+d;
 else pvt2="Win: T+"+d;
 //
