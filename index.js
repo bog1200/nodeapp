@@ -274,6 +274,26 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
+
+if ((msg.content).substr(0,6) === '.redir') {
+	  var date = new Date();
+  console.error("lol");
+	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	  var link = msg.content.substr(6,50);
+	
+	  
+	const Embed = new Discord.RichEmbed()
+	.setColor('#20fc03')
+	.setTitle('Redirect')
+	.addField("Input:",`${link}`
+	.addField("Redirected:","https://romail.ml/redir/"+`${link}`)
+	.setTimestamp()
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
+	  msg.channel.send(Embed);
+	  msg.delete(1);
+  }}
+  )
   
   client.on('message', msg => {
   if (msg.content === '.help') {
