@@ -274,8 +274,8 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
-
-if ((msg.content).substr(0,6) === '.redir') {
+ client.on('message', msg => {
+  if ((msg.content).substr(0,6) === '.redir') {
 	  var date = new Date();
   console.error("lol");
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
