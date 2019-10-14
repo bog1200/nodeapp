@@ -27,7 +27,7 @@ const requestHandler = (request, response) => {
 if (request.url == "/"){ response.writeHead(302, { Location: '/api/' }); response.end();}; 
 if (request.url == "/api/"){response.end('Bot is online!')}
 if (request.url == "/api/time"){response.end(`${Date.now()}`);}
-if (request.url(0,5) == "/redir"){response.writeHead(302, { Location: "https://romail.ml/redir/"+`${request.url(6,100)}`}); response.end();}; 
+if (request.url(0,5) == "/redir"){response.writeHead(302, { Location: "https://romail.ml/redir/"+`${request.url(6,100)}`}); response.end();};
 else {response.writeHead(404); response.end();}; 
 }
 
