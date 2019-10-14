@@ -286,10 +286,10 @@ if ((msg.content).substr(0,6) === '.redir') {
 	const Embed = new Discord.RichEmbed()
 	.setColor('#20fc03')
 	.setTitle('Redirect')
-	.addField("Input:",`${link}`
+	.addField("Input:",`${link}`)
 	.addField("Redirected:","https://romail.ml/redir/"+`${link}`)
 	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
+	.setFooter(`${msg.author.username}#${msg.author.discriminator}`);
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
