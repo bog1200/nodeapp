@@ -205,7 +205,7 @@ else pvt2="Win: T+"+d;
 //
 alm="Subscribers: "+`${a}`;
 
-setTimeout(repeat, 30000);}
+setTimeout(repeat, 1440000);}
 
 client.on('message', msg => {
   if (msg.content === '.pvt') {
@@ -328,6 +328,7 @@ client.on('message', msg => {
 	  msg.delete(1);
   }}
   )
+ 
  
   //dd=token2.substr(0,129);
 function repeat(){
