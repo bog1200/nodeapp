@@ -239,7 +239,7 @@ client.on('message', msg => {
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
 	if (alive <=60) 
-	((Embed.setDescription(`Bot is up for ${(alive)} s`))
+	(Embed.setDescription(`Bot is up for ${(alive)} s`))
 	if (alive > 60 && alive < 3600)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min`))
 	if (alive > 3600 && alive < 86400)
