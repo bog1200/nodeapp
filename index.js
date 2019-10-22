@@ -27,7 +27,7 @@ const requestHandler = (request, response) => {
 if (request.url == "/"){ response.writeHead(302, { Location: '/api/' }); response.end();}; 
 if (request.url == "/api/"){response.end('Bot is online!')}
 if (request.url == "/api/time"){response.end(`${Date.now()}`);}
-if (request.url.substr(0,7) == "/redir/"){response.writeHead(302, { Location: "https://romail.ml/redir/"+`${request.url.substr(7,100)}`}); response.end();}
+if (request.url.substr(0,7) == "/redir/"){response.writeHead(302, { Location: "https://romail.ml/redir/"+`${request.url.substr(,100)}`}); response.end();}
 else {response.writeHead(404); response.end();}; 
 }
 
@@ -205,7 +205,7 @@ else pvt2="Win: T+"+d;
 //
 alm="Subscribers: "+`${a}`;
 
-setTimeout(repeat, 1440000);}
+setTimeout(repeat, 600000);}
 
 client.on('message', msg => {
   if (msg.content === '.pvt') {
@@ -231,13 +231,19 @@ client.on('message', msg => {
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	var alive=((Date.now()-started)/1000).toFixed(0);
 	  	  var date = new Date();
+	
 	  const Embed = new Discord.RichEmbed()
 	.setColor('#ffff00')
 	.setTitle('Uptime')
-	.setDescription(`Bot is up for ${alive} s`)
 	.setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	//  channel.setName('not_general')
+	if (alive <=60) 
+	((Embed.setDescription(`Bot is up for ${(alive)} s`))
+	if (alive > 60 && alive < 3600)
+	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min`))
+	if (alive > 3600 && alive < 86400)
+	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h`))
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
