@@ -243,7 +243,7 @@ client.on('message', msg => {
 	if (alive > 60 && alive < 3600)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min, ${parseInt(alive%60)} s`))
 	if (alive > 3600 && alive < 86400)
-	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt(alive%3600)} s`))
+	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
 	  msg.channel.send(Embed);
 	  msg.delete(1);
   }}
