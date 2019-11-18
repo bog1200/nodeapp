@@ -254,8 +254,8 @@ client.on('message', msg => {
 	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`);
 	}
 		
-	msg.delete(1);
 	msg.channel.send(Embed);
+	msg.delete(1);
   })
 
   //dd=token2.substr(0,129);
