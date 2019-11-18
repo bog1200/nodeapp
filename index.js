@@ -208,134 +208,56 @@ alm="Subscribers: "+`${a}`;
 setTimeout(repeat, 600000);}
 
 client.on('message', msg => {
-  if (msg.content === '.pvt') {
-	  var date = new Date();
+	var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-      request(options_p, callback_p);
+	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	  const Embed = new Discord.RichEmbed()
-	.setColor('#800080')
-	.setTitle('PewDiePie vs T-Series')
-	.setDescription(pvt)
-	.setTimestamp()
+	  .setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	//  channel.setName('not_general')
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
- client.on('message', msg => {
-  if (msg.content === '.uptime') {
-	  	  var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	if (msg.content === '.pvt') {
+	Embed.setColor('#800080');
+	Embed.setTitle('PewDiePie vs T-Series');
+	Embed.setDescription(pvt);
+	}
+	else  if (msg.content === '.uptime') {
 	var alive=((Date.now()-started)/1000).toFixed(0);
-	  	  var date = new Date();
-	
-	  const Embed = new Discord.RichEmbed()
-	.setColor('#ffff00')
-	.setTitle('Uptime')
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	//  channel.setName('not_general')
+	Embed.setColor('#ffff00')
+	Embed.setTitle('Uptime')
 	if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
 	if (alive > 60 && alive < 3600)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min, ${parseInt(alive%60)} s`))
 	if (alive > 3600 && alive < 86400)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
-
-  client.on('message', msg => {
-  if (msg.content === '.time') {
-	 var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	const Embed = new Discord.RichEmbed()
-	.setColor('#0099ff')
+	}
+	else  if (msg.content === '.time') {
+	Embed.setColor('#0099ff')
 	.setTitle('Time')
-	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`)
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
-
- client.on('message', msg => {
-  if (msg.content.substr(0,6) === '.quote') {
-	  var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	const Embed = new Discord.RichEmbed()
-	.setColor('#ff00ff')
+	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`);
+	}
+	else if (msg.content.substr(0,6) === '.quote') {
+	Embed.setColor('#ff00ff')
 	.setTitle('Quote')
-	.setDescription(msg.content.substr(6,56))
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
- client.on('message', msg => {
-  if ((msg.content).substr(0,6) === '.redir') {
-	  var date = new Date();
-  console.error("lol");
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  var link = msg.content.substr(7,50);
-	
-	  
-	const Embed = new Discord.RichEmbed()
-	.setColor('#20fc03')
-	.setTitle('Redirect')
-	.setDescription("https://romail.ml/redir/"+`${msg.content.substr(7,50)}`)
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}`);
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
-  
-  client.on('message', msg => {
-  if (msg.content === '.help') {
-	  var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	const Embed = new Discord.RichEmbed()
-	.setColor('#0adcff')
+	.setDescription(msg.content.substr(6,56));
+	}
+	else if (msg.content === '.help') {
+	Embed.setColor('#0adcff')
 	.setTitle('Help')
 	.addField(".time","Shows current time")
 	.addField(".uptime","Shows bot online time")
-	.addField(".pvt","PewDiePie vs T-Series Subscribers difference")
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
-
-client.on('message', msg => {
-  if ((msg.content).substr(0,10) === 'romail.ml/') {
-	  var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	const Embed = new Discord.RichEmbed()
-	.setColor('#000000')
+	.addField(".pvt","PewDiePie vs T-Series Subscribers difference");
+	}
+	else  if ((msg.content).substr(0,10) === 'romail.ml/') {
+	Embed.setColor('#000000')
 	.setTitle('Romail.ml')
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
-	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`)
-	.setTimestamp()
-	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
-	  msg.channel.send(Embed);
-	  msg.delete(1);
-  }}
-  )
- 
- 
+	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`);
+	}
+		
+	msg.delete(1);
+	msg.channel.send(Embed);
+  })
+
   //dd=token2.substr(0,129);
 function repeat(){
 //console.log('Diferenta:', d);
