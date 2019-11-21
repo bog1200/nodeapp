@@ -253,9 +253,8 @@ client.on('message', msg => {
 	.addField(".pvt","PewDiePie vs T-Series Subscribers difference");
 	}
 	else  if ((msg.content).substr(0,10) === 'romail.ml/') {
-		
-	Embed.setColor('#000000')
 		ct=true;
+	Embed.setColor('#000000')
 	.setTitle('Romail.ml')
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
