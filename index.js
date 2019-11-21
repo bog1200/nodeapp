@@ -251,7 +251,7 @@ client.on('message', msg => {
 	Embed.setColor('#000000')
 	.setTitle('Romail.ml')
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
-	.addField("Link:",`https://romail.ml/${msg.content.substr(10,100)}`);
+	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
 		
 	msg.channel.send(Embed);
