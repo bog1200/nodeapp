@@ -208,6 +208,7 @@ alm="Subscribers: "+`${a}`;
 setTimeout(repeat, 600000);}
 
 client.on('message', msg => {
+	var ct=false;
 	var date = new Date();
 	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
@@ -215,11 +216,13 @@ client.on('message', msg => {
 	  .setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
 	if (msg.content === '.pvt') {
+		ct=true;
 	Embed.setColor('#800080');
 	Embed.setTitle('PewDiePie vs T-Series');
 	Embed.setDescription(pvt);
 	}
 	else  if (msg.content === '.uptime') {
+		ct=true;
 	var alive=((Date.now()-started)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Uptime')
@@ -231,6 +234,7 @@ client.on('message', msg => {
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
 	}
 	else  if (msg.content === '.time') {
+		ct=true;
 	Embed.setColor('#0099ff')
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`);
@@ -241,6 +245,7 @@ client.on('message', msg => {
 	.setDescription(msg.content.substr(6,56));
 	}
 	else if (msg.content === '.help') {
+		ct=true;
 	Embed.setColor('#0adcff')
 	.setTitle('Help')
 	.addField(".time","Shows current time")
@@ -248,14 +253,16 @@ client.on('message', msg => {
 	.addField(".pvt","PewDiePie vs T-Series Subscribers difference");
 	}
 	else  if ((msg.content).substr(0,10) === 'romail.ml/') {
+		
 	Embed.setColor('#000000')
+		ct=true;
 	.setTitle('Romail.ml')
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
-		
+	if (ct==true){
 	msg.channel.send(Embed);
-	msg.delete(1);
+	msg.delete(1);}
   })
 
   //dd=token2.substr(0,129);
