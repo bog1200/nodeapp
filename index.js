@@ -210,8 +210,6 @@ setTimeout(repeat, 600000);}
 client.on('message', msg => {
 	var ct=false;
 	var date = new Date();
-	  //console.log(`Command .pvt triggered by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	  const Embed = new Discord.RichEmbed()
 	  .setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
@@ -260,6 +258,7 @@ client.on('message', msg => {
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
 	if (ct==true){
+	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	msg.channel.send(Embed);
 	msg.delete(1);}
   })
