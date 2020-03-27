@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
+var start_time = Date.now();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity("Google API", {
@@ -106,75 +107,23 @@ function callback(error, response, body) {
   else {/*console.error("Error:",responsep.statuscode)*/; }
 	//console.error('Google API:',responsep.statusCode)
 	
-	request(options_t, callback_t);
 }
 
-function callback_a(error3, responsea, bodya) {
-  if (!error3 && responsea.statusCode == 200) {
-	const infoa = JSON.parse(bodya);
-	// const subs = JSON.parse(stat);
-	var asub= infoa.items[0].statistics.subscriberCount
-    alm_subs=parseInt(asub, 10);}
-  else {/*console.error("Error:",responsep.statuscode)*/; }
-	//console.error('Google API:',responsep.statusCode)
-	
-}
-
-function callback_t(error2, responset, bodyt) {
-  if (!error2 && responset.statusCode == 200) {
-  const infot = JSON.parse(bodyt);
-  // const subs = JSON.parse(stat);
-  var tsub= infot.items[0].statistics.subscriberCount
-   tsr_subs=parseInt(tsub, 10);
-	request(options_a, callback_a);    
-       // console.log('T-Series:',responset.statuscode,'abonati');
-		}
-else {/*console.error("Error:",responset.statuscode);*/}
-	setTimeout(lol, 1000);
-}
-var options_s = {
-	url: '',};
-function callback_s(error4, responses, bodys) {
-	//console.error("ER ",options_p)
-  if (!error4 && responses.statusCode == 200) {
-  const infos = JSON.parse(bodys);
-  // const subs = JSON.parse(stat);
-  var ssub= infos.items[0].statistics.subscriberCount
-sa=parseInt(ssub, 10); console.log("C1:",sa)}
-else {console.error("Error:",responses.statuscode);}}
-
-function callback_i(error4, responses, bodys) {
-	//console.error("ER ",options_p)
-  if (!error4 && responses.statusCode == 200) {
-  const infos = JSON.parse(bodys);
-  // const subs = JSON.parse(stat);
-  var iid= infos.items[0].id;
-  return iid;
-  } else {console.error("Error:",responses.statuscode);}}
-
-
-  
-	request(options_a, callback_a); 
-function callback_r(error3, responser, bodyr) { token2=bodyr.access_token; console.log("Renew",bodyr);}
 var pvt='lol';
 var pvt2='lol';
 
-
-	
-setTimeout(load,5000);
+setTimeout(update,5000);
 
 function setUrl(channel_id)
 {
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
- function load(){
-
-tmp=`"Authorization": "Bearer ${google_token}"`;
-
-request(options_p, callback_p);
+ function update(){
+pew_subs=request(options_p, callback);
+tsr_subs=request(options_t, callback);
+alm_subs=request(options_a, callback);
+lol();
 }
-
-var started = Date.now();
 
 function lol(){
 	//console.log
@@ -208,7 +157,7 @@ client.on('message', msg => {
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
-	var alive=((Date.now()-started)/1000).toFixed(0);
+	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Uptime')
 	if (alive <=60) 
@@ -264,6 +213,5 @@ client.channels.find(channel => channel.id === "545918234822574111").setName(tsr
 client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
-  request(options_p, callback_p);
- // request(update_d, callback_d);
+  update();
 }
