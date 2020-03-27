@@ -85,15 +85,6 @@ var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 
-var options_p = {
-  url: ,
-};
-var options_t = {
-  url: setUrl(id_tsr),
-};
-var options_a = {
-  url: setUrl(id_alm),
-};
 
 
 
