@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 require('dotenv').config();
-const client = new Discord.Client()
+const client = new Discord.Client();
+var date = new Date();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity("Google API", {
@@ -11,7 +12,6 @@ console.log("[Discord] API Successfully connected!")
 })
 client.on('message', msg => {
   if (msg.content === '.ping') {
-	  var date = new Date();
 	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       msg.channel.send('Pong!');
   }
@@ -48,16 +48,15 @@ var readline = require('readline');
 var {google} = require('googleapis');
 var googleAuth = require('google-auth-library');
 let privatekey = require("./privatekey.json");
+///
+///
 
-var check=-1;
-var dd=" ";
-var d=-1;
-var h2=" "
-var min=0;
-var p=-1;
-var t=-1;
-var a=-1;
-var tw=-1;
+var google_token=" ";
+var diff=-1;
+var pew_subs=-1;
+var tsr_subs=-1;
+var alm_subs=-1;
+var winn=-1;
 var sa=-1;
 
 // If modifying these scopes, delete your previously saved credentials
@@ -74,7 +73,7 @@ jwtClient.authorize(function (err, tokens) {
    console.log(err);
    return;
  } else {
-	dd=tokens.access_token;
+	google_token=tokens.access_token;
    console.log("[Google] API Successfully connected!");
  }
 });
@@ -87,7 +86,6 @@ jwtClient.authorize(function (err, tokens) {
 const request = require('request');
 //const token = 'Bearer ya29.GlyxBi08Q26iSu5IqzKdzmfsm539c6BY79GZwpTVvhxZ_rV6EaL_1iNdZOHmD6kwOCZyi-z9_EwsEGpyPhNsarz2bvOOIqrZzOruVQWmyPbG9Pb-Su0R76L0SbQBYw';
 
-var ss="";
 var options_p = {
   url: '',
 };
@@ -107,7 +105,7 @@ function callback_p(error, responsep, bodyp) {
 	const infop = JSON.parse(bodyp);
 	// const subs = JSON.parse(stat);
 	var psub= infop.items[0].statistics.subscriberCount
-    p=parseInt(psub, 10);}
+    pew_subs=parseInt(psub, 10);}
   else {/*console.error("Error:",responsep.statuscode)*/; }
 	//console.error('Google API:',responsep.statusCode)
 	
@@ -119,7 +117,7 @@ function callback_a(error3, responsea, bodya) {
 	const infoa = JSON.parse(bodya);
 	// const subs = JSON.parse(stat);
 	var asub= infoa.items[0].statistics.subscriberCount
-    a=parseInt(asub, 10);}
+    alm_subs=parseInt(asub, 10);}
   else {/*console.error("Error:",responsep.statuscode)*/; }
 	//console.error('Google API:',responsep.statusCode)
 	
@@ -131,7 +129,7 @@ function callback_t(error2, responset, bodyt) {
   const infot = JSON.parse(bodyt);
   // const subs = JSON.parse(stat);
   var tsub= infot.items[0].statistics.subscriberCount
-   t=parseInt(tsub, 10);
+   tsr_subs=parseInt(tsub, 10);
 	request(options_a, callback_a);    
        // console.log('T-Series:',responset.statuscode,'abonati');
 		
@@ -167,44 +165,51 @@ function callback_r(error3, responser, bodyr) { token2=bodyr.access_token; conso
 var pvt='lol';
 var pvt2='lol';
 
+var id_url1=UC-lHJZR3Gqxm24_Vd_AJ5Yw
+var id_url2=UCq-Fj5jknLsUf-MWSy4_brA
+var id_url3=UC73wv11MF_jm6v7iz3kuO8Q
 	
 setTimeout(load,5000);
+
+function setUrl(channel_id)
+{
+return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
+}
  function load(){
-	//dd=token2.substr(0,129);
-	//var uri="https://www.googleapis.com/youtube/v3/channels?part=statistics&access_token="+`${dd}`+"&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&fields=items/statistics/subscriberCount"
-	var uri="https://www.googleapis.com/youtube/v3/channels?id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	var uri2="https://www.googleapis.com/youtube/v3/channels?id=UCq-Fj5jknLsUf-MWSy4_brA&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
-	var uri3="https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${dd}`;
+	//google_token=token2.substr(0,129);
+	//var uri="https://www.googleapis.com/youtube/v3/channels?part=statistics&access_token="+`${google_token}`+"&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&fields=items/statistics/subscriberCount"
+	var uri=setUrl(id_url1);
+	var uri2=setUrl(id_url2);
+	var uri3=setUrl(id_url3);
+
 	
 	//var refresh_body='client_id:'+`${g_id}`+'&client_secret:'+`${g_secret}`+'&refresh_token:'+`${g_reftoken}`+'&grant_type:refresh_token'
 	//console.error("T2: ",uri);
-	tmp=`"Authorization": "Bearer ${dd}"`;
+	tmp=`"Authorization": "Bearer ${google_token}"`;
 options_p.url=uri;
 options_t.url=uri2;
 options_a.url=uri3;
-/*if (g_reftoken.length>3){ options_r.body=refresh_body;*/ //request(options_r, callback_r);/*}*/
 
-//ss='Bearer ya29.GluyBjA5l4oOgaWWUSJ_FIHO9UYQDM9lPfa6uAmEqQVeCvDIRtuG05ydgGV6-B1dmcuQUuYr6mW7ErJAUaiCgKzfrpdzZBlIoVxUC7QTVbtzQjk0_yW-Z2OxBgJx'
 request(options_p, callback_p);
 }
-var date = new Date()
+
 var started = Date.now();
-var alm="";
+
 function lol(){
 	//console.log
-d=p-t;
-if (d<0) {d=t-p;tw=1;}
-else tw=0;
-if (d>1000000 || d<-1000000) d=(d/1000000)+'M';
-pvt='PewDiePie e in fata T-Series cu '+d+' abonati';
-if (tw==1) pvt='T-Series e in fata PewDiePie cu '+d+' abonati'
-if (d == -1) {console.log('!!!'); pvt="Data not avaliable!"}
-pew="PewDiePie: "+(p/1000000)+'M';
-tsr="T-Series: "+(t/1000000)+'M';
-if (tw==0)pvt2='Win: P+'+d;
-else pvt2="Win: T+"+d;
+diff=pew_subs-tsr_subs;
+if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
+else winn=0;
+if (diff>1000000 || diff<-1000000) diff=(diff/1000000)+'M';
+pvt='PewDiePie e in fata T-Series cu '+diff+' abonati';
+if (winn==1) pvt='T-Series e in fata PewDiePie cu '+diff+' abonati'
+if (diff == -1) {console.log('!!!'); pvt="Data not avaliable!"}
+pew="PewDiePie: "+(pew_subs/1000000)+'M';
+tsr="T-Series: "+(tsr_subs/1000000)+'M';
+if (winn==0)pvt2='Win: P+'+diff;
+else pvt2="Win: T+"+diff;
 //
-alm="Subscribers: "+`${a}`;
+var alm="Subscribers: "+`${alm_subs}`;
 
 setTimeout(repeat, 600000);}
 
@@ -266,7 +271,7 @@ client.on('message', msg => {
 
   //dd=token2.substr(0,129);
 function repeat(){
-//console.log('Diferenta:', d);
+//console.log('Diferenta:', diff);
 ///lient.channels.find("id","545918988409110548").setName(pvt2);
 ///client.channels.find("id","545918846754619392").setName(pew);
 //Romail.ml
