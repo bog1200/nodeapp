@@ -111,7 +111,7 @@ function setUrl(channel_id)
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
  function update(){
-pew_subs=request(setUrl(id_pew), callback));
+pew_subs=request(setUrl(id_pew), callback);
 tsr_subs=request(setUrl(id_tsr), callback);
 alm_subs=request(setUrl(id_alm), callback);
 setTimeout(lol,5000);
