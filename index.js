@@ -85,21 +85,25 @@ var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 
-
-
-
-function callback(error, response, body) {
-  if (!error && response.statusCode == 200) {
-	const info = JSON.parse(body);
-	var sub= info.items[0].statistics.subscriberCount;
-	var subInt=parseInt(sub, 10);
-	console.log(subInt);
-    return subInt;
-	}
-  else {console.error("Error:",response.statuscode); return -1;}
-	//console.error('Google API:',responsep.statusCode)
-	
+function getBody(url, callback) {
+  request({
+    url: url,
+    json: true
+  }, function (error, response, body) {
+    if (error || response.statusCode !== 200) {
+      return callback(error || {statusCode: response.statusCode});
+    }
+    callback(null, JSON.parse(body));  
+  });
 }
+
+getBody(url, function(err, body) {
+  if (err) {
+    console.log(err);
+  } else {
+    js_traverse(body); 
+  }
+});
 
 var pvt='lol';
 var pvt2='lol';
@@ -111,9 +115,9 @@ function setUrl(channel_id)
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
  function update(){
-pew_subs=JSON.parse(request(setUrl(id_pew), callback));
-tsr_subs=request(setUrl(id_tsr), callback);
-alm_subs=request(setUrl(id_alm), callback);
+pew_subs=getBody(setUrl(id_pew), callback);
+tsr_subs=getBody(setUrl(id_tsr), callback);
+alm_subs=getBody(setUrl(id_alm), callback);
 setTimeout(lol,5000);
 }
 
@@ -135,6 +139,8 @@ else pvt2="Win: T+"+diff;
 var alm="Subscribers: "+`${alm_subs}`;
 
 setTimeout(update, 600000);}
+
+
 
 client.on('message', msg => {
 	var ct=false;
