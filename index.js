@@ -78,11 +78,6 @@ jwtClient.authorize(function (err, tokens) {
  }
 });
 
-
-
-
-///
-
 const request = require('request');
 //const token = 'Bearer ya29.GlyxBi08Q26iSu5IqzKdzmfsm539c6BY79GZwpTVvhxZ_rV6EaL_1iNdZOHmD6kwOCZyi-z9_EwsEGpyPhNsarz2bvOOIqrZzOruVQWmyPbG9Pb-Su0R76L0SbQBYw';
 
@@ -176,19 +171,11 @@ function setUrl(channel_id)
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
  function load(){
-	//google_token=token2.substr(0,129);
-	//var uri="https://www.googleapis.com/youtube/v3/channels?part=statistics&access_token="+`${google_token}`+"&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&fields=items/statistics/subscriberCount"
-	var uri=setUrl(id_url1);
-	var uri2=setUrl(id_url2);
-	var uri3=setUrl(id_url3);
 
-	
-	//var refresh_body='client_id:'+`${g_id}`+'&client_secret:'+`${g_secret}`+'&refresh_token:'+`${g_reftoken}`+'&grant_type:refresh_token'
-	//console.error("T2: ",uri);
-	tmp=`"Authorization": "Bearer ${google_token}"`;
-options_p.url=uri;
-options_t.url=uri2;
-options_a.url=uri3;
+tmp=`"Authorization": "Bearer ${google_token}"`;
+options_p.url=setUrl(id_url1);
+options_t.url=setUrl(id_url2);
+options_a.url=setUrl(id_url3);
 
 request(options_p, callback_p);
 }
