@@ -102,7 +102,7 @@ function callback(error, response, body) {
 	var sub= infop.items[0].statistics.subscriberCount
     return parseInt(sub, 10);
 	}
-  else {/*console.error("Error:",responsep.statuscode)*/; }
+  else {console.error("Error:",response.statuscode); return -1;}
 	//console.error('Google API:',responsep.statusCode)
 	
 }
