@@ -91,9 +91,10 @@ var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 	const info = JSON.parse(body);
-	var sub= info.items[0].statistics.subscriberCount
-	console.log(sub);
-    return parseInt(sub, 10);
+	var sub= info.items[0].statistics.subscriberCount;
+	var subInt=parseInt(sub, 10);
+	console.log(subInt);
+    return subInt;
 	}
   else {console.error("Error:",response.statuscode); return -1;}
 	//console.error('Google API:',responsep.statusCode)
@@ -125,7 +126,7 @@ else winn=0;
 if (diff>1000000 || diff<-1000000) diff=(diff/1000000)+'M';
 pvt='PewDiePie e in fata T-Series cu '+diff+' abonati';
 if (winn==1) pvt='T-Series e in fata PewDiePie cu '+diff+' abonati'
-if (diff == -1) {console.log('!!!'); pvt="Data not avaliable!"}
+if (diff == -2) {console.log('!!!'); pvt="Data not avaliable!"}
 pew="PewDiePie: "+(pew_subs/1000000)+'M';
 tsr="T-Series: "+(tsr_subs/1000000)+'M';
 if (winn==0)pvt2='Win: P+'+diff;
