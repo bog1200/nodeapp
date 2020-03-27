@@ -128,8 +128,8 @@ if (winn==0)pvt2='Win: P+'+diff;
 else pvt2="Win: T+"+diff;
 //
 var alm="Subscribers: "+`${alm_subs}`;
+setTimeout(UpdateStatus, 3000);}
 
-setTimeout(update, 600000);}
 
 
 
@@ -190,7 +190,7 @@ client.on('message', msg => {
   })
 
   //dd=token2.substr(0,129);
-function repeat(){
+function UpdateStatus(){
 //console.log('Diferenta:', diff);
 ///lient.channels.find("id","545918988409110548").setName(pvt2);
 ///client.channels.find("id","545918846754619392").setName(pew);
@@ -203,5 +203,6 @@ client.channels.find(channel => channel.id === "545918234822574111").setName(tsr
 client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
-  update();
+  setTimeout(update, 600000);}
+
 }
