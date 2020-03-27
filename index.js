@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const JSON = require("json")
 require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
@@ -102,7 +103,7 @@ axios.all([
   axios.get(setUrl(id_tsr)),
   axios.get(setUrl(id_alm))
 ]).then(axios.spread((response1, response2, response3) => {
-  console.log("Pew: "+response1.data);
+  console.log("Pew: "+JSON.parse(response1.data));
   console.log("Tsr: "+response2.data);
   console.log("Alm: "+response3.data);
 })).catch(error => {
