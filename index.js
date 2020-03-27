@@ -91,10 +91,10 @@ var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 	const info = JSON.parse(body);
-	//var sub= info.items[0].statistics.subscriberCount;
-	//var subInt=parseInt(sub, 10);
-	console.log(info.items[0].statistics.subscriberCount);
-    return info.items[0].statistics.subscriberCount;
+	var sub= info.items[0].statistics.subscriberCount;
+	var subInt=parseInt(sub, 10);
+	console.log(subInt);
+    return subInt;
 	}
   else {console.error("Error:",response.statuscode); return -1;}
 	//console.error('Google API:',responsep.statusCode)
@@ -111,7 +111,7 @@ function setUrl(channel_id)
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
  function update(){
-request(setUrl(id_pew), callback);
+pew_subs=JSON.parse(request(setUrl(id_pew), callback));
 tsr_subs=request(setUrl(id_tsr), callback);
 alm_subs=request(setUrl(id_alm), callback);
 setTimeout(lol,5000);
