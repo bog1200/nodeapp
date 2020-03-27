@@ -79,28 +79,30 @@ jwtClient.authorize(function (err, tokens) {
 });
 
 const request = require('request');
-//const token = 'Bearer ya29.GlyxBi08Q26iSu5IqzKdzmfsm539c6BY79GZwpTVvhxZ_rV6EaL_1iNdZOHmD6kwOCZyi-z9_EwsEGpyPhNsarz2bvOOIqrZzOruVQWmyPbG9Pb-Su0R76L0SbQBYw';
+var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
+var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
+var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 
 var options_p = {
-  url: '',
+  url: setUrl(id_pew),
 };
 var options_t = {
-  url: '',
+  url: setUrl(id_tsr),
 };
 var options_a = {
-  url: '',
+  url: setUrl(id_alm),
 };
 var options_i = {
   url: '',
 };
 
 
-function callback_p(error, responsep, bodyp) {
-  if (!error && responsep.statusCode == 200) {
-	const infop = JSON.parse(bodyp);
-	// const subs = JSON.parse(stat);
-	var psub= infop.items[0].statistics.subscriberCount
-    pew_subs=parseInt(psub, 10);}
+function callback(error, response, body) {
+  if (!error && response.statusCode == 200) {
+	const info = JSON.parse(body);
+	var sub= infop.items[0].statistics.subscriberCount
+    return parseInt(sub, 10);
+	}
   else {/*console.error("Error:",responsep.statuscode)*/; }
 	//console.error('Google API:',responsep.statusCode)
 	
@@ -119,7 +121,6 @@ function callback_a(error3, responsea, bodya) {
 }
 
 function callback_t(error2, responset, bodyt) {
-	//console.error("ER ",options_p)
   if (!error2 && responset.statusCode == 200) {
   const infot = JSON.parse(bodyt);
   // const subs = JSON.parse(stat);
@@ -128,11 +129,9 @@ function callback_t(error2, responset, bodyt) {
 	request(options_a, callback_a);    
        // console.log('T-Series:',responset.statuscode,'abonati');
 		
-  }
 else {/*console.error("Error:",responset.statuscode);*/}
 	setTimeout(lol, 1000);
 }
-var url_t="";
 var options_s = {
 	url: '',};
 function callback_s(error4, responses, bodys) {
@@ -160,9 +159,7 @@ function callback_r(error3, responser, bodyr) { token2=bodyr.access_token; conso
 var pvt='lol';
 var pvt2='lol';
 
-var id_url1="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
-var id_url2="UCq-Fj5jknLsUf-MWSy4_brA"
-var id_url3="UC73wv11MF_jm6v7iz3kuO8Q"
+
 	
 setTimeout(load,5000);
 
@@ -173,9 +170,6 @@ return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&pa
  function load(){
 
 tmp=`"Authorization": "Bearer ${google_token}"`;
-options_p.url=setUrl(id_url1);
-options_t.url=setUrl(id_url2);
-options_a.url=setUrl(id_url3);
 
 request(options_p, callback_p);
 }
@@ -268,11 +262,7 @@ client.channels.find(channel => channel.id === "545918234822574111").setName(tsr
 
 //AlmostIce
 client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
-
-//Yuppy Puppy
-/*client.channels.find(channel => channel.id === "545918988409110548").setName(pvt2);
-client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
-client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);*/
+//client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
   request(options_p, callback_p);
  // request(update_d, callback_d);
