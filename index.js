@@ -117,7 +117,8 @@ setTimeout(lol,5000);
 }
 
 function lol(){
-	//console.log
+	console.log("Pew"+`${pew_subs}`);
+	console.log("Tsr"+`${tsr_subs}`);
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
