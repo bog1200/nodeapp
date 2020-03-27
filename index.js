@@ -102,9 +102,9 @@ axios.all([
   axios.get(setUrl(id_tsr)),
   axios.get(setUrl(id_alm))
 ]).then(axios.spread((response1, response2, response3) => {
-  console.log(response1.data.url);
-  console.log(response2.data.url);
-  console.log(response3.data.url);
+  console.log("Pew"+response1.data.url);
+  console.log("Tsr"+response2.data.url);
+  console.log("Alm"+response3.data.url);
 })).catch(error => {
   console.log(error);
 });
