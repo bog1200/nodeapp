@@ -75,6 +75,7 @@ jwtClient.authorize(function (err, tokens) {
    return;
  } else {
 	google_token=tokens.access_token;
+	console.log("[Google] Token: "+`${google_token}`);
    console.log("[Google] API Successfully connected!");
  }
 });
@@ -85,7 +86,7 @@ var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 
 var options_p = {
-  url: setUrl(id_pew),
+  url: ,
 };
 var options_t = {
   url: setUrl(id_tsr),
@@ -117,9 +118,9 @@ function setUrl(channel_id)
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
 }
  function update(){
-pew_subs=request(options_p, callback);
-tsr_subs=request(options_t, callback);
-alm_subs=request(options_a, callback);
+pew_subs=request(setUrl(id_pew), callback);
+tsr_subs=request(setUrl(id_tsr), callback);
+alm_subs=request(setUrl(id_alm), callback);
 lol();
 }
 
