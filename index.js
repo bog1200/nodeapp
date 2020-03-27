@@ -139,7 +139,7 @@ else pvt2="Win: T+"+diff;
 //
 var alm="Subscribers: "+`${alm_subs}`;
 
-setTimeout(repeat, 600000);}
+setTimeout(update, 600000);}
 
 client.on('message', msg => {
 	var ct=false;
