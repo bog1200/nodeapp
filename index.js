@@ -93,9 +93,7 @@ var options_t = {
 var options_a = {
   url: setUrl(id_alm),
 };
-var options_i = {
-  url: '',
-};
+
 
 
 function callback(error, response, body) {
