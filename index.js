@@ -91,7 +91,7 @@ var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 	const info = JSON.parse(body);
-	var sub= infop.items[0].statistics.subscriberCount
+	var sub= info.items[0].statistics.subscriberCount
     return parseInt(sub, 10);
 	}
   else {console.error("Error:",response.statuscode); return -1;}
