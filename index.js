@@ -113,7 +113,7 @@ return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&pa
 pew_subs=request(setUrl(id_pew), callback);
 tsr_subs=request(setUrl(id_tsr), callback);
 alm_subs=request(setUrl(id_alm), callback);
-lol();
+setTimeout(lol,5000);
 }
 
 function lol(){
