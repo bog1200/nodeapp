@@ -85,6 +85,7 @@ var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 var pvt='lol';
 var pvt2='lol';
+var alm_msg;
 
 setTimeout(update,5000);
 function setUrl(channel_id)
@@ -109,6 +110,7 @@ setTimeout(lol,5000);
 }
 
 function lol(){
+alm_msg="Subscribers: "+`${alm_subs}`;
 	console.log("Pew"+`${pew_subs}`);
 	console.log("Tsr"+`${tsr_subs}`);
 diff=pew_subs-tsr_subs;
@@ -123,7 +125,7 @@ tsr="T-Series: "+(tsr_subs/1000000)+'M';
 if (winn==0)pvt2='Win: P+'+diff;
 else pvt2="Win: T+"+diff;
 //
-var alm="Subscribers: "+`${alm_subs}`;
+
 setTimeout(UpdateStatus, 3000);
 }
 
