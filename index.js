@@ -155,7 +155,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#0099ff')
 	.setTitle('Time')
-	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`);
+	.setDescription(`${Date.getHours()}:${Date.getMinutes()}:${Date.getSeconds()} GMT`);
 	}
 	else if (msg.content.substr(0,6) === '.quote') {
 	Embed.setColor('#ff00ff')
@@ -178,7 +178,7 @@ client.on('message', msg => {
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
 	if (ct==true){
-	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${Date.getHours()}:${Date.getMinutes()}:${Date.getSeconds()}`)
 	msg.channel.send(Embed);
 	msg.delete(1);}
   })
