@@ -155,7 +155,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#0099ff')
 	.setTitle('Time')
-	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`);
+	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT+2`);
 	}
 	else if (msg.content.substr(0,6) === '.quote') {
 	Embed.setColor('#ff00ff')
