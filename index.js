@@ -5,9 +5,7 @@ var date = new Date();
 var start_time = Date.now();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
- client.user.setActivity("Google API", {
-  type: "LISTENING",
-});
+ client.user.setActivity("Now with 30% more bananas");
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
