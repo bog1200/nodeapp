@@ -75,7 +75,7 @@ jwtClient.authorize(function (err, tokens) {
    return;
  } else {
 	google_token=tokens.access_token;
-	console.log("[Google] Token: "+`${google_token}`);
+ //console.log("[Google] Token: "+`${google_token}`);
    console.log("[Google] API Successfully connected!");
  }
 });
@@ -111,8 +111,8 @@ setTimeout(lol,5000);
 
 function lol(){
 alm_msg="Subscribers: "+`${alm_subs}`;
-	console.log("Pew"+`${pew_subs}`);
-	console.log("Tsr"+`${tsr_subs}`);
+//	console.log("Pew: "+`${pew_subs}`);
+//	console.log("Tsr: "+`${tsr_subs}`);
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
@@ -192,7 +192,7 @@ client.channels.find(channel => channel.id === "545918846754619392").setName(pew
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
 
 //AlmostIce
-client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
+client.channels.find(channel => channel.id === "581018000019292162").setName(alm_msg);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
   setTimeout(update, 600000);
