@@ -92,6 +92,7 @@ function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
 	const info = JSON.parse(body);
 	var sub= info.items[0].statistics.subscriberCount
+	console.log(sub);
     return parseInt(sub, 10);
 	}
   else {console.error("Error:",response.statuscode); return -1;}
