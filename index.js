@@ -5,7 +5,7 @@ var date = new Date();
 var start_time = Date.now();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
- //client.user.setActivity("Now with 30% more bananas..");
+ //client.user.setActivity("Now with 30% more bananas");
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
@@ -129,7 +129,7 @@ setTimeout(UpdateStatus, 3000);
 
 client.on('message', msg => {
 	var ct=false;
-	var date = Date.now();
+	var date = new Date();
 	  const Embed = new Discord.RichEmbed()
 	  .setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
@@ -155,7 +155,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#0099ff')
 	.setTitle('Time')
-	.setDescription(`${Date.getHours()}:${Date.getMinutes()}:${Date.getSeconds()} GMT`);
+	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT`);
 	}
 	else if (msg.content.substr(0,6) === '.quote') {
 	Embed.setColor('#ff00ff')
@@ -178,7 +178,7 @@ client.on('message', msg => {
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
 	if (ct==true){
-	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${Date.getHours()}:${Date.getMinutes()}:${Date.getSeconds()}`)
+	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	msg.channel.send(Embed);
 	msg.delete(1);}
   })
