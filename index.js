@@ -79,18 +79,14 @@ jwtClient.authorize(function (err, tokens) {
    console.log("[Google] API Successfully connected!");
  }
 });
-
 var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
-
-
 var pvt='lol';
 var pvt2='lol';
 
 setTimeout(update,5000);
-
 function setUrl(channel_id)
 {
 return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
@@ -128,14 +124,12 @@ if (winn==0)pvt2='Win: P+'+diff;
 else pvt2="Win: T+"+diff;
 //
 var alm="Subscribers: "+`${alm_subs}`;
-setTimeout(UpdateStatus, 3000);}
-
-
-
+setTimeout(UpdateStatus, 3000);
+}
 
 client.on('message', msg => {
 	var ct=false;
-	var date = new Date();
+	var date = Date.now();
 	  const Embed = new Discord.RichEmbed()
 	  .setTimestamp()
 	.setFooter(`${msg.author.username}#${msg.author.discriminator}` );
@@ -188,12 +182,8 @@ client.on('message', msg => {
 	msg.channel.send(Embed);
 	msg.delete(1);}
   })
-
-  //dd=token2.substr(0,129);
 function UpdateStatus(){
-//console.log('Diferenta:', diff);
-///lient.channels.find("id","545918988409110548").setName(pvt2);
-///client.channels.find("id","545918846754619392").setName(pew);
+
 //Romail.ml
 client.channels.find(channel => channel.id === "545918988409110548").setName(pvt2);
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
@@ -203,6 +193,6 @@ client.channels.find(channel => channel.id === "545918234822574111").setName(tsr
 client.channels.find(channel => channel.id === "581018000019292162").setName(alm);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
-  setTimeout(update, 600000);}
+  setTimeout(update, 600000);
 
 }
