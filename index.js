@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-const JSON = require("json")
 require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
