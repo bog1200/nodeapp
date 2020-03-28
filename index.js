@@ -153,15 +153,20 @@ client.on('message', msg => {
 	try {
 	const response = await axios.get(setUrl(msg.content.substr(3,50),1))
 	ch_id=response.data.items[0].id.channelId;
-	});
+	} catch (error) {
+    console.error(error);}
+  
 	async function getSubs(){
 	try {
 	const response = await axios.get(setUrl(ch_id,0))
 	subs=response.data.items[0].statistics.subscriberCount;
-	});
+	} catch (error) {
+    console.error(error);
+	}
+  }
 	Embed.addField("Channel ID",`${ch_id}`)
 	.addField("Subscribers",`${subs}`);
-	}
+	}}
 	else  if (msg.content === '.uptime') {
 		ct=true;
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
