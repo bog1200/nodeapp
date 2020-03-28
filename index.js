@@ -155,7 +155,7 @@ client.on('message', msg => {
 	ch_id=response.data.items[0].id.channelId;
 	console.log("ch_id:"+`${ch_id}`)
 	} catch (error) {
-    console.error(error);}
+    console.error(error);}}
   
 	async function getSubs(){
 	try {
@@ -165,7 +165,6 @@ client.on('message', msg => {
 	} catch (error) {
     console.error(error);
 	}
-  }
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
 	}}
