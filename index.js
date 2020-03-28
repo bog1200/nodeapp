@@ -163,6 +163,7 @@ client.on('message', msg => {
 	getSubs();
 	}
 	function show(){
+	console.log("Yt Show")
 	Embed.addField("Channel Name",`${ch_title}`);
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
@@ -171,7 +172,7 @@ client.on('message', msg => {
 	{response = await axios.get(setUrl(ch_id,0));
 	subs=response.data.items[0].statistics.subscriberCount;
 	console.log("Subs:"+`${subs}`);
-	show();}
+	setTimeout(show,2000);}
 	load();
 	}
 	else  if (msg.content === '.uptime') {
