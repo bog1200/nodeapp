@@ -150,14 +150,14 @@ client.on('message', msg => {
 	var subs=-1;
 	Embed.addField("Channel Name",`${msg.content(3,50)}`);
 	axios.get(setUrl(msg.content(3,50),1))
-	.then(
+	.then{
 		ch_id=response.data.items[0].id.channelId;
-	)
+	};
 	Embed.addField("Channel ID",`${ch_id}`);
 	axios.get(setUrl(ch_id,0))
-	.then(
+	.then{
 		subs=response.data.items[0].statistics.subscriberCount;
-	)
+	};
 	Embed.addField("Subscribers",`${subs}`)
 	}
 	else  if (msg.content === '.uptime') {
