@@ -129,25 +129,20 @@ else pvt2="Win: T+"+diff;
 
 setTimeout(UpdateStatus, 3000);
 }
-var ch_id='a';
+var ch_id='undefined';
+var ch_title='undefined'
 var subs=-1;
 async function getData(data){
 	try {
 	const response = await axios.get(setUrl(data,1))
 	ch_id=response.data.items[0].id.channelId;
+	ch_title=response.data.items[0].snippet.title;
 	console.log("ch_id:"+`${ch_id}`)
-	} catch (error) {
-    console.error(error);}}
-  
-	async function getSubs(data){
-	try {
-	const response = await axios.get(setUrl(data,0))
+	const response2 = await axios.get(setUrl(ch_id,0))
 	subs=response.data.items[0].statistics.subscriberCount;
 	console.log("Subs:"+`${subs}`)
 	} catch (error) {
-    console.error(error);
-	}}
-
+    console.error(error);}}
 client.on('message', msg => {
 	var ct=false;
 	var date = new Date();
@@ -164,11 +159,8 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
-	
-	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
 	getData(msg.content.substr(3,50));
-	getSubs(ch_id);
-
+	Embed.addField("Channel Name",`${ch_title}`);
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
 	}
