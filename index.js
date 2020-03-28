@@ -164,10 +164,10 @@ client.on('message', msg => {
 	console.log("Subs:"+`${subs}`)
 	} catch (error) {
     console.error(error);
-	}
+	}}
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
-	}}
+	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
