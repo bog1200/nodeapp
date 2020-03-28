@@ -142,14 +142,14 @@ client.on('message', msg => {
 	Embed.setTitle('PewDiePie vs T-Series');
 	Embed.setDescription(pvt);
 	}
-	else if (msg.content(0,3) === '.yt') {
+	else if (msg.content.substr(0,3) === '.yt') {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
 	var ch_id=' ';
 	var subs=-1;
-	Embed.addField("Channel Name",`${msg.content(3,50)}`);
-	axios.get(setUrl(msg.content(3,50),1))
+	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
+	axios.get(setUrl(msg.content.substr(3,50),1))
 	.then(function (response){
 		ch_id=response.data.items[0].id.channelId;
 	});
