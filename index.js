@@ -159,10 +159,14 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
-	getData(msg.content.substr(3,50));
+	async function load()
+	{
+	await getData(msg.content.substr(3,50));
 	Embed.addField("Channel Name",`${ch_title}`);
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
+	}
+	load();
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
