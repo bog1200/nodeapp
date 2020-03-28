@@ -153,6 +153,7 @@ client.on('message', msg => {
 	try {
 	const response = await axios.get(setUrl(msg.content.substr(3,50),1))
 	ch_id=response.data.items[0].id.channelId;
+	console.log("ch_id:"+`${ch_id}`)
 	} catch (error) {
     console.error(error);}
   
@@ -160,12 +161,13 @@ client.on('message', msg => {
 	try {
 	const response = await axios.get(setUrl(ch_id,0))
 	subs=response.data.items[0].statistics.subscriberCount;
+	console.log("Subs:"+`${subs}`)
 	} catch (error) {
     console.error(error);
 	}
   }
-	Embed.addField("Channel ID",`${ch_id}`)
-	.addField("Subscribers",`${subs}`);
+	Embed.addField("Channel ID",`${ch_id}`);
+	Embed.addField("Subscribers",`${subs}`);
 	}}
 	else  if (msg.content === '.uptime') {
 		ct=true;
