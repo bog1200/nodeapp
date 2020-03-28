@@ -138,6 +138,7 @@ async function getData(data){
 	ch_id=response.data.items[0].id.channelId;
 	ch_title=response.data.items[0].snippet.title;
 	console.log("ch_id:"+`${ch_id}`)
+	console.log("ch_title:"+`${ch_title}`)
 	const response2 = await axios.get(setUrl(ch_id,0))
 	subs=response.data.items[0].statistics.subscriberCount;
 	console.log("Subs:"+`${subs}`)
