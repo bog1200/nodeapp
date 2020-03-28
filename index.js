@@ -129,18 +129,7 @@ else pvt2="Win: T+"+diff;
 
 setTimeout(UpdateStatus, 3000);
 }
-var ch_id='undefined';
-var ch_title='undefined'
-var subs=-1;
-async function getData(data){
-	try {
-	const response = await axios.get(setUrl(data,1))
-	ch_id=response.data.items[0].id.channelId;
-	ch_title=response.data.items[0].snippet.title;
-	console.log("ch_id:"+`${ch_id}`)
-	console.log("ch_title:"+`${ch_title}`)
-	} catch (error) {
-    console.error(error);}}
+
 client.on('message', msg => {
 	var ct=false;
 	var date = new Date();
@@ -157,24 +146,19 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
-	async function wait()
-	{
-	await getData(msg.content.substr(3,50));
-	getSubs();
-	}
-	function show(){
-	console.log("Yt Show")
-	Embed.addField("Channel Name",`${ch_title}`);
+	var ch_id=' ';
+	var subs=-1;
+	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
+	axios.get(setUrl(msg.content.substr(3,50),1))
+	.then(function (response){
+		ch_id=response.data.items[0].id.channelId;
+		axios.get(setUrl(ch_id=response.data.items[0].id.channelId,0))
+		.then(function (response2){
+			subs=response2.data.items[0].statistics.subscriberCount;
+		});
+	});
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
-	}
-	async function getSubs()
-	{response = await axios.get(setUrl(ch_id,0));
-	subs=response.data.items[0].statistics.subscriberCount;
-	console.log("Subs:"+`${subs}`);
-	setTimeout(show,2000);}
-	async function load(){
-	await wait();}
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
