@@ -157,7 +157,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
-	async function load()
+	async function wait()
 	{
 	await getData(msg.content.substr(3,50));
 	getSubs();
@@ -173,7 +173,8 @@ client.on('message', msg => {
 	subs=response.data.items[0].statistics.subscriberCount;
 	console.log("Subs:"+`${subs}`);
 	setTimeout(show,2000);}
-	load();
+	async function load(){
+	await wait();}
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
