@@ -161,11 +161,12 @@ client.on('message', msg => {
 	{
 	await getData(msg.content.substr(3,50));
 	getSubs();
-	
-	function show(){Embed.addField("Channel Name",`${ch_title}`);
+	}
+	function show(){
+	Embed.addField("Channel Name",`${ch_title}`);
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
-	}}
+	}
 	async function getSubs()
 	{response = await axios.get(setUrl(ch_id,0));
 	subs=response.data.items[0].statistics.subscriberCount;
