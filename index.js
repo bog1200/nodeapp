@@ -84,18 +84,20 @@ var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 var pvt='lol';
 var pvt2='lol';
 var alm_msg;
+var type=-1;
 
 setTimeout(update,5000);
-function setUrl(channel_id)
+function setUrl(channel_id,type)
 {
-return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
+if (type==0)return "https://www.googleapis.com/youtube/v3/channels?id="+`${channel_id}`+"&part=statistics&fields=items/statistics/subscriberCount&access_token="+`${google_token}`;
+else return  "https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=1&q="+`${query}`+"&access_token="+`${google_token}`;
 }
  function update(){
 
 axios.all([
-  axios.get(setUrl(id_pew)),
-  axios.get(setUrl(id_tsr)),
-  axios.get(setUrl(id_alm))
+  axios.get(setUrl(id_pew,0)),
+  axios.get(setUrl(id_tsr,0)),
+  axios.get(setUrl(id_alm,0))
 ]).then(axios.spread((response1, response2, response3) => {
   pew_subs=response1.data.items[0].statistics.subscriberCount;
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
@@ -139,6 +141,24 @@ client.on('message', msg => {
 	Embed.setColor('#800080');
 	Embed.setTitle('PewDiePie vs T-Series');
 	Embed.setDescription(pvt);
+	}
+	else if (msg.content(0,3) === '.yt') {
+		ct=true;
+	Embed.setColor('#123456');
+	Embed.setTitle('Youtube Subscriber Count');
+	var ch_id=' ';
+	var subs=-1;
+	Embed.addField("Channel Name",`${msg.content(3,50)}`);
+	axios.get(setUrl(msg.content(3,50),1))
+	.then(
+		ch_id=response.data.items[0].id.channelId;
+	)
+	Embed.addField("Channel ID",`${ch_id}`);
+	axios.get(setUrl(ch_id,0))
+	.then(
+		subs=response.data.items[0].statistics.subscriberCount;
+	)
+	Embed.addField("Subscribers",`${subs}`)
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
