@@ -73,7 +73,7 @@ jwtClient.authorize(function (err, tokens) {
    return;
  } else {
 	google_token=tokens.access_token;
- //console.log("[Google] Token: "+`${google_token}`);
+   console.log("[Google] Token: "+`${google_token}`);
    console.log("[Google] API Successfully connected!");
  }
 });
