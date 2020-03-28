@@ -146,7 +146,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
-	var ch_id=' ';
+	var ch_id='a';
 	var subs=-1;
 	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
 	axios.get(setUrl(msg.content.substr(3,50),1))
@@ -158,7 +158,7 @@ client.on('message', msg => {
 	.then(function (response){
 		subs=response.data.items[0].statistics.subscriberCount;
 	});
-	Embed.addField("Subscribers",`${subs}`)
+	Embed.addField("Subscribers",`${subs}`);
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
