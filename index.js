@@ -101,6 +101,7 @@ axios.all([
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
 })).catch(error => {
+	if (response1.status == 401) jwtClient.authorize();
   console.log(error);
 });
 
@@ -146,10 +147,12 @@ client.on('message', msg => {
 	Embed.setTitle('Uptime')
 	if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
-	if (alive > 60 && alive < 3600)
+	else if (alive > 60 && alive < 3600)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min, ${parseInt(alive%60)} s`))
-	if (alive > 3600 && alive < 86400)
+	else if (alive > 3600 && alive < 86400)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
+	else (Embed.setDescription(`Bot is up for ${parseInt(alive/86400)} d, ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
+
 	}
 	else  if (msg.content === '.time') {
 		ct=true;
