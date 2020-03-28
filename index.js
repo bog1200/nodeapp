@@ -139,9 +139,6 @@ async function getData(data){
 	ch_title=response.data.items[0].snippet.title;
 	console.log("ch_id:"+`${ch_id}`)
 	console.log("ch_title:"+`${ch_title}`)
-	const response2 = await axios.get(setUrl(ch_id,0))
-	subs=response.data.items[0].statistics.subscriberCount;
-	console.log("Subs:"+`${subs}`)
 	} catch (error) {
     console.error(error);}}
 client.on('message', msg => {
@@ -163,10 +160,17 @@ client.on('message', msg => {
 	async function load()
 	{
 	await getData(msg.content.substr(3,50));
-	Embed.addField("Channel Name",`${ch_title}`);
+	getSubs();
+	
+	function show(){Embed.addField("Channel Name",`${ch_title}`);
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
-	}
+	}}
+	async function getSubs()
+	{response = await axios.get(setUrl(ch_id,0));
+	subs=response.data.items[0].statistics.subscriberCount;
+	console.log("Subs:"+`${subs}`);
+	show();}
 	load();
 	}
 	else  if (msg.content === '.uptime') {
