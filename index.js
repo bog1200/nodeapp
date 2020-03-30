@@ -160,9 +160,10 @@ client.on('message', msg => {
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
 	});
+	do {
 	Embed.addField("Channel ID",`${ch_id}`);
 	Embed.addField("Subscribers",`${subs}`);
-
+	}while (ch_id=="undefined")
 	
 	}
 	else  if (msg.content === '.uptime') {
