@@ -103,7 +103,7 @@ axios.all([
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
 })).catch(error => {
-	if (response1.status == 401) jwtClient.authorize();
+	if (error.status == 401) jwtClient.authorize();
   console.log(error);
 });
 
