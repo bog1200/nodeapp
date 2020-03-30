@@ -103,7 +103,7 @@ axios.all([
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
 })).catch(error => {
-	if (error.status == 401) jwtClient.authorize();
+  jwtClient.authorize();
   console.log(error);
 });
 
@@ -158,10 +158,13 @@ client.on('message', msg => {
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
 			console.log("Ch_ID: "+`${ch_id}`);
-			Embed.addField("Channel ID",`${ch_id}`);
-			Embed.addField("Subscribers",`${subs}`);
-		
+			setTimeout(writeEmbed,1000);
 	});
+	function writeEmbed()
+	{
+		Embed.addField("Channel ID",`${ch_id}`);
+		Embed.addField("Subscribers",`${subs}`);
+	}
 	
 	}
 	else  if (msg.content === '.uptime') {
