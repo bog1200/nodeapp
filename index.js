@@ -149,7 +149,7 @@ client.on('message', msg => {
 	var ch_id='undefined';
 	var ch_name='undefined';
 	var subs=-1;
-	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
+	
 	axios.get(setUrl(msg.content.substr(3,50),1))
 	.then(function (response){
 		ch_id=response.data.items[0].id.channelId;
@@ -162,8 +162,9 @@ client.on('message', msg => {
 	.then(function (response){
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
+			Embed.addField("Channel Name",`${ch_name}`);
 			Embed.addField("Channel ID",`${ch_id}`);
-		Embed.addField("Subscribers",`${subs}`);
+			Embed.addField("Subscribers",`${subs}`);
 	});
 	
 
