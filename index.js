@@ -187,6 +187,13 @@ client.on('message', msg => {
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT+2`);
 	}
+	else  if (msg.content === '.update') {
+		ct=true;
+	Embed.setColor('#8cef69')
+	.setTitle('Update')
+	.setDescription("Subs updated successfully");
+	update();
+	}
 	else if (msg.content.substr(0,6) === '.quote') {
 	Embed.setColor('#ff00ff')
 	.setTitle('Quote')
