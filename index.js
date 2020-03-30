@@ -159,11 +159,10 @@ client.on('message', msg => {
 	.then(function (response){
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
+			Embed.addField("Channel ID",`${ch_id}`);
+		Embed.addField("Subscribers",`${subs}`);
 	});
-	setTimeout(function () {
-	Embed.addField("Channel ID",`${ch_id}`);
-	Embed.addField("Subscribers",`${subs}`);
-             }, 2000);
+	
 
 	
 
@@ -218,8 +217,11 @@ client.on('message', msg => {
 	}
 	if (ct==true){
 	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-	msg.channel.send(Embed);
-	msg.delete(1);}
+	setTimeout(function () {
+		msg.channel.send(Embed);
+		msg.delete(1);
+        }, 2000);
+	}
   })
 function UpdateStatus(){
 
