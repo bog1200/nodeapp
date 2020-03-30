@@ -152,17 +152,17 @@ client.on('message', msg => {
 	axios.get(setUrl(msg.content.substr(3,50),1))
 	.then(function (response){
 		ch_id=response.data.items[0].id.channelId;
-		return axios.get(setUrl(ch_id=response.data.items[0].id.channelId,0))
+		console.log("Ch_ID: "+`${ch_id}`);
+		Embed.addField("Channel ID",`${ch_id}`);
+		return axios.get(setUrl(response.data.items[0].id.channelId,0))
 		})
 	.then(function (response){
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
-			console.log("Ch_ID: "+`${ch_id}`);
 			setTimeout(writeEmbed,1000);
 	});
 	function writeEmbed()
 	{
-		Embed.addField("Channel ID",`${ch_id}`);
 		Embed.addField("Subscribers",`${subs}`);
 	}
 	
