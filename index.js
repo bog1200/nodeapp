@@ -153,18 +153,16 @@ client.on('message', msg => {
 	.then(function (response){
 		ch_id=response.data.items[0].id.channelId;
 		console.log("Ch_ID: "+`${ch_id}`);
-		Embed.addField("Channel ID",`${ch_id}`);
+		
 		return axios.get(setUrl(response.data.items[0].id.channelId,0))
 		})
 	.then(function (response){
 			subs=response.data.items[0].statistics.subscriberCount;
 			console.log("Subs:" +`${subs}`);
-			setTimeout(writeEmbed,1000);
 	});
-	function writeEmbed()
-	{
-		Embed.addField("Subscribers",`${subs}`);
-	}
+	Embed.addField("Channel ID",`${ch_id}`);
+	Embed.addField("Subscribers",`${subs}`);
+
 	
 	}
 	else  if (msg.content === '.uptime') {
