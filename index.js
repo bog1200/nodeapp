@@ -76,15 +76,21 @@ jwtClient.authorize(function (err, tokens) {
    console.log("[Google] Token: "+`${google_token}`);
    console.log("[Google] API Successfully connected!");
  }
+ });
  function refreshKey(){
 
  jwtClient.refreshAccessToken((err, tokens) => {
 google_token=tokens.access_token;
 console.log("[Google] API Key refreshed!");
-});}
+})
+.catch(error)
+{
+	console.error(error);
+}
+};
 
 
-});
+
 var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
@@ -173,7 +179,7 @@ client.on('message', msg => {
 			if (subs>=100000 && subs <=999999) sub=(sub/100000) +" K"
 			else if (subs>1000000) sub=(subs/1000000)+" M";
 			else sub=subs;
-			console.log("Subs:" +`${subs}`);
+			console.log("Subs:" +`${sub}`);
 			Embed.setColor('#123456');
 			Embed.addField("Channel Name",`${ch_name}`);
 			Embed.addField("Channel ID",`${ch_id}`);
