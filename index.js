@@ -170,10 +170,10 @@ client.on('message', msg => {
 			Embed.addField("Channel ID",`${ch_id}`);
 			Embed.addField("Subscribers",`${sub}`);
 	})
-	.catch(error){
+	.catch(function (error){
 		console.error(error);
-		Embed.setDescription("Channel not found! Please try again")
-	}
+		Embed.setDescription("Channel not found! Please try again");
+	});
 	
 
 	
