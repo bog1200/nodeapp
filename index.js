@@ -76,6 +76,14 @@ jwtClient.authorize(function (err, tokens) {
    console.log("[Google] Token: "+`${google_token}`);
    console.log("[Google] API Successfully connected!");
  }
+ function refreshKey(){
+
+ jwtClient.refreshAccessToken((err, tokens) => {
+google_token=tokens.access_token;
+console.log("[Google] API Key refreshed!");
+});}
+
+
 });
 var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
@@ -103,7 +111,7 @@ axios.all([
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
 })).catch(error => {
-  jwtClient.authorize();
+  refreshKey();
   console.log(error);
 });
 
@@ -144,7 +152,7 @@ client.on('message', msg => {
 	}
 	else if (msg.content.substr(0,3) === '.yt') {
 		ct=true;
-	Embed.setColor('#123456');
+	
 	Embed.setTitle('Youtube Subscriber Count');
 	var ch_id='undefined';
 	var ch_name='undefined';
@@ -166,13 +174,16 @@ client.on('message', msg => {
 			else if (subs>1000000) sub=(subs/1000000)+" M";
 			else sub=subs;
 			console.log("Subs:" +`${subs}`);
+			Embed.setColor('#123456');
 			Embed.addField("Channel Name",`${ch_name}`);
 			Embed.addField("Channel ID",`${ch_id}`);
 			Embed.addField("Subscribers",`${sub}`);
 	})
 	.catch(function (error){
+		refreshKey();
 		console.error(error);
-		Embed.setDescription("Channel not found! Please try again");
+		Ember.setColor("#ff0000")
+		Embed.setDescription("Bot cannot contact servers! Please try again later");
 	});
 	
 
