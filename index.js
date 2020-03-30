@@ -149,6 +149,7 @@ client.on('message', msg => {
 	var ch_id='undefined';
 	var ch_name='undefined';
 	var subs=-1;
+	var sub="undefined";
 	
 	axios.get(setUrl(msg.content.substr(3,50),1))
 	.then(function (response){
@@ -161,11 +162,18 @@ client.on('message', msg => {
 		})
 	.then(function (response){
 			subs=response.data.items[0].statistics.subscriberCount;
+			if (subs>=100000 && subs <=999999) sub=(sub/100000) +" K"
+			else if (subs>1000000) sub=(subs/1000000)+" M";
+			else sub=subs;
 			console.log("Subs:" +`${subs}`);
 			Embed.addField("Channel Name",`${ch_name}`);
 			Embed.addField("Channel ID",`${ch_id}`);
-			Embed.addField("Subscribers",`${subs}`);
-	});
+			Embed.addField("Subscribers",`${sub}`);
+	})
+	.catch(error){
+		console.error(error);
+		Embed.setDescription("Channel not found! Please try again")
+	}
 	
 
 	
