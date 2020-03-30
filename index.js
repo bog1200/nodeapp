@@ -147,12 +147,15 @@ client.on('message', msg => {
 	Embed.setColor('#123456');
 	Embed.setTitle('Youtube Subscriber Count');
 	var ch_id='undefined';
+	var ch_name='undefined';
 	var subs=-1;
 	Embed.addField("Channel Name",`${msg.content.substr(3,50)}`);
 	axios.get(setUrl(msg.content.substr(3,50),1))
 	.then(function (response){
 		ch_id=response.data.items[0].id.channelId;
+		ch_name=response.data.items[0].snippet.title;
 		console.log("Ch_ID: "+`${ch_id}`);
+		console.log("Ch_name: "+`${ch_name}`);
 		
 		return axios.get(setUrl(response.data.items[0].id.channelId,0))
 		})
@@ -220,7 +223,7 @@ client.on('message', msg => {
 	setTimeout(function () {
 		msg.channel.send(Embed);
 		msg.delete(1);
-        }, 2000);
+        }, 1000);
 	}
   })
 function UpdateStatus(){
