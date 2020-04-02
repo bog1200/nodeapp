@@ -263,6 +263,6 @@ client.channels.find(channel => channel.id === "545918234822574111").setName(tsr
 client.channels.find(channel => channel.id === "581018000019292162").setName(alm_msg);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
-  setTimeout(update, 600000);
+  setTimeout(update, 300000);
 
 }
