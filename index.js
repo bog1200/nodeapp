@@ -125,7 +125,7 @@ setTimeout(lol,5000);
 }
 
 function lol(){
-alm_msg="Subscribers: "+`${alm_subs}`;
+alm_msg="Abonati: "+`${alm_subs}`;
 //	console.log("Pew: "+`${pew_subs}`);
 //	console.log("Tsr: "+`${tsr_subs}`);
 diff=pew_subs-tsr_subs;
