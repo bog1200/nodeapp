@@ -80,13 +80,12 @@ jwtClient.authorize(function (err, tokens) {
  function refreshKey(){
 
  jwtClient.refreshAccessToken((err, tokens) => {
- if (err) {
-   console.log(err);
-   return;
- } else {
+ if (err) {console.error(err);}
+ else{
 google_token=tokens.access_token;
 console.log("[Google] API Key refreshed!");
-}});
+}
+});
 }
 
 
