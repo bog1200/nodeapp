@@ -156,11 +156,7 @@ client.on('message', msg => {
 		Ember.setColor("#ff0000")
 		Embed.setDescription("Bot cannot contact servers! Please try again later");
 	});
-	
 
-	
-
-	
 	}
 	else  if (msg.content === '.uptime') {
 		ct=true;
@@ -182,7 +178,7 @@ client.on('message', msg => {
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT+2`);
 	}
-	else if (msg.content === .ping){
+	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
 	  }
 	else  if (msg.content === '.update') {
