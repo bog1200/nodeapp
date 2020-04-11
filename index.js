@@ -3,6 +3,7 @@ require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
 var start_time = Date.now();
+var start_time_gmt=Date.toLocaleString();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity("Now with 30% more bananas...");
@@ -164,7 +165,7 @@ client.on('message', msg => {
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Status')
-	Embed.addField("Start time",`${start_time.toLocaleString()}`);
+	Embed.addField("Start time",`${start_time_gmt}`);
 	Embed.addField("Uptime",`${(alive)}`);
 	/*if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
