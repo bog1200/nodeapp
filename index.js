@@ -200,9 +200,10 @@ client.on('message', msg => {
 	.setDescription(msg.content.substr(6,56));
 	}
 	else if (msg.content.substr(0,6) === '.clear') {
+	ct=true;
 	Embed.setColor('#ff00ff')
 	.setTitle('Clear')
-	.setDescription(`${msg.content.substr(6,7)} mesaje sterse`);
+	.setDescription(`${msg.content.substr(6,7)}`+ "mesaje sterse");
 	msg.delete(msg.content.substr(6,7));
 	}
 	else if (msg.content === '.help') {
