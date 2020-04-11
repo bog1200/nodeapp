@@ -160,10 +160,11 @@ client.on('message', msg => {
 	}
 	else  if (msg.content === '.status') {
 		ct=true;
+
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Status')
-	Embed.addField("Start time",`${start_time.toGMT()}`);
+	Embed.addField("Start time",`${start_time.toString()}`);
 	Embed.addField("Uptime",`${(alive)}`);
 	/*if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
