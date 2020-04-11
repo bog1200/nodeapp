@@ -166,14 +166,16 @@ client.on('message', msg => {
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Status')
 	Embed.addField("Start time",`${start_time_gmt}`);
-	Embed.addField("Uptime",`${(alive)}`);
-	/*if (alive <=60) 
-	(Embed.setDescription(`Bot is up for ${(alive)} s`))
+	alive_string=" "
+	
+	if (alive <=60) 
+	(alive_string=`${(alive)} s`)
 	else if (alive > 60 && alive < 3600)
-	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min, ${parseInt(alive%60)} s`))
+	(alive_string=`${parseInt(alive/60)} min, ${parseInt(alive%60)} s`)
 	else if (alive > 3600 && alive < 86400)
-	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
-	else (Embed.setDescription(`Bot is up for ${parseInt(alive/86400)} d, ${parseInt((alive/3600)%24)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))*/
+	(alive_string=`${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`)
+	else (alive_string=`${parseInt(alive/86400)} d, ${parseInt((alive/3600)%24)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`)
+	Embed.addField("Uptime",`${(alive_string)}`);
 
 	}
 	else  if (msg.content === '.time') {
