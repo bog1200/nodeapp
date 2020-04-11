@@ -199,6 +199,12 @@ client.on('message', msg => {
 	.setTitle('Quote')
 	.setDescription(msg.content.substr(6,56));
 	}
+	else if (msg.content.substr(0,6) === '.clear') {
+	Embed.setColor('#ff00ff')
+	.setTitle('Clear')
+	.setDescription(`${msg.content.substr(6,7)} mesaje sterse`);
+	msg.delete(msg.content.substr(6,7));
+	}
 	else if (msg.content === '.help') {
 		ct=true;
 	Embed.setColor('#0adcff')
@@ -214,6 +220,7 @@ client.on('message', msg => {
 	.setDescription("Visit "+`${msg.content.substr(10,100)}`+" on romail.ml")
 	.addField("Link:","https://romail.ml/"+`${msg.content.substr(10,100)}`);
 	}
+
 	if (ct==true){
 	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	setTimeout(function () {
