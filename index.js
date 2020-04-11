@@ -5,41 +5,12 @@ var date = new Date();
 var start_time = Date.now();
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
- //client.user.setActivity("Now with 30% more bananas");
+ client.user.setActivity("Now with 30% more bananas...");
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
-client.on('message', msg => {
-  if (msg.content === '.ping') {
-	  console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-      msg.channel.send('Pong!');
-  }
-  }
-)
-
 client.login(process.env.DISCORD_KEY)
 ///
-const http = require('http')
-const port=process.env.PORT || 3000
-
-const requestHandler = (request, response) => {
-  console.log(request.url)
-if (request.url == "/"){ response.writeHead(302, { Location: '/api/' }); response.end();}; 
-if (request.url == "/api/"){response.end('Bot is online!')}
-if (request.url == "/api/time"){response.end(`${Date.now()}`);}
-if (request.url.substr(0,7) == "/redir/"){response.writeHead(302, { Location: "https://romail.ml/redir/"+`${request.url.substr(7,100)}`}); response.end();}
-else {response.writeHead(404); response.end();}; 
-}
-
-const server = http.createServer(requestHandler)
-
-server.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err)
-  }
-
-  console.log(`[HTTP] server is listening on ${port}`)
-})
 var token2=" ";
 //
 var fs = require('fs');
@@ -49,7 +20,6 @@ var googleAuth = require('google-auth-library');
 let privatekey = require("./privatekey.json");
 ///
 ///
-
 var google_token=" ";
 var diff=-1;
 var pew_subs=-1;
@@ -57,10 +27,8 @@ var tsr_subs=-1;
 var alm_subs=-1;
 var winn=-1;
 var sa=-1;
-
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/google-apis-nodejs-quickstart.json
-
 let jwtClient = new google.auth.JWT(
        privatekey.client_email,
        null,
@@ -87,8 +55,6 @@ console.log("[Google] API Key refreshed!");
 }
 });
 }
-
-
 
 var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
@@ -216,6 +182,9 @@ client.on('message', msg => {
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT+2`);
 	}
+	else if (msg.content === .ping){
+      msg.channel.send('Pong!');
+	  }
 	else  if (msg.content === '.update') {
 		ct=true;
 	Embed.setColor('#8cef69')
