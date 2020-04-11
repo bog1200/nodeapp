@@ -158,18 +158,20 @@ client.on('message', msg => {
 	});
 
 	}
-	else  if (msg.content === '.uptime') {
+	else  if (msg.content === '.status') {
 		ct=true;
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
-	Embed.setTitle('Uptime')
-	if (alive <=60) 
+	Embed.setTitle('Status')
+	Embed.addField("Start time",`${start_time.toGMT()}`);
+	Embed.addField("Uptime",`${(alive)}`);
+	/*if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
 	else if (alive > 60 && alive < 3600)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/60)} min, ${parseInt(alive%60)} s`))
 	else if (alive > 3600 && alive < 86400)
 	(Embed.setDescription(`Bot is up for ${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
-	else (Embed.setDescription(`Bot is up for ${parseInt(alive/86400)} d, ${parseInt((alive/3600)%24)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))
+	else (Embed.setDescription(`Bot is up for ${parseInt(alive/86400)} d, ${parseInt((alive/3600)%24)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`))/*
 
 	}
 	else  if (msg.content === '.time') {
