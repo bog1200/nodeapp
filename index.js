@@ -164,7 +164,7 @@ client.on('message', msg => {
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
 	Embed.setTitle('Status')
-	Embed.addField("Start time",`${start_time.toUTCString()}`);
+	Embed.addField("Start time",`${start_time.toLocaleString()}`);
 	Embed.addField("Uptime",`${(alive)}`);
 	/*if (alive <=60) 
 	(Embed.setDescription(`Bot is up for ${(alive)} s`))
