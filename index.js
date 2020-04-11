@@ -3,7 +3,7 @@ require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
 var start_time = Date.now();
-var start_time_gmt=Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+var start_time_gmt= new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity("Now with 30% more bananas...");
