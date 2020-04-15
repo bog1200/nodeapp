@@ -162,6 +162,8 @@ client.on('message', msg => {
 	}
 	else  if (msg.content === '.status') {
 		ct=true;
+	console.log("Start_time_gmt: "+`${start_time_gmt}`)
+	console.log("Start_time: "+`${start_time}`)
 
 	var alive=((Date.now()-start_time)/1000).toFixed(0);
 	Embed.setColor('#ffff00')
@@ -179,12 +181,12 @@ client.on('message', msg => {
 	Embed.addField("Uptime",`${(alive_string)}`);
 
 	}
-	else  if (msg.content === '.time') {
+	/*else  if (msg.content === '.time') {
 		ct=true;
 	Embed.setColor('#0099ff')
 	.setTitle('Time')
 	.setDescription(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} GMT+2`);
-	}
+	}*/
 	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
 	  }
