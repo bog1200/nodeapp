@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 require('dotenv').config();
 const client = new Discord.Client();
-var date = new Date();
 var start_time = Date.now();
 var start_time_gmt = new Date(start_time);
 client.on('ready', () => {
