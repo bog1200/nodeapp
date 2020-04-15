@@ -3,7 +3,8 @@ require('dotenv').config();
 const client = new Discord.Client();
 var date = new Date();
 var start_time = Date.now();
-var start_time_gmt= new Date(start_time * 1000)
+var start_time_gmt = new Date(0); // The 0 there is the key, which sets the date to the epoch
+start_time_gmt.setUTCSeconds(start_time);
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity("Now with 30% more bananas...");
