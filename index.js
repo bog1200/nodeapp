@@ -230,7 +230,7 @@ client.channels.find(channel => channel.id === "545918988409110548").setName(pvt
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
 
-AlmostIce
+///AlmostIce
 client.channels.find(channel => channel.id === "700813443111977021").setName(alm_msg);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
