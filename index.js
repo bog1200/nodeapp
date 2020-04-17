@@ -59,10 +59,10 @@ console.log("[Google] API Key refreshed!");
 var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
-//var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
+var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 var pvt='lol';
 var pvt2='lol';
-//var alm_msg;
+var alm_msg;
 var type=-1;
 
 setTimeout(update,5000);
@@ -76,11 +76,11 @@ else return  "https://www.googleapis.com/youtube/v3/search?part=snippet&type=cha
 axios.all([
   axios.get(setUrl(id_pew,0)),
   axios.get(setUrl(id_tsr,0)),
-  //axios.get(setUrl(id_alm,0))
-]).then(axios.spread((response1, response2, /*response3*/) => {
+  axios.get(setUrl(id_alm,0))
+]).then(axios.spread((response1, response2, response3) => {
   pew_subs=response1.data.items[0].statistics.subscriberCount;
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
-  //alm_subs=response3.data.items[0].statistics.subscriberCount;
+  alm_subs=response3.data.items[0].statistics.subscriberCount;
 })).catch(error => {
   refreshKey();
   console.log(error);
@@ -90,9 +90,9 @@ setTimeout(lol,5000);
 }
 
 function lol(){
-//alm_msg="Abonati: "+`${alm_subs}`;
-//	console.log("Pew: "+`${pew_subs}`);
-//	console.log("Tsr: "+`${tsr_subs}`);
+alm_msg="Abonati: "+`${alm_subs}`;
+	console.log("Pew: "+`${pew_subs}`);
+	console.log("Tsr: "+`${tsr_subs}`);
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
@@ -204,8 +204,7 @@ client.on('message', msg => {
 		ct=true;
 	Embed.setColor('#0adcff')
 	.setTitle('Help')
-	.addField(".time","Shows current time")
-	.addField(".uptime","Shows bot online time")
+	.addField(".status","Shows bot online time")
 	.addField(".pvt","PewDiePie vs T-Series Subscribers difference");
 	}
 	else  if ((msg.content).substr(0,10) === 'romail.ml/') {
@@ -231,8 +230,8 @@ client.channels.find(channel => channel.id === "545918988409110548").setName(pvt
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
 
-//AlmostIce
-///client.channels.find(channel => channel.id === "581018000019292162").setName(alm_msg);
+AlmostIce
+client.channels.find(channel => channel.id === "700813443111977021").setName(alm_msg);
 //client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 
   setTimeout(update, 300000);
