@@ -84,7 +84,7 @@ axios.all([
   pew_subs=response1.data.items[0].statistics.subscriberCount;
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
-  cov_nr=response4.data.total;
+  cov_nr=response4.data.data.total;
 })).catch(error => {
   refreshKey();
   console.log(error);
