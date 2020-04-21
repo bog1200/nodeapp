@@ -62,6 +62,8 @@ var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 var pvt='lol';
 var pvt2='lol';
+var cov_nr=-1;
+var cov_str="lol"
 var alm_msg;
 var type=-1;
 
@@ -76,11 +78,13 @@ else return  "https://www.googleapis.com/youtube/v3/search?part=snippet&type=cha
 axios.all([
   axios.get(setUrl(id_pew,0)),
   axios.get(setUrl(id_tsr,0)),
-  axios.get(setUrl(id_alm,0))
-]).then(axios.spread((response1, response2, response3) => {
+  axios.get(setUrl(id_alm,0)),
+  axios.get('https://covid19.geo-spatial.org/api/dashboard/getCasesByCounty')
+]).then(axios.spread((response1, response2, response3, response4) => {
   pew_subs=response1.data.items[0].statistics.subscriberCount;
   tsr_subs=response2.data.items[0].statistics.subscriberCount;
   alm_subs=response3.data.items[0].statistics.subscriberCount;
+  cov_nr=response4.data.total;
 })).catch(error => {
   refreshKey();
   console.log(error);
@@ -90,9 +94,11 @@ setTimeout(lol,5000);
 }
 
 function lol(){
-alm_msg="Abonati: "+`${alm_subs}`;
+	alm_msg="Abonati: "+`${alm_subs}`;
 	console.log("Pew: "+`${pew_subs}`);
+	console.log("Alm: "+`${alm_subs}`);
 	console.log("Tsr: "+`${tsr_subs}`);
+cov_str="Cazuri"+cov_nr;
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
@@ -229,6 +235,7 @@ function UpdateStatus(){
 client.channels.find(channel => channel.id === "545918988409110548").setName(pvt2);
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
+client.channels.find(channel => channel.id === "702248585991028776").setName(cov_str);
 
 ///AlmostIce
 client.channels.find(channel => channel.id === "700813443111977021").setName(alm_msg);
