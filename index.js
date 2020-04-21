@@ -98,7 +98,8 @@ function lol(){
 	console.log("Pew: "+`${pew_subs}`);
 	console.log("Alm: "+`${alm_subs}`);
 	console.log("Tsr: "+`${tsr_subs}`);
-cov_str="Cazuri"+cov_nr;
+	console.log("Czr: "+`${cov_nr}`);
+cov_str="Cazuri: "+cov_nr;
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
