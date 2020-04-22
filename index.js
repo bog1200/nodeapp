@@ -198,15 +198,15 @@ client.on('message', msg => {
 	}*/
 	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
-	  }
-	else if (msg.content.substr(0,7) === '.qclear'){
+	  
+	else if (msg.content.substr(0,6) === '.clear'){
       ct=true;
 	 let messagecount = parseInt(msg.content.substr(8,9));
 	if (msg.member.hasPermission("MANAGE_MESSAGES"))
 		{
 		msg.channel.fetchMessages({ limit: messagecount }).then(messages => msg.channel.bulkDelete(messages));
 		}
-	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted")
+	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted").setColor("#0f3c6c");
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
