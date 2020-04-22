@@ -223,6 +223,7 @@ client.on('message', msg => {
 	else if (msg.content.substr(0,8) ==='.sstatus')
 	{
 		ct=true;
+		stream_status=msg.content.substr(8,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
 		.setDescription("Bot stream status has been set: "+`${msg.content.substr(8,30)}`);
