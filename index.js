@@ -201,7 +201,7 @@ client.on('message', msg => {
 	  }
 	else if (msg.content.substr(0,6) === '.qclear'){
       ct=true;
-	  msg.delete(parseInt(msg.content.substr(7,8));
+	  msg.delete(parseInt(msg.content.substr(7,8)));
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
