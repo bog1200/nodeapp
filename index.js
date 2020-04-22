@@ -63,9 +63,7 @@ var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
 var pvt='lol';
 var pvt2='lol';
 var cov_nr=-1;
-var cov_nr_old=-1;
 var cov_str="lol"
-var cov_str2="lol"
 var alm_msg;
 var type=-1;
 
@@ -101,10 +99,7 @@ function lol(){
 	console.log("Alm: "+`${alm_subs}`);
 	console.log("Tsr: "+`${tsr_subs}`);
 	console.log("Czr: "+`${cov_nr}`);
-if (cov_nr != cov_nr_old)
-{cov_str2="Diferenta: "+cov_nr-cov_nr_old;
 cov_str="Cazuri: "+cov_nr;
-	setTimeout(function () {cov_nr_old=cov_nr}, 1000);}
 diff=pew_subs-tsr_subs;
 if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 else winn=0;
@@ -242,7 +237,6 @@ client.channels.find(channel => channel.id === "545918988409110548").setName(pvt
 client.channels.find(channel => channel.id === "545918846754619392").setName(pew);
 client.channels.find(channel => channel.id === "545918234822574111").setName(tsr);
 client.channels.find(channel => channel.id === "702248585991028776").setName(cov_str);
-client.channels.find(channel => channel.id === "702477086950031430").setName(cov_str);
 
 ///AlmostIce
 client.channels.find(channel => channel.id === "700813443111977021").setName(alm_msg);
