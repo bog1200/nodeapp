@@ -210,33 +210,34 @@ client.on('message', msg => {
 	.setTitle('Quote')
 	.setDescription(msg.content.substr(6,56));
 	}
-	else if (msg.content.substr(0,8) ==='.bstatus')
+	else if (msg.content.substr(0,13) ==='.bstatus text')
 	{
 		ct=true;
-		stream_status=msg.content.substr(8,30);
+		stream_status=msg.content.substr(13,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot status has been set: "+`${msg.content.substr(8,30)}`);
-		client.user.setActivity(msg.content.substr(8,30));
+		.setDescription("Bot status has been set: "+`${msg.content.substr(13,30)}`);
+		client.user.setActivity(msg.content.substr(13,30));
 
 	}
-	else if (msg.content.substr(0,8) ==='.sstatus')
+	else if (msg.content.substr(0,15) ==='.bstatus update')
 	{
 		ct=true;
-		stream_status=msg.content.substr(8,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot stream status has been set: "+`${msg.content.substr(8,30)}`);
-		client.user.setPresence({ game: { name: `${stream_status}`, type: "WATCHING", url: `${stream_link}`}}); 
-
+		.setDescription("Bot status has been updated")
+		.addField("Status",`${stream_status}`)
+		.addField("Type",`${status_type}`)
+		.addField("Link", `${stream_link}`);
+		client.user.setPresence({ game: { name: `${stream_status}`, type: `${status_type}`, url: `${stream_link}`}}); 
 	}
-	else if (msg.content.substr(0,6) ==='.slink')
+	else if (msg.content.substr(0,13) ==='.bstatus link')
 	{
 		ct=true;
-		stream_link=msg.content.substr(6,30);
+		stream_link=msg.content.substr(13,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot stream link has been set: "+`${msg.content.substr(8,30)}`);
+		.setDescription("Bot stream link has been set: "+`${msg.content.substr(13,30)}`);
 	}
 
 
