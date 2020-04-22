@@ -227,7 +227,7 @@ client.on('message', msg => {
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
 		.setDescription("Bot stream status has been set: "+`${msg.content.substr(8,30)}`);
-		client.user.setPresence({ game: { name: `${stream_status}`, type: "streaming", url: `${stream_link}`}}); 
+		client.user.setPresence({ game: { name: `${stream_status}`, type: "WATCHING", url: `${stream_link}`}}); 
 
 	}
 	else if (msg.content.substr(0,6) ==='.slink')
