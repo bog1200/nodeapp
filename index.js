@@ -6,6 +6,8 @@ var start_time_gmt = new Date(start_time);
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity(process.env.DISCORD_STATUS);
+var stream_link=process.env.DISCORD_STREAM_LINK;
+var stream_status=process.env.DISCORD_STATUS;
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
@@ -60,6 +62,7 @@ var axios = require('axios');
 var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
 var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
+var discord
 var pvt='lol';
 var pvt2='lol';
 var cov_nr=-1;
@@ -210,12 +213,34 @@ client.on('message', msg => {
 	else if (msg.content.substr(0,8) ==='.bstatus')
 	{
 		ct=true;
+		stream_status=msg.content.substr(8,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
 		.setDescription("Bot status has been set: "+`${msg.content.substr(8,30)}`);
 		client.user.setActivity(msg.content.substr(8,30));
 
 	}
+	else if (msg.content.substr(0,8) ==='.sstatus')
+	{
+		ct=true;
+		Embed.setColor("#ff1493")
+		.setTitle("Bot Status")
+		.setDescription("Bot stream status has been set: "+`${msg.content.substr(8,30)}`);
+		client.user.setPresence({ game: { name: `${stream_status}`, type: "streaming", url: `${stream_link}`}}); 
+
+	}
+	else if (msg.content.substr(0,6) ==='.slink')
+	{
+		ct=true;
+		stream_link=msg.content.substr(6,30);
+		Embed.setColor("#ff1493")
+		.setTitle("Bot Status")
+		.setDescription("Bot stream link has been set: "+`${msg.content.substr(8,30)}`);
+	}
+
+
+	
+
 	else if (msg.content === '.help') {
 		ct=true;
 	Embed.setColor('#0adcff')
