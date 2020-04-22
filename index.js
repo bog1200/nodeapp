@@ -5,7 +5,7 @@ var start_time = Date.now();
 var start_time_gmt = new Date(start_time);
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
- client.user.setActivity("Now with 30% more bananas...");
+ client.user.setActivity(process.env.DISCORD_STATUS);
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
@@ -206,6 +206,15 @@ client.on('message', msg => {
 	Embed.setColor('#ff00ff')
 	.setTitle('Quote')
 	.setDescription(msg.content.substr(6,56));
+	}
+	else if (msg.content.substr(0,8) ==='.bstatus')
+	{
+		ct=true;
+		Embed.setColor("#ff1493")
+		.setTitle("Bot Status")
+		.setDescription("Bot status has been set: "+`${msg.content.substr(8,30)}`);
+		client.user.setActivity(msg.content.substr(8,30));
+
 	}
 	else if (msg.content === '.help') {
 		ct=true;
