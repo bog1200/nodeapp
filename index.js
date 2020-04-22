@@ -204,7 +204,7 @@ client.on('message', msg => {
 	 let messagecount = parseInt(msg.content.substr(7,8));
 	if (msg.member.hasPermission("MANAGE_MESSAGES"))
 		{
-		msg.channel.fetchMessages({ limit: messagecount }).then(messages => msg.channel.bulkDelete(messages));
+		msg.channel.fetchMessages({ limit: messagecount+1 }).then(messages => msg.channel.bulkDelete(messages));
 		}
 	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted").setColor("#0f3c6c");
 	  }
@@ -280,7 +280,7 @@ client.on('message', msg => {
 	setTimeout(function () {
 		msg.channel.send(Embed);
 		msg.delete(1);
-        }, 1000);
+        }, 1500);
 	}
   })
 function UpdateStatus(){
