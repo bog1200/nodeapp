@@ -202,6 +202,7 @@ client.on('message', msg => {
 	else if (msg.content.substr(0,7) === '.qclear'){
       ct=true;
 	  msg.delete(parseInt(msg.content.substr(8,9)));
+	  Embed.setTitle("Delete")
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
