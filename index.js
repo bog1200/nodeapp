@@ -234,18 +234,18 @@ client.on('message', msg => {
 	else if (msg.content.substr(0,13) ==='.bstatus link')
 	{
 		ct=true;
-		stream_link=msg.content.substr(13,30);
+		stream_link=msg.content.substr(14,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot stream link has been set: "+`${msg.content.substr(13,30)}`);
+		.setDescription("Bot stream link has been set: "+`${msg.content.substr(14,30)}`);
 	}
 	else if (msg.content.substr(0,13) ==='.bstatus type')
 	{
 		ct=true;
-		status_type=msg.content.substr(13,30);
+		status_type=msg.content.substr(14,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot stream type has been set: "+`${msg.content.substr(13,30)}`);
+		.setDescription("Bot stream type has been set: "+`${msg.content.substr(14,30)}`);
 	}
 
 
