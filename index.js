@@ -218,7 +218,6 @@ client.on('message', msg => {
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
 		.setDescription("Bot status has been set: "+`${msg.content.substr(13,30)}`);
-		client.user.setActivity(msg.content.substr(13,30));
 
 	}
 	else if (msg.content.substr(0,15) ==='.bstatus update')
