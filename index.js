@@ -215,10 +215,10 @@ client.on('message', msg => {
 	.setDescription("Subs updated successfully");
 	update();
 	}
-	else if (msg.content.substr(0,6) === '.quote') {
+	else if (msg.content.substr(0,5) === '.quote') {
 	Embed.setColor('#ff00ff')
 	.setTitle('Quote')
-	.setDescription(msg.content.substr(6,56));
+	.setDescription(msg.content.substr(7,56));
 	}
 	else if (msg.content.substr(0,13) ==='.bstatus text')
 	{
