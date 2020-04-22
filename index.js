@@ -230,7 +230,7 @@ client.on('message', msg => {
 		.addField("Status",`${stream_status}`)
 		.addField("Type",`${status_type}`)
 		.addField("Link", `${stream_link}`);
-		client.user.setPresence({ game: { name: `${stream_status}`, type: `${status_type}`, url: `${stream_link}`}}); 
+		client.user.setPresence({ game: { name:`${stream_status}`, type:`${status_type}`,url:`${stream_link}`}}); 
 	}
 	else if (msg.content.substr(0,13) ==='.bstatus link')
 	{
