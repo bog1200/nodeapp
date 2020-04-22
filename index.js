@@ -201,7 +201,7 @@ client.on('message', msg => {
 	  
 	else if (msg.content.substr(0,6) === '.clear'){
       ct=true;
-	 let messagecount = parseInt(msg.content.substr(8,9));
+	 let messagecount = parseInt(msg.content.substr(7,8));
 	if (msg.member.hasPermission("MANAGE_MESSAGES"))
 		{
 		msg.channel.fetchMessages({ limit: messagecount }).then(messages => msg.channel.bulkDelete(messages));
