@@ -3,11 +3,11 @@ require('dotenv').config();
 const client = new Discord.Client();
 var start_time = Date.now();
 var start_time_gmt = new Date(start_time);
+var stream_link=process.env.DISCORD_STREAM_LINK;
+var stream_status=process.env.DISCORD_STATUS;
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
  client.user.setActivity(process.env.DISCORD_STATUS);
-var stream_link=process.env.DISCORD_STREAM_LINK;
-var stream_status=process.env.DISCORD_STATUS;
 console.log("[Discord] API Successfully connected!")
 //client.user.setStatus('dnd') 
 })
