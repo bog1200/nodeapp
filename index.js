@@ -4,6 +4,7 @@ const client = new Discord.Client();
 var start_time = Date.now();
 var start_time_gmt = new Date(start_time);
 var stream_link=process.env.DISCORD_STREAM_LINK;
+var status_type="PLAYING";
 var stream_status=process.env.DISCORD_STATUS;
 client.on('ready', () => {
   //console.log(`Logged in as ${client.user.tag}!`);
