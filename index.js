@@ -199,6 +199,10 @@ client.on('message', msg => {
 	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
 	  }
+	else if (msg.content.substr(0,6) === '.qclear'){
+      ct=true;
+	  msg.delete(parseInt(msg.content.substr(7,8));
+	  }
 	else  if (msg.content === '.update') {
 		ct=true;
 	Embed.setColor('#8cef69')
@@ -245,7 +249,7 @@ client.on('message', msg => {
 		status_type=msg.content.substr(14,30);
 		Embed.setColor("#ff1493")
 		.setTitle("Bot Status")
-		.setDescription("Bot stream type has been set: "+`${msg.content.substr(14,30)}`);
+		.setDescription("Bot status type has been set: "+`${msg.content.substr(14,30)}`);
 	}
 
 
