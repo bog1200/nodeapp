@@ -204,7 +204,7 @@ client.on('message', msg => {
 	 let messagecount = parseInt(msg.content.substr(8,9));
 	if (msg.member.hasPermission("MANAGE_MESSAGES"))
 		{
-		msg.channel.fetchMessages({ limit: messagecount }).then(messages => message.channel.bulkDelete(messages));
+		msg.channel.fetchMessages({ limit: messagecount }).then(messages => msg.channel.bulkDelete(messages));
 		}
 	  }
 	else  if (msg.content === '.update') {
