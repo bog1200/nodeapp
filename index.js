@@ -206,6 +206,7 @@ client.on('message', msg => {
 		{
 		msg.channel.fetchMessages({ limit: messagecount }).then(messages => msg.channel.bulkDelete(messages));
 		}
+	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted")
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
