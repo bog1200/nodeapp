@@ -199,9 +199,9 @@ client.on('message', msg => {
 	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
 	  }
-	else if (msg.content.substr(0,6) === '.qclear'){
+	else if (msg.content.substr(0,7) === '.qclear'){
       ct=true;
-	  msg.delete(parseInt(msg.content.substr(7,8)));
+	  msg.delete(parseInt(msg.content.substr(8,9)));
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
