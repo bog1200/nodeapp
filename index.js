@@ -198,7 +198,7 @@ client.on('message', msg => {
 	}*/
 	else if (msg.content === '.ping'){
       msg.channel.send('Pong!');
-	  
+	  }
 	else if (msg.content.substr(0,6) === '.clear'){
       ct=true;
 	 let messagecount = parseInt(msg.content.substr(7,8));
