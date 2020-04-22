@@ -201,8 +201,11 @@ client.on('message', msg => {
 	  }
 	else if (msg.content.substr(0,7) === '.qclear'){
       ct=true;
-	  msg.delete(parseInt(msg.content.substr(8,9)));
-	  Embed.setTitle("Delete")
+	 let messagecount = parseInt(msg.content.substr(8,9));
+	if (msg.member.hasPermission("MANAGE_MESSAGES"))
+		{
+		msg.channel.fetchMessages({ limit: messagecount }).then(messages => message.channel.bulkDelete(messages));
+		}
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
