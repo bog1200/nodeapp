@@ -282,7 +282,7 @@ client.on('message', msg => {
 	setTimeout(function () {
 		msg.channel.send(Embed);
 		if (del==false) msg.delete(1);
-        }, 1500);
+        }, 500);
 	}
   })
 function UpdateStatus(){
