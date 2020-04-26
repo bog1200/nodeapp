@@ -284,7 +284,7 @@ client.on('message', msg => {
 	setTimeout(function () {
 		msg.channel.send(Embed);
 		if (del==false) msg.delete(1);
-        }, 500);
+        }, 1000);
 	}
   })
 function UpdateStatus(){
