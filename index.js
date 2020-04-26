@@ -204,7 +204,7 @@ client.on('message', msg => {
       ct=true;
 	  Embed.setTitle("Delete Messages");
 	 let messagecount = parseInt(msg.content.substr(7,8));
-	if (messagecount<1) Embed.setTitle("Delete Messages").setDescription("Invalid Number").setColor("#ff0000");
+	if (Number.isInteger(messagecount)==false) Embed.setTitle("Delete Messages").setDescription("Invalid Number").setColor("#ff0000");
 	else if (msg.member.hasPermission("MANAGE_MESSAGES"))
 		{
 		msg.channel.fetchMessages({ limit: messagecount+1 }).then(messages => msg.channel.bulkDelete(messages));	
