@@ -203,12 +203,13 @@ client.on('message', msg => {
 	else if (msg.content.substr(0,6) === '.clear'){
       ct=true;
 	 let messagecount = parseInt(msg.content.substr(7,8));
-	if (msg.member.hasPermission("MANAGE_MESSAGES"))
+	if (msg.member.hasPermission("MANAGE_MESSAGES") && messagecount>0)
 		{
 		msg.channel.fetchMessages({ limit: messagecount+1 }).then(messages => msg.channel.bulkDelete(messages));
-		}
+		
 		del=true;
-	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted").setColor("#0f3c6c");
+	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted").setColor("#0f3c6c");}
+	else {Embed.setTitle("Delete Messages").setDescription("Invalid Number").setColor("#ff0000");}
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
