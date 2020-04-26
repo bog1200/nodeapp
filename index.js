@@ -122,6 +122,7 @@ setTimeout(UpdateStatus, 3000);
 
 client.on('message', msg => {
 	var ct=false;
+	var del=false;
 	var date = new Date();
 	  const Embed = new Discord.RichEmbed()
 	  .setTimestamp()
@@ -206,6 +207,7 @@ client.on('message', msg => {
 		{
 		msg.channel.fetchMessages({ limit: messagecount+1 }).then(messages => msg.channel.bulkDelete(messages));
 		}
+		del=true;
 	Embed.setTitle("Delete Messages").setDescription(messagecount+" messages deleted").setColor("#0f3c6c");
 	  }
 	else  if (msg.content === '.update') {
@@ -279,7 +281,7 @@ client.on('message', msg => {
 	console.log(`Bot triggered with "${msg.content}" by ${msg.author.username}#${msg.author.discriminator} (#${msg.channel.name} on ${msg.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 	setTimeout(function () {
 		msg.channel.send(Embed);
-		msg.delete(1);
+		if (del==false) msg.delete(1);
         }, 1500);
 	}
   })
