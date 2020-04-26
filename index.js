@@ -210,7 +210,7 @@ client.on('message', msg => {
 		msg.channel.fetchMessages({ limit: messagecount+1 }).then(messages => msg.channel.bulkDelete(messages));	
 		del=true;
 	Embed.setDescription(messagecount+" messages deleted").setColor("#0f3c6c");}
-	else {Embed.setDescription("You do not have permission to use this command!").setColor("#ff000");}
+	else {Embed.setDescription("You do not have permission to use this command!").setColor("#ff0000");}
 	  }
 	else  if (msg.content === '.update') {
 		ct=true;
