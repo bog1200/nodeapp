@@ -60,16 +60,11 @@ console.log("[Google] API Key refreshed!");
 }
 
 var axios = require('axios');
-var id_pew="UC-lHJZR3Gqxm24_Vd_AJ5Yw"
-var id_tsr="UCq-Fj5jknLsUf-MWSy4_brA"
-var id_alm="UC73wv11MF_jm6v7iz3kuO8Q"
-var discord
 var pvt='lol';
 var pvt2='lol';
 var cov_nr=-1;
 var cov_str="lol"
 var alm_msg;
-var type=-1;
 
 setTimeout(update,5000);
 function setUrl(channel_id,type)
@@ -80,9 +75,9 @@ else return  "https://www.googleapis.com/youtube/v3/search?part=snippet&type=cha
  function update(){
 
 axios.all([
-  axios.get(setUrl(id_pew,0)),
-  axios.get(setUrl(id_tsr,0)),
-  axios.get(setUrl(id_alm,0)),
+  axios.get(setUrl("UC-lHJZR3Gqxm24_Vd_AJ5Yw",0)),
+  axios.get(setUrl("UCq-Fj5jknLsUf-MWSy4_brA",0)),
+  axios.get(setUrl("UC73wv11MF_jm6v7iz3kuO8Q",0)),
   axios.get('https://covid19.geo-spatial.org/api/dashboard/getCasesByCounty')
 ]).then(axios.spread((response1, response2, response3, response4) => {
   pew_subs=response1.data.items[0].statistics.subscriberCount;
