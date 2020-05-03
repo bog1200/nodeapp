@@ -1,5 +1,4 @@
 //
-'use strict'
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
@@ -145,7 +144,6 @@ function update(){
 	{
 		google_token= await getkey();
 		const D_Log_out = await loginDiscord();
-		console.log(google_token);
 		console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
@@ -164,6 +162,7 @@ function update(){
 		if (!client.commands.has(command)) return;
 
 try {
+	if (command==='yt') {args[99]=google_token};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if (message.guild!==null){
 	client.commands.get(command).execute(message, args);
