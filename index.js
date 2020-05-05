@@ -182,7 +182,6 @@ function UpdateStatus(){
 	client.channels.fetch("545918846754619392").then(channel => channel.setName(pew));
 	client.channels.fetch("545918234822574111").then(channel => channel.setName(tsr));
 	client.channels.fetch("702248585991028776").then(channel => channel.setName(cov_str));
-	client.channels.fetch("707321430379069502").then(channel => channel.setName(cov_h_nr));
 
 	///AlmostIce
 	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg));
