@@ -7,7 +7,8 @@ module.exports = {
         .setFooter(`${message.author.username}#${message.author.discriminator}` );
         const count = parseInt(args[0]);
         if (isNaN(count) || count<=0 || count >99) 
-        Embed.setDescription("Invalid Number").setColor("#ff0000");
+        {Embed.setDescription("Invalid Number").setColor("#ff0000")
+        message.delete();}
         else if (message.member.hasPermission("MANAGE_MESSAGES"))
            {
            message.channel.bulkDelete(count+1);	
