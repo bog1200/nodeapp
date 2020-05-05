@@ -28,7 +28,7 @@ module.exports = {
 	console.log(`Subs: ${sub}`);
 	Embed.setColor('#123456');
 	Embed.addField("Channel Name",`${ch_name}`);
-	Embed.addField("Channel ID",`${ch_id}`);
+	Embed.addField("Channel ID",`[${ch_id}](https://www.youtube.com/channel/${ch_id})`);
     Embed.addField("Subscribers",`${sub}`);
     //return ({'Name':`${ch_name}`,'ID':`${ch_id}`,'Subs':`${sub}`});
     }
