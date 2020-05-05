@@ -96,8 +96,9 @@ else return  "https://www.googleapis.com/youtube/v3/search?part=snippet&type=cha
 
 let axios = require('axios');
 let pvt,pvt2,pew,tsr;
-let cov_nr;
 let cov_str;
+let c_out;
+let cov_h_str;
 let alm_msg;
 function update(){
 
@@ -110,7 +111,7 @@ function update(){
 	  pew_subs=response1.data.items[0].statistics.subscriberCount;
 	  tsr_subs=response2.data.items[0].statistics.subscriberCount;
 	  alm_subs=response3.data.items[0].statistics.subscriberCount;
-	  cov_nr=response4.data.data.total;
+	  c_out=response4.data.data;
 	})).catch(error => {
 	  refreshKey();
 	  console.log(error);
@@ -124,8 +125,8 @@ function update(){
 		console.log("Pew: "+`${pew_subs}`);
 		console.log("Alm: "+`${alm_subs}`);
 		console.log("Tsr: "+`${tsr_subs}`);
-		console.log("Czr: "+`${cov_nr}`);
-	cov_str="Cazuri: "+cov_nr;
+		console.log("Czr: "+`${c_out.total}`);
+	cov_str="Cazuri: "+c_out.total;
 	diff=pew_subs-tsr_subs;
 	if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 	else winn=0;
@@ -181,6 +182,7 @@ function UpdateStatus(){
 	client.channels.fetch("545918846754619392").then(channel => channel.setName(pew));
 	client.channels.fetch("545918234822574111").then(channel => channel.setName(tsr));
 	client.channels.fetch("702248585991028776").then(channel => channel.setName(cov_str));
+	client.channels.fetch("707321430379069502").then(channel => channel.setName(cov_h_nr));
 
 	///AlmostIce
 	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg));
