@@ -164,9 +164,10 @@ function update(){
 		if (!client.commands.has(command)) return;
 
 try {
+	if (message.content.substr(0,1)!==prefix) {return;};
 	if (command==='yt') {args[99]=google_token};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
-	if (message.guild!==null){
+	if  (message.guild!==null){
 	client.commands.get(command).execute(message, args);
 	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
 	else {message.reply('Bot commands are unavailable on DMs'); console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}

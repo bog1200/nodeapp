@@ -1,4 +1,4 @@
 .env
-.vs
+.vscode
 *.cmd
-privatekey.json
+/privatekey.json
