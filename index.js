@@ -11,6 +11,7 @@ const Discord = require('discord.js');
 require('dotenv').config();
 let prefix = process.env.DISCORD_PREFIX;
 const client = new Discord.Client();
+console.log(`Prefix: ${prefix}`);
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
