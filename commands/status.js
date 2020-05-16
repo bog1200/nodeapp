@@ -17,6 +17,10 @@ module.exports = {
         (alive_string=`${parseInt(alive/3600)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`)
         else (alive_string=`${parseInt(alive/86400)} d, ${parseInt((alive/3600)%24)} h, ${parseInt((alive/60)%60)} min, ${parseInt((alive/3600)%60)} s`)
         Embed.addField("Uptime",`${(alive_string)}`);
-        message.channel.send(Embed); 
+        message.channel.send(Embed)
+        .then(msg => {
+            msg.delete({ timeout: 15000 });
+          })
+        .catch(error => console.err(error)); 
     }
 }
