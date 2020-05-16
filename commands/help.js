@@ -23,7 +23,11 @@ module.exports = {
                     if (message.channel.type === 'dm') return;
                     //message.reply('I\'ve sent you a DM with all my commands!');
                     Embed.setDescription('I\'ve sent you a DM with all my commands!')
-                    message.channel.send(Embed);
+                    message.channel.send(Embed)
+        .then(msg => {
+            msg.delete({ timeout: 7000 });
+          })
+        .catch(error => console.err(error));
                 })
                 .catch(error => {
                     console.error(`Could not send help DM to ${message.author.tag}.\n`, error);

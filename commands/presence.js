@@ -12,7 +12,11 @@ module.exports = {
 		.addField("Type",`${args[1]||'PLAYING'}`)
         .addField("Link", `${args[2]||'none'}`);
         
-        message.channel.send(Embed);
+        message.channel.send(Embed)
+        .then(msg => {
+            msg.delete({ timeout: 7000 });
+          })
+        .catch(error => console.err(error));
 
         
         //status.update(args[0],args[1],args[2]);

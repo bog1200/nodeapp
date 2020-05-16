@@ -36,7 +36,11 @@ module.exports = {
     {   
         const output=await runCommand();
         //console.log(`Output: ${output}`);
-        message.channel.send(Embed);     
+        message.channel.send(Embed)
+        .then(msg => {
+            msg.delete({ timeout: 15000 });
+          })
+        .catch(error => console.err(error));     
         }
     load();
     }

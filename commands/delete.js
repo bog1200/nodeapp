@@ -15,6 +15,10 @@ module.exports = {
         Embed.setDescription(`${count} messages deleted`).setColor("#0f3c6c");
             }
         else {Embed.setDescription("You do not have permission to use this command!").setColor("#ff0000");}
-        message.channel.send(Embed);     
+        message.channel.send(Embed)
+        .then(msg => {
+            msg.delete({ timeout: 7000 });
+          })
+        .catch(error => console.err(error));     
         }   
 	}
