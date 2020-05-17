@@ -195,6 +195,13 @@ function UpdateStatus(){
 	  setTimeout(update, 1200000);
 	
 	}
+        //Romail.ml
+
+
+process.on('SIGINT',function(){
+console.log('LOL');
+client.destroy();
+});
 	process.on('SIGUSR1',function (){
 		console.log('Goodbye!');
 		client.destroy();
