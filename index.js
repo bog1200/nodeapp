@@ -195,5 +195,17 @@ function UpdateStatus(){
 	  setTimeout(update, 1200000);
 	
 	}
+	process.on('SIGUSR1',function (){
+		console.log('Goodbye!');
+		client.destroy();
+	});
+	process.on('SIGUSR2',function (){
+		console.log('Goodbye!');
+		client.destroy();
+	});
+	process.on('exit', function (){
+		console.log('Goodbye!');
+		client.destroy();
+	});
 	
 		
