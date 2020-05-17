@@ -156,8 +156,8 @@ function update(){
 	
 	
 	
-	
-	client.on('message', message => {
+	const queue = new Map();
+	client.on('message', async message => {
 		const date = new Date;
 		const args = message.content.slice(prefix.length).split(/ +/);
 		const command = args.shift().toLowerCase();
@@ -165,10 +165,10 @@ function update(){
 
 try {
 	if (message.content.substr(0,1)!==prefix) {return;};
-	if (command==='yt') {args[99]=google_token};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if  (message.guild!==null){
-	client.commands.get(command).execute(message, args);
+		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
+		else {client.commands.get(command).execute(message,args,google_token);}
 	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
 	else {message.reply('Bot commands are unavailable on DMs'); console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
 } catch (error) {
@@ -176,6 +176,8 @@ try {
 	message.reply('there was an error trying to execute that command!');
 }
 });
+
+
 
 function UpdateStatus(){
 
