@@ -192,7 +192,7 @@ function UpdateStatus(){
 	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg));
 	//client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
 	
-	  setTimeout(update, 300000);
+	  setTimeout(update, 1200000);
 	
 	}
 	
