@@ -1,11 +1,18 @@
 module.exports = {
 	name: 'play',
-	description: 'Ping!',
-	execute(message, args) {
+	description: 'Play',
+	 execute(message, queue, args, g_token) {
         const ytdl = require("ytdl-core");
-        const queue = new Map();
+        const axios = require('axios');
         const serverQueue = queue.get(message.guild.id);
         execute(message, serverQueue);
+        async function google (title)
+        {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${title}&access_token=${g_token}`)
+        console.log(`VT: ${title}`);
+        console.log(`VID: ${response.data.items[0].id.videoId}`)
+          return `https://www.youtube.com/watch?v=${response.data.items[0].id.videoId}`;
+        }
         
         async function execute(message, serverQueue) {
 
@@ -22,8 +29,12 @@ module.exports = {
                 "I need the permissions to join and speak in your voice channel!"
               );
             }
-          
-            const songInfo = await ytdl.getInfo(args[1]);
+            let songInfo;
+            if (!(args[1].startsWith("https://"))) {
+             const googleparse= await google(args.slice(1).join(' '));
+            songInfo = await ytdl.getInfo(googleparse);
+            }
+            else  {songInfo = await ytdl.getInfo(args[1]);}
             const song = {
               title: songInfo.title,
               url: songInfo.video_url
@@ -56,25 +67,6 @@ module.exports = {
               serverQueue.songs.push(song);
               return message.channel.send(`${song.title} has been added to the queue!`);
             }
-          }
-          
-          function skip(message, serverQueue) {
-            if (!message.member.voice.channel)
-              return message.channel.send(
-                "You have to be in a voice channel to stop the music!"
-              );
-            if (!serverQueue)
-              return message.channel.send("There is no song that I could skip!");
-            serverQueue.connection.dispatcher.end();
-          }
-          
-          function stop(message, serverQueue) {
-            if (!message.member.voice.channel)
-              return message.channel.send(
-                "You have to be in a voice channel to stop the music!"
-              );
-            serverQueue.songs = [];
-            serverQueue.connection.dispatcher.end();
           }
           
           function play(guild, song) {

@@ -2,3 +2,5 @@
 .vscode
 *.cmd
 /privatekey.json
+node_modules/
+
