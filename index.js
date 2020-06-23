@@ -160,17 +160,25 @@ function update(){
 	client.on('message', async message => {
 		const date = new Date;
 		const args = message.content.slice(prefix.length).split(/ +/);
-		const command = args.shift().toLowerCase();
+		let command = args.shift().toLowerCase();
+		if (command==='2fa') command='validate';
+		//client.channels.resolve(message.channel.id.toString()).messages.fetch(message.content.toString()).then((message => {message.delete()}));
 		if (!client.commands.has(command)) return;
 
 try {
+	
 	if (message.content.substr(0,1)!==prefix) {return;};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if  (message.guild!==null){
 		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
 		else {client.commands.get(command).execute(message,args,google_token);}
-	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
-	else {message.reply('Bot commands are unavailable on DMs'); console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
+	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+}
+	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
+		msg.delete({ timeout: 7000 });
+	  })
+	.catch(error => console.err(error));
+	 console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
 } catch (error) {
 	console.error(error);
 	message.reply('there was an error trying to execute that command!');
@@ -198,9 +206,8 @@ function UpdateStatus(){
         //Romail.ml
 
 
-process.on('SIGINT',function(){
-console.log('LOL');
-client.destroy();
+	process.on('SIGINT',function(){
+	client.destroy();
 });
 	process.on('SIGUSR1',function (){
 		console.log('Goodbye!');
