@@ -15,6 +15,7 @@
     "googleapis": "^49.0.0",
     "mime": "^2.4.5",
     "opusscript": "0.0.7",
+    "totp-generator": "0.0.7",
     "ytdl-core": "^2.1.2"
   },
   "devDependencies": {
