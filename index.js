@@ -27,12 +27,11 @@ let start_time_gmt = new Date(start_time);
 
 let stream_link=process.env.DISCORD_STREAM_LINK;
 let status_type="PLAYING";
-let stream_status=process.env.DISCORD_STATUS;
-
+let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`
 
 
 client.on('ready', () => {
- client.user.setActivity(process.env.DISCORD_STATUS);
+ client.user.setActivity(stream_status);
 console.log("[Discord] API Successfully connected!");
 });
  exports.update = ((arg1,arg2='PLAYING',arg3='null',arg4='active') => {console.log(`${arg1},${arg2},${arg3}`);
