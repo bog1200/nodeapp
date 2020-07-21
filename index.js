@@ -107,12 +107,12 @@ function update(){
 	  axios.get(setUrl("UC-lHJZR3Gqxm24_Vd_AJ5Yw",0)),
 	  axios.get(setUrl("UCq-Fj5jknLsUf-MWSy4_brA",0)),
 	  axios.get(setUrl("UC73wv11MF_jm6v7iz3kuO8Q",0)),
-	  axios.get('https://covid19.geo-spatial.org/api/dashboard/getCasesByCounty')
+	  axios.get('https://api.covid19api.com/country/ro')
 	]).then(axios.spread((response1, response2, response3, response4) => {
 	  pew_subs=response1.data.items[0].statistics.subscriberCount;
 	  tsr_subs=response2.data.items[0].statistics.subscriberCount;
 	  alm_subs=response3.data.items[0].statistics.subscriberCount;
-	  c_out=response4.data.data;
+	  c_out=response4.data;
 	})).catch(error => {
 	  refreshKey();
 	  console.log(error);
@@ -127,9 +127,10 @@ function update(){
 		console.log("Pew: "+`${pew_subs}`);
 		console.log("Alm: "+`${alm_subs}`);
 		console.log("Tsr: "+`${tsr_subs}`);
-		console.log("Czr: "+`${c_out.total}`);
-		if (cnr!==c_out.total) {cdf=c_out.total-cnr; cnr=c_out.total;}
-	cov_str=`Cazuri: ${c_out.total}`;
+		console.log(c_out.length);
+		console.log("Czr: "+`${Object.entries(c_out[c_out.length-1])[7][1]}`);
+		cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
+	cov_str=`Cazuri: ${Object.entries(c_out[c_out.length-1])[7][1]}`;
 	diff=pew_subs-tsr_subs;
 	if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 	else winn=0;
