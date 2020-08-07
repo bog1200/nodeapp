@@ -26,7 +26,7 @@ let start_time = Date.now();
 let start_time_gmt = new Date(start_time);
 
 let stream_link=process.env.DISCORD_STREAM_LINK;
-let status_type="PLAYING";
+let status_type="PLAYING"; 
 let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`
 
 
@@ -99,7 +99,7 @@ const { count } = require('console');
 let pvt,pvt2,pew,tsr;
 let cov_str;
 let c_out;
-let cov_h_str;
+let c_api=true;
 let alm_msg;
 function update(){
 
@@ -114,6 +114,7 @@ function update(){
 	  alm_subs=response3.data.items[0].statistics.subscriberCount;
 	  c_out=response4.data;
 	})).catch(error => {
+		console.error(error);
 	  refreshKey();
 	  console.log(error);
 	});
@@ -123,14 +124,21 @@ function update(){
 	let cdf=0;
 	let cnr=0;
 	function lol(){
+		try{
 		alm_msg="Abonati: "+`${alm_subs}`;
 		console.log("Pew: "+`${pew_subs}`);
 		console.log("Alm: "+`${alm_subs}`);
 		console.log("Tsr: "+`${tsr_subs}`);
-		console.log(c_out.length);
+		//console.log(c_out.length);
 		console.log("Czr: "+`${Object.entries(c_out[c_out.length-1])[7][1]}`);
 		cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
 	cov_str=`Cazuri: ${Object.entries(c_out[c_out.length-1])[7][1]}`;
+}
+	catch(error){
+		cdf="-1";
+		cov_str="Cazuri: -1"
+		c_api=false;
+	}
 	diff=pew_subs-tsr_subs;
 	if (diff<0) {diff=tsr_subs-pew_subs;winn=1;}
 	else winn=0;
@@ -173,6 +181,7 @@ try {
 	if (message.content.substr(0,1)!==prefix) {return;};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if  (message.guild!==null){
+		if (command==='covid') args[99]=c_api;
 		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
 		else {client.commands.get(command).execute(message,args,google_token);}
 	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
