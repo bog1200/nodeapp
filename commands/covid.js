@@ -8,6 +8,7 @@ module.exports = {
         let timeout=15000;
         async function lol(args)
         {
+
           if (args[1]!==undefined &&parseInt(args[1])!=='NaN'){timeout=parseInt(args[1])*1000;}
           const response = await axios.get(`https://api.covid19api.com/country/${args[0]}`);
           console.log(`Timeout: ${timeout}`);
@@ -28,11 +29,11 @@ module.exports = {
           })
         .catch(error => console.err(error));
         }
-        if(args[0]!=='us' || args[0].length>2 ) lol(args);
+        if(args[0]!=='us' || args[0].length>2 || args[99]=='false') lol(args);
         else 
         {
             message.delete();
-            Embed.setTitle("Error").setDescription("Country not supported").setColor(`#ff0000`)
+            Embed.setTitle("Error").setDescription("Country not supported or API not avaliable").setColor(`#ff0000`)
             .setTimestamp().setFooter(`${message.author.username}#${message.author.discriminator}`);
             message.channel.send(Embed)
             .then(msg => {
