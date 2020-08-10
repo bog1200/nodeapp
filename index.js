@@ -107,7 +107,8 @@ function update(){
 	  axios.get(setUrl("UC-lHJZR3Gqxm24_Vd_AJ5Yw",0)),
 	  axios.get(setUrl("UCq-Fj5jknLsUf-MWSy4_brA",0)),
 	  axios.get(setUrl("UC73wv11MF_jm6v7iz3kuO8Q",0)),
-	  axios.get('https://api.covid19api.com/country/ro')
+	  //axios.get('https://api.covid19api.com/country/ro')
+	  axios.get('https://covid19-api.org/api/timeline/ro')
 	]).then(axios.spread((response1, response2, response3, response4) => {
 	  pew_subs=response1.data.items[0].statistics.subscriberCount;
 	  tsr_subs=response2.data.items[0].statistics.subscriberCount;
@@ -116,7 +117,6 @@ function update(){
 	})).catch(error => {
 		console.error(error);
 	  refreshKey();
-	  console.log(error);
 	});
 	
 	setTimeout(lol,5000);
@@ -129,10 +129,18 @@ function update(){
 		console.log("Pew: "+`${pew_subs}`);
 		console.log("Alm: "+`${alm_subs}`);
 		console.log("Tsr: "+`${tsr_subs}`);
-		//console.log(c_out.length);
-		console.log("Czr: "+`${Object.entries(c_out[c_out.length-1])[7][1]}`);
-		cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
-	cov_str=`Cazuri: ${Object.entries(c_out[c_out.length-1])[7][1]}`;
+		//console.log(c_out[0]['cases']);
+		
+		let i=0;
+		do
+		{
+			i=i+1;
+			cdf=c_out[0]['cases']-c_out[i]['cases']
+		}while (cdf==0);
+		console.log(`Czr: ${c_out[0]['cases']}`);
+		console.log(`Cdf: ${cdf}`);
+		//cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
+	cov_str=`Cazuri: ${c_out[0]['cases']}`;
 }
 	catch(error){
 		cdf="-1";
@@ -184,7 +192,7 @@ try {
 		if (command==='covid') args[99]=c_api;
 		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
 		else {client.commands.get(command).execute(message,args,google_token);}
-	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
 }
 	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
 		msg.delete({ timeout: 7000 });
