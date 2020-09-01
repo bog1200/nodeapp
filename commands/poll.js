@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 module.exports = {
 	name: 'poll',
@@ -42,34 +41,41 @@ module.exports = {
         .then(msg => {
           msg.react('✅')
           .then(() => msg.react('❌'))
-          const filter = (reaction,user) => {return ['✅','❌'].includes(reaction.emoji.name)&& user.id != msg.author.id};
-          const collector = msg.createReactionCollector(filter, { time: countdown*1000-1})
+          const filter = (reaction,user) => {return reaction.emoji.name};
+          const collector = msg.createReactionCollector(filter, { time: countdown*1000-1,dispose: true })
+          const votes=[];
           collector.on('collect', (reaction, reactionCollector) => {
             //do stuff
             const user_id=`${reactionCollector.username}#${reactionCollector.discriminator} (${reactionCollector.id})`;
-            //console.log(reactionCollector);
-            console.log(`[Poll] Vote received: \nPoll ID: ${id}\nUser ID: ${user_id}\nVote: ${reaction.emoji.name}`);
-            //console.log(input.emoji.name)
-            if (reaction.emoji.name ==="✅") yes=yes+1;
-            if (reaction.emoji.name==="❌") no=no+1
+            if (reactionCollector.id===msg.author.id)  return;
+            if (reaction.emoji.name!=='✅' && reaction.emoji.name!=='❌' ) {reaction.users.remove(reactionCollector.id); return;}
+            if (votes.includes(reactionCollector.id)) {reaction.users.remove(reactionCollector.id); vote_status='blocked'}
+            else {votes.push(reactionCollector.id); vote_status='received'}
+            console.log(`[Poll] Vote ${vote_status}: \nPoll ID: ${id}\nUser ID: ${user_id}\nTimestamp: ${Date.now()}\nVote: ${reaction.emoji.name}`);
        });
-       setTimeout(() => {
+      /* collector.on('remove',(reaction,reactionCollector) =>
+       {
+        console.log(reaction)
+        index=votes.indexOf(reactionCollector.id);
+        if (index > -1) {
+          votes.splice(index, 1);
+       }});*/
+       collector.on('end', collected =>
+       {
+        let votes = Array.from(collected.entries());
+        yes=votes[0][1]['count']-1;
+        no=votes[1][1]['count']-1;
         let result="Draw";
         if (yes>no) {result = "✅"; color="#00FF00"}
-        else if (yes==no) {result = "Draw"; color="FFF00"}
+        else if (yes==no) {result = "Draw"; color="FFF000"}
         else {result="❌"; color="#FF0000"}
         console.log(`[Poll] Poll finished: \nPoll ID: ${id} | Y: ${yes} | N: ${no} | result: ${result}`)
         EmbedText = {title:`Poll`,color: color,description: `${poll}`, fields: [
           { name: 'Winner', value: `${result}`,inline: true },],
             timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
             Embed = new Discord.MessageEmbed(EmbedText);
-        msg.edit(Embed)
-        msg.reactions.removeAll();
-        console.log(msg.reactions);
-      },countdown*1000);
-    
-  
-
+        msg.edit(Embed).then(msg.reactions.removeAll());
+       })
            let timer = setInterval(() =>
             {
               if (countdown<=5) clearInterval(timer);
@@ -84,14 +90,6 @@ module.exports = {
                     timestamp: new Date(),footer: { text: `${countdown_format} | ${message.author.username}#${message.author.discriminator}`},};
           Embed = new Discord.MessageEmbed(EmbedText);
           msg.edit(Embed);
-       // console.log(`Time:${new Date()} | ${countdown}`)
-      }
-            
-            
-            
-          },1000)
-      
-    }
-        );}
-     lol(args);
-}}
+      }},1000)
+    })}
+     lol(args)}}
