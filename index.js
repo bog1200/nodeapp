@@ -4,6 +4,8 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const googleAuth = require('google-auth-library');
 const privatekey = require("./privatekey.json");
+const wait = require('util').promisify(setTimeout);
+
 ///
 ///
 
@@ -27,13 +29,21 @@ let start_time_gmt = new Date(start_time);
 
 let stream_link=process.env.DISCORD_STREAM_LINK;
 let status_type="PLAYING"; 
-let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`
+let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`;
+let invites = {};
 
 
 client.on('ready', () => {
  client.user.setActivity(stream_status);
 console.log("[Discord] API Successfully connected!");
 });
+wait(2000);
+/*client.cache.guilds.forEach(g => {
+	g.fetchInvites().then(guildInvites => {
+		invites[g.id] = guildInvites;
+	});
+});*/
+
  exports.update = ((arg1,arg2='PLAYING',arg3='null',arg4='active') => {console.log(`${arg1},${arg2},${arg3}`);
 if (arg3!=='null') {client.user.setPresence({ activity: { name: `${arg1}`,type: `${arg2}`,url:`${arg3}` }, status: `${arg4}` });}
 else {client.user.setPresence({ activity: { name: `${arg1}`,type: `${arg2}`}, status: `${arg4}` });}
@@ -225,7 +235,24 @@ function UpdateStatus(){
 	
 	}
         //Romail.ml
-
+		client.on('guildMemberAdd', member => {
+			// To compare, we need to load the current invite list.
+			member.guild.fetchInvites().then(guildInvites => {
+				// This is the *existing* invites for the guild.
+				const ei = invites[member.guild.id];
+		
+				// Update the cached invites
+				invites[member.guild.id] = guildInvites;
+		
+				// Look through the invites, find the one for which the uses went up.
+				const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+		
+				console.log(invite.code)
+		
+				if (invite.code === "xg44stZ") {
+					return member.addRole(member.guild.roles.find(role => role.name === "bog1200"));
+				}
+			})});
 
 	process.on('SIGINT',function(){
 	client.destroy();
