@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = {
 	name: 'poll',
   description: 'Poll System',
-  usage: '<time> <question> <option1> <option2> [option3]',
+  usage: '<time> <question>',
 	execute(message, args) {
     let countdown=30;
     let length=args.length;
@@ -30,6 +30,7 @@ module.exports = {
         {
           if (countdown<60) countdown_format=`${countdown}s`
           else if (countdown<3600) countdown_format=`${Math.floor(countdown/60)}m`
+          else if (countdown%3600==0) countdown_format=countdown_format=`${Math.floor(countdown/3600)}h`
           else countdown_format=countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
           console.log(`[Poll] Poll started: \nPoll ID: ${id} | time: ${countdown_format}`);
           let EmbedText = {title:`Poll`,color: '#fff000',description: `${poll}`, fields: [
@@ -70,8 +71,8 @@ module.exports = {
         else if (yes==no) {result = "Draw"; color="FFF000"}
         else {result="❌"; color="#FF0000"}
         console.log(`[Poll] Poll finished: \nPoll ID: ${id} | Y: ${yes} | N: ${no} | result: ${result}`)
-        EmbedText = {title:`Poll`,color: color,description: `${poll}`, fields: [
-          { name: 'Winner', value: `${result}`,inline: true },],
+        EmbedText = {title:`Poll`,color: color, description: `${poll}`, fields: [
+          { name: 'Winner', value: `${result} (${yes} - ${no})`,inline: true },],
             timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
             Embed = new Discord.MessageEmbed(EmbedText);
         msg.edit(Embed).then(msg.reactions.removeAll());
@@ -80,15 +81,17 @@ module.exports = {
             {
               if (countdown<=5) clearInterval(timer);
               countdown=countdown-1;
-              if ((countdown%5==0 && countdown<=60) || (countdown%60==0 && countdown>60 && countdown<=300)|| (countdown%300==0 && countdown>300))
+                    if ((countdown%5==0 && countdown<=60) || (countdown%60==0 && countdown>60 && countdown<=300)|| (countdown%300==0 && countdown>300 && countdown<=3600) ||(countdown%1800==0 && countdown > 3600))
                {
                  if (countdown<60) countdown_format=`${countdown}s`
                  else if (countdown<3600) countdown_format=`${Math.floor(countdown/60)}m`
-                 else countdown_format=countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
+                 else if (countdown%3600==0) countdown_format=countdown_format=`${Math.floor(countdown/3600)}h`
+                 else  countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
+                 
                  EmbedText = {title:`Poll`,color: '#fff000',description: `${poll}`, fields: [
                   { name: 'Yes', value: `✅`,inline: true },{name: "\u200B",value: '\u200B',inline: true},{name: "No",value: '❌',inline: true},],
                     timestamp: new Date(),footer: { text: `${countdown_format} | ${message.author.username}#${message.author.discriminator}`},};
-          Embed = new Discord.MessageEmbed(EmbedText);
+                    Embed =  new Discord.MessageEmbed(EmbedText);
           msg.edit(Embed);
       }},1000)
     })}
