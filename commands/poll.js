@@ -71,11 +71,12 @@ module.exports = {
         else if (yes==no) {result = "Draw"; color="FFF000"}
         else {result="❌"; color="#FF0000"}
         console.log(`[Poll] Poll finished: \nPoll ID: ${id} | Y: ${yes} | N: ${no} | result: ${result}`)
+        const end = async () => {
         EmbedText = {title:`Poll`,color: color, description: `${poll}`, fields: [
           { name: 'Winner', value: `${result} (${yes} - ${no})`,inline: true },],
             timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
-            Embed = new Discord.MessageEmbed(EmbedText);
-        msg.edit(Embed).then(msg.reactions.removeAll());
+             Embed =  new Discord.MessageEmbed(EmbedText);}
+             end().then(msg.edit(Embed)).then(msg.reactions.removeAll());
        })
            let timer = setInterval(() =>
             {
