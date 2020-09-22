@@ -8,7 +8,7 @@ module.exports = {
         axios.all([
             axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
             axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UCq-Fj5jknLsUf-MWSy4_brA&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`)
-          ]).then(axios.spread((response1, response2, ) => {
+          ]).then(axios.spread((response1, response2) => {
              pew_subs=response1.data.items[0].statistics.subscriberCount;
              tsr_subs=response2.data.items[0].statistics.subscriberCount;
           
