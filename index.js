@@ -175,8 +175,8 @@ try {
 function UpdateStatus(){
 
 	//Romail.ml
-	client.channels.fetch("702248585991028776").then(channel => channel.setName(cov_str)).catch(error => console.error(error));
-	client.channels.fetch("733602475436802058").then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
+	client.channels.fetch(process.env.COVID19_CASES_CHANNEL).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
+	client.channels.fetch(process.env.COVID19_NEW_CHANNEL).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
 	///AlmostIce
 	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg)).catch(error => console.error(error));
 	//client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
