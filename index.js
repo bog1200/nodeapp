@@ -1,4 +1,5 @@
 //
+const mysql = require('mysql');
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
@@ -11,12 +12,17 @@ const wait = require('util').promisify(setTimeout);
 
 const Discord = require('discord.js');
 require('dotenv').config();
-let prefix = process.env.DISCORD_PREFIX;
+let prefix;
 const client = new Discord.Client();
-console.log(`Prefix: ${prefix}`);
-
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+var con = mysql.createConnection({
+	host: process.env.MYSQL_HOST,
+	port: process.env.MYSQL_PORT,
+	user: process.env.MYSQL_USER,
+	password: process.env.MYSQL_PASS,
+	database: process.env.MYSQL_DB
+  });
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
@@ -45,7 +51,7 @@ else {client.user.setPresence({ activity: { name: `${arg1}`,type: `${arg2}`}, st
 
 });
 
-function loginDiscord()
+async function loginDiscord()
 {
 const login = new Promise ((resolve,reject) =>
 {
@@ -117,8 +123,8 @@ function update(){
 			i=i+1;
 			cdf=c_out[0]['cases']-c_out[i]['cases']
 		}while (cdf==0);
-		console.log(`Czr: ${c_out[0]['cases']}`);
-		console.log(`Cdf: ${cdf}`);
+		//console.log(`Czr: ${c_out[0]['cases']}`);
+		//console.log(`Cdf: ${cdf}`);
 		//cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
 	cov_str=`Cazuri: ${c_out[0]['cases']}`;
 }
@@ -131,59 +137,109 @@ function update(){
 	setTimeout(UpdateStatus, 3000);
 	//
 	}
+	async function loginSql(log){
+		
+		  con.connect( err => {
+			if (err) console.error(err);})
+			if(log) console.log("[SQL] Database Successfully Connected!");
+	}
 	async function load()
 	{
 		google_token= await getkey();
 		const D_Log_out = await loginDiscord();
+		const sqlstart = await loginSql(true);
 		console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
 		update();
 	}
 	load();
-
+	con.on('error', err =>
+	{
+		if(err.code === 'PROTOCOL_CONNECTION_LOST') { loginSql(false);} 
+	});
 	const queue = new Map();
 	client.on('message', async message => {
 		const date = new Date;
+		const sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;
+		con.query(sql, function (err, result) {
+			if (err)
+				throw err;
+			else 
+			{
+			if (message.mentions.has(client.user.id)) prefix = " <@!476441249738653706>";
+			else prefix = result[0]['PREFIX'];
 		const args = message.content.slice(prefix.length).split(/ +/);
 		let command = args.shift().toLowerCase();
 		if (command==='2fa') command='validate';
 		//client.channels.resolve(message.channel.id.toString()).messages.fetch(message.content.toString()).then((message => {message.delete()}));
 		if (!client.commands.has(command)) return;
-
 try {
-	
-	if (message.content.substr(0,1)!==prefix) {return;};
+	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
 	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if  (message.guild!==null){
 		if (command==='covid') args[99]=c_api;
 		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
 		else {client.commands.get(command).execute(message,args,google_token);}
-	console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
 }
 	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
 		msg.delete({ timeout: 7000 });
 	  })
 	.catch(error => console.err(error));
-	 console.log(`Bot triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
+	 console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
 } catch (error) {
 	console.error(error);
 	message.reply('there was an error trying to execute that command!');
 }
+}});
 });
 
 function UpdateStatus(){
-
-	//Romail.ml
-	client.channels.fetch(process.env.COVID19_CASES_CHANNEL).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
-	client.channels.fetch(process.env.COVID19_NEW_CHANNEL).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
+	//console.log(client.guilds.cache)
+	for (let i=0;i<client.guilds.cache.size;i=i+1)
+	{
+		let sql = `SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`;
+			  con.query(sql, function (err, result) {
+				if (err) throw err;
+				else if(result[0]['COVCHID']!=null) {
+					
+					client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
+					client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
+				}});
+	}
+	
 	///AlmostIce
 	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg)).catch(error => console.error(error));
-	//client.channels.find(channel => channel.id === "693109405696262164").setName(dro);
-	
 	  setTimeout(update, 1200000);
 	
 	}
+	
+	client.on('guildCreate', guild =>
+	{
+		let sql = `INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${con.escape(guild.name)},${Date.now()})`;
+			  con.query(sql, function (err, result) {
+				if (err) throw err;
+				console.log(`[Bot] Joined ${guild.name} (${guild.id})`); })
+});
+client.on('guildUpdate', (oldGuild, newGuild) =>
+	{
+		let sql = `UPDATE bot SET SERVERNAME = ${con.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`;
+			  con.query(sql, function (err, result) {
+				if (err) throw err;
+				console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`);
+})});
+
+	client.on('guildDelete', guild =>
+	{
+		let sql = `DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`;
+			  con.query(sql, function (err, result) {
+				if (err) throw err;
+				console.log(`[Bot] Left ${guild.name} (${guild.id})`);
+})});
+
+
+	
         //Romail.ml
 		client.on('guildMemberAdd', member => {
 			// To compare, we need to load the current invite list.
@@ -203,19 +259,32 @@ function UpdateStatus(){
 					return member.addRole(member.guild.roles.find(role => role.name === "bog1200"));
 				}
 			})});
-
+		
+	process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 	process.on('SIGINT',function(){
 	client.destroy();
+	connection.end(function(err) {
+		console.error(err);
+	  });
 });
 	process.on('SIGUSR1',function (){
 		console.log('Goodbye!');
 		client.destroy();
+		connection.end(function(err) {
+			console.error(err);
+		  });
 	});
 	process.on('SIGUSR2',function (){
 		console.log('Goodbye!');
+		connection.end(function(err) {
+			console.error(err);
+		  });
 		client.destroy();
 	});
 	process.on('exit', function (){
 		console.log('Goodbye!');
+		connection.end(function(err) {
+			console.error(err);
+		  });
 		client.destroy();
 	});
