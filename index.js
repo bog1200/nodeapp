@@ -161,7 +161,10 @@ function update(){
 	const queue = new Map();
 	client.on('message', async message => {
 		const date = new Date;
-		const sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;
+		let sql;
+		if  (message.guild!==null){
+		sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;}
+		else {sql = `SELECT * FROM bot WHERE SERVERID = 'DM'`;}
 		con.query(sql, function (err, result) {
 			if (err)
 				throw err;
