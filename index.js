@@ -4,6 +4,8 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const googleAuth = require('google-auth-library');
+const moment = require('moment');
+let axios = require('axios');
 const privatekey = require("./privatekey.json");
 const wait = require('util').promisify(setTimeout);
 
@@ -93,13 +95,16 @@ console.log("[Google] API Key refreshed!");
 }
 });
 }
+function days(today,days)
+        {
+          return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
+        }
 
-let axios = require('axios');
-let cov_str, c_out, alm_msg, alm_subs=-1; c_api=true;
+let today,historicalData,jud, cov_str, c_out, alm_msg, alm_subs=-1; c_api=true;
 function update(){
 	axios.all([
 	  axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
-	  axios.get('https://covid19-api.org/api/timeline/ro')
+	  axios.get('https://datelazi.ro/latestData.json')
 	]).then(axios.spread((response1, response2) => {
 	  alm_subs=response1.data.items[0].statistics.subscriberCount;
 	  c_out=response2.data;
@@ -111,22 +116,18 @@ function update(){
 	setTimeout(lol,5000);
 	}
 	let cdf=0;
+	
 	function lol(){
 		try{
 		alm_msg="Abonati: "+`${alm_subs}`;
 		//console.log("Alm: "+`${alm_subs}`);
 		//console.log(c_out[0]['cases']);
-		
-		let i=0;
-		do
-		{
-			i=i+1;
-			cdf=c_out[0]['cases']-c_out[i]['cases']
-		}while (cdf==0);
-		//console.log(`Czr: ${c_out[0]['cases']}`);
-		//console.log(`Cdf: ${cdf}`);
-		//cdf=(Object.entries(c_out[c_out.length-1])[7][1])-(Object.entries(c_out[c_out.length-2])[7][1]);
-	cov_str=`Cazuri: ${c_out[0]['cases']}`;
+			
+			today=c_out["currentDayStats"];
+			jud=today.incidence;
+            historicalData = c_out["historicalData"];
+		cdf=today.numberInfected-historicalData[days(today,1)].numberInfected
+		cov_str=`Cazuri: ${today.numberInfected}`;
 }
 	catch(error){
 		cdf="-1";
@@ -203,13 +204,16 @@ function UpdateStatus(){
 	for (let i=0;i<client.guilds.cache.size;i=i+1)
 	{
 		let sql = `SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`;
+		
 			  con.query(sql, function (err, result) {
 				if (err) throw err;
 				else if(result[0]['COVCHID']!=null) {
-					
 					client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
 					client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
-				}});
+					if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
+					{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
+
+			  }});
 	}
 	
 	///AlmostIce
