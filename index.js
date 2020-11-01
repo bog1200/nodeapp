@@ -47,9 +47,10 @@ console.log("[Discord] API Successfully connected!");
 });
 wait(2000);
 
- exports.update = ((arg1,arg2='PLAYING',arg3='null',arg4='active') => {console.log(`${arg1},${arg2},${arg3}`);
-if (arg3!=='null') {client.user.setPresence({ activity: { name: `${arg1}`,type: `${arg2}`,url:`${arg3}` }, status: `${arg4}` });}
-else {client.user.setPresence({ activity: { name: `${arg1}`,type: `${arg2}`}, status: `${arg4}` });}
+ exports.update = ((arg0,arg1='PLAYING',arg2='online', arg3) => {console.log(`1:${arg0}, 2:${arg1}, 3:${arg2}, 4:${arg3}`);
+
+if (arg3!==undefined) {client.user.setPresence({ activity: { name: `${arg0}`,type: `${arg1}`,url:`${arg3}` }, status: `${arg2}` });}
+else {client.user.setPresence({ activity: { name: `${arg0}`,type: `${arg1}`}, status: `${arg2}` });}
 
 });
 
@@ -184,7 +185,7 @@ try {
 	if  (message.guild!==null){
 		if (command==='covid') args[99]=c_api;
 		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
-		else {client.commands.get(command).execute(message,args,google_token);}
+		else {client.commands.get(command).execute(message,args);}
 	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
 }
 	else {message.reply('Bot commands are unavailable on DMs').then(msg => {

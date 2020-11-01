@@ -4,13 +4,15 @@ module.exports = {
     name: 'presence',
     description: 'Change bot presence',
     execute(message, args) {
-        status.update(args[0],args[1],args[2],args[3]);
+        const arguments=args.join(" ").split(", ");
+        status.update(arguments[0],arguments[1],arguments[2],arguments[3]);
         message.delete();
         const Embed = new Discord.MessageEmbed().setTitle("Bot Presence").setTimestamp()
         .setFooter(`${message.author.username}#${message.author.discriminator}`)
-        .addField("Status",`${args[0]}`)
-		.addField("Type",`${args[1]||'PLAYING'}`)
-        .addField("Link", `${args[2]||'none'}`);
+        .addField("Presence",`${arguments[0]}`)
+        .addField("Type",`${arguments[1]||'PLAYING'}`)
+        .addField("Status",`${arguments[2]||'online'}`)
+        .addField("Link", `${arguments[3]||'none'}`);
         
         message.channel.send(Embed)
         .then(msg => {
