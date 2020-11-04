@@ -150,9 +150,10 @@ function update(){
 		google_token= await getkey();
 		const D_Log_out = await loginDiscord();
 		const sqlstart = await loginSql(true);
-		console.log("[Google] Token: "+`${google_token}`);
+		//console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
+		exports.client= client;
 		update();
 	}
 	load();
