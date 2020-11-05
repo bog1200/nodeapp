@@ -101,11 +101,11 @@ function days(today,days)
           return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
         }
 
-let today,historicalData,jud, cov_str, c_out, alm_msg, alm_subs=-1;
-function update(){
-	axios.all([
-	  axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
-	  axios.get('https://datelazi.ro/latestData.json')
+let today, historicalData, jud, cov_str, c_out, cdf=0, alm_msg, alm_subs=-1;
+async function update(){
+	await axios.all([
+		axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
+		axios.get('https://datelazi.ro/latestData.json')
 	]).then(axios.spread((response1, response2) => {
 	  alm_subs=response1.data.items[0].statistics.subscriberCount;
 	  c_out=response2.data;
@@ -113,13 +113,7 @@ function update(){
 		console.error(error);
 	  refreshKey();
 	});
-	
-	setTimeout(lol,5000);
-	}
-	let cdf=0;
-	
-	function lol(){
-		try{
+	try{
 		alm_msg="Abonati: "+`${alm_subs}`;
 		//console.log("Alm: "+`${alm_subs}`);
 		//console.log(c_out[0]['cases']);
@@ -131,11 +125,10 @@ function update(){
 		cov_str=`Cazuri: ${today.numberInfected}`;
 }
 	catch(error){
+		console.error(error);
 		cdf="-1";
-		cov_str="Cazuri: -1"
-		c_api=false;
-	}
-	
+		cov_str="Cazuri: -1";	}
+		
 	setTimeout(UpdateStatus, 3000);
 	//
 	}
@@ -179,12 +172,13 @@ function update(){
 		const args = message.content.slice(prefix.length).split(/ +/);
 		let command = args.shift().toLowerCase();
 		if (command==='2fa') command='validate';
+		if (command==='update' && message.author.id==="239136395665342474") {update(); message.delete(); return}
 		//client.channels.resolve(message.channel.id.toString()).messages.fetch(message.content.toString()).then((message => {message.delete()}));
 		if (!client.commands.has(command)) return;
 try {
 	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
 	if  (message.guild!==null){
-		client.commands.get(command).execute(message, args)
+		 client.commands.get(command).execute(message, args);
 	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
 }
 	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
