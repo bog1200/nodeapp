@@ -16,7 +16,7 @@ module.exports = {
         let query=true,perm=false;
         if (args[0]===undefined) {Embed.setColor('#FFFF00');query=false;
           if(message.member.hasPermission("MANAGE_GUILD")){Embed.addField('prefix {prefix}','Change bot prefix');perm=true;}
-          if(message.member.hasPermission("MANAGE_CHANNELS")){Embed.addField('cov {channel1 channel2} || {clear}','Change COV19 Channels');perm=true;}}                                                                
+          if(message.member.hasPermission("MANAGE_CHANNELS")){Embed.addField('cov {channel1 channel2} || {clear}','Change COV19 Channels').addField('cov jud {channel county}','Change COV19 County');perm=true;}}                                                                
         else if (args[0].toLowerCase()==='prefix' && message.member.hasPermission("MANAGE_GUILD"))  {sql=`UPDATE bot SET PREFIX = '${args[1].substring(0,1)}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription(`Prefix set to ${args[1].substring(0,1)}`)}
         else if (args[0].toLowerCase()==='reset' && message.member.hasPermission("MANAGE_GUILD"))  {sql=`UPDATE bot SET PREFIX = '.',COVCHID = NULL ,COVNEWID = NULL, COVJUDID = NULL, COVJUD = NULL WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('Settings Cleared');}
         else if (args[0].toLowerCase()==='cov' && args[1]=="clear" && message.member.hasPermission("MANAGE_CHANNELS")) {sql=`UPDATE bot SET COVCHID = NULL ,COVNEWID = NULL, COVJUDID = NULL, COVJUD = NULL WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription('Setting Updated');}
