@@ -110,9 +110,8 @@ module.exports = {
         {
         console.error(error);
         }};
-        console.log(`${args[0]}, ${args[0].length}, ${args[99]}`,);
         if(args[0].toUpperCase()=='RO') lol(true ,args);
-        else if(args[0].toUpperCase()!='UK'&& args[0].length==2 && args[0].match(/[a-zA-Z]{2}/)&& args[99]==true && (typeof args[1]=='undefined'|| args[1]>5)) lol(false, args);
+        else if(args[0].toUpperCase()!='UK'&& args[0].length==2 && args[0].match(/[a-zA-Z]{2}/) && (typeof args[1]=='undefined'|| args[1]>5)) lol(false, args);
         else
         {
             message.delete();
