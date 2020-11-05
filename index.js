@@ -101,7 +101,7 @@ function days(today,days)
           return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
         }
 
-let today,historicalData,jud, cov_str, c_out, alm_msg, alm_subs=-1; c_api=true;
+let today,historicalData,jud, cov_str, c_out, alm_msg, alm_subs=-1;
 function update(){
 	axios.all([
 	  axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
@@ -162,6 +162,7 @@ function update(){
 		if(err.code === 'PROTOCOL_CONNECTION_LOST') { loginSql(false);} 
 	});
 	const queue = new Map();
+	exports.queue = queue;
 	client.on('message', async message => {
 		const date = new Date;
 		let sql;
@@ -182,11 +183,8 @@ function update(){
 		if (!client.commands.has(command)) return;
 try {
 	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
-	if(command==='status'){args[98]=start_time; args[99]=start_time_gmt;};
 	if  (message.guild!==null){
-		if (command==='covid') args[99]=c_api;
-		if (command === 'play' || command === 'skip' ||command === 'stop' ) {client.commands.get(command).execute(message, queue, args, google_token);}
-		else {client.commands.get(command).execute(message,args);}
+		client.commands.get(command).execute(message, args)
 	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
 }
 	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
@@ -269,7 +267,7 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 				}
 			})});
 		
-	process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
+	process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
 	process.on('SIGINT',function(){
 	client.destroy();
 	connection.end(function(err) {

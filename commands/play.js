@@ -1,9 +1,13 @@
+const ytdl = require("ytdl-core");
+const axios = require('axios');
+const main = require("../index.js");
+  
 module.exports = {
 	name: 'play',
 	description: 'Play',
-	 execute(message, queue, args, g_token) {
-        const ytdl = require("ytdl-core");
-        const axios = require('axios');
+	 execute(message, args) {
+     let queue=main.queue;
+     let g_token=main.g_token;
         const serverQueue = queue.get(message.guild.id);
         execute(message, serverQueue);
         async function google (title)
@@ -35,9 +39,10 @@ module.exports = {
             songInfo = await ytdl.getInfo(googleparse);
             }
             else  {songInfo = await ytdl.getInfo(args[1]);}
+            console.log(songInfo);
             const song = {
-              title: songInfo.title,
-              url: songInfo.video_url
+              title: songInfo.videoDetails.title,
+              url: songInfo.videoDetails.video_url
             };
           
             if (!serverQueue) {
@@ -65,14 +70,14 @@ module.exports = {
               }
             } else {
               serverQueue.songs.push(song);
-              return message.channel.send(`${song.title} has been added to the queue!`);
+              return message.channel.send(`**${song.title}** has been added to the queue!`);
             }
           }
           
           function play(guild, song) {
             const serverQueue = queue.get(guild.id);
             if (!song) {
-              serverQueue.voiceChannel.leave();
+              //serverQueue.voiceChannel.leave();
               queue.delete(guild.id);
               return;
             }
