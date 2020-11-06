@@ -17,6 +17,7 @@ require('dotenv').config();
 let prefix;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+let cooldowns = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 var con = mysql.createConnection({
 	host: process.env.MYSQL_HOST,
@@ -177,6 +178,10 @@ async function update(){
 		if (!client.commands.has(command)) return;
 try {
 	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
+	
+	if (cooldowns.has(message.author.id)){return;}
+	else cooldowns.set(message.author.id, Date.now());
+	setTimeout(() => cooldowns.delete(message.author.id), 3000);
 	if  (message.guild!==null){
 		 client.commands.get(command).execute(message, args);
 	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
