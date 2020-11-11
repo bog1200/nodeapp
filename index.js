@@ -19,13 +19,15 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 let cooldowns = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-var con = mysql.createConnection({
+const sql_info={
 	host: process.env.MYSQL_HOST,
 	port: process.env.MYSQL_PORT,
 	user: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASS,
 	database: process.env.MYSQL_DB
-  });
+  }
+var pool= mysql.createPool(sql_info);
+module.exports.pool = pool;
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
@@ -33,11 +35,6 @@ for (const file of commandFiles) {
 	// with the key as the command name and the value as the exported module
 	client.commands.set(command.name, command);
 }
-let start_time = Date.now();
-let start_time_gmt = new Date(start_time);
-
-let stream_link=process.env.DISCORD_STREAM_LINK;
-let status_type="PLAYING"; 
 let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`;
 let invites = {};
 
@@ -99,7 +96,8 @@ console.log("[Google] API Key refreshed!");
 }
 function days(today,days)
         {
-          return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
+		  if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
+          else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
         }
 
 let today, historicalData, jud, cov_str, c_out, cdf=0, alm_msg, alm_subs=-1;
@@ -108,42 +106,47 @@ async function update(){
 		axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
 		axios.get('https://datelazi.ro/latestData.json')
 	]).then(axios.spread((response1, response2) => {
-	  alm_subs=response1.data.items[0].statistics.subscriberCount;
+	   alm_subs=response1.data.items[0].statistics.subscriberCount;
 	  c_out=response2.data;
-	})).catch(error => {
+		  today=c_out["currentDayStats"];
+		historicalData = c_out["historicalData"];
+	}))
+		  .then( () => {
+			try{
+				alm_msg="Abonati: "+`${alm_subs}`;
+				//console.log("Alm: "+`${alm_subs}`);
+				//console.log(c_out[0]['cases']);
+					//setTimeout(() => {
+						jud=today.incidence;
+						cdf=today.numberInfected-historicalData[days(today,1)].numberInfected;
+						cov_str=`Cazuri: ${today.numberInfected}`;	
+					//}, 1000);
+					
+		}
+			catch(error){
+				console.error(error);
+				cdf="-1";
+				cov_str="Cazuri: -1";	}
+		  })
+	  
+		
+	.catch(error => {
 		console.error(error);
 	  refreshKey();
 	});
-	try{
-		alm_msg="Abonati: "+`${alm_subs}`;
-		//console.log("Alm: "+`${alm_subs}`);
-		//console.log(c_out[0]['cases']);
-			
-			today=c_out["currentDayStats"];
-			jud=today.incidence;
-            historicalData = c_out["historicalData"];
-		cdf=today.numberInfected-historicalData[days(today,1)].numberInfected
-		cov_str=`Cazuri: ${today.numberInfected}`;
-}
-	catch(error){
-		console.error(error);
-		cdf="-1";
-		cov_str="Cazuri: -1";	}
-		
 	setTimeout(UpdateStatus, 3000);
 	//
 	}
-	async function loginSql(log){
-		
+	/*async function loginSql(log){
 		  con.connect( err => {
 			if (err) console.error(err);})
 			if(log) console.log("[SQL] Database Successfully Connected!");
-	}
+	}*/
 	async function load()
 	{
 		google_token= await getkey();
 		const D_Log_out = await loginDiscord();
-		const sqlstart = await loginSql(true);
+		//const sqlstart = await loginSql(true);
 		//console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
@@ -151,15 +154,17 @@ async function update(){
 		update();
 	}
 	load();
-	con.on('error', err =>
+	pool.on('error', err =>
 	{
-		if(err.code === 'PROTOCOL_CONNECTION_LOST') { loginSql(false);} 
+		console.log(`[SQL] : ${err}`)
+		//if(err.code === 'PROTOCOL_CONNECTION_LOST') { con.release(); loginSql(false);} 
 	});
 	const queue = new Map();
 	exports.queue = queue;
 	client.on('message', async message => {
 		const date = new Date;
 		let sql;
+		pool.getConnection(function(err, con) {
 		if  (message.guild!==null){
 		sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;}
 		else {sql = `SELECT * FROM bot WHERE SERVERID = 'DM'`;}
@@ -195,7 +200,7 @@ try {
 	console.error(error);
 	message.reply('there was an error trying to execute that command!');
 }
-}});
+}});})
 });
 
 function UpdateStatus(){
@@ -204,7 +209,7 @@ function UpdateStatus(){
 	{
 		let sql = `SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`;
 		
-			  con.query(sql, function (err, result) {
+			  pool.query(sql, function (err, result) {
 				if (err) throw err;
 				else if(result[0]['COVCHID']!=null) {
 					client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
@@ -224,14 +229,14 @@ function UpdateStatus(){
 	client.on('guildCreate', guild =>
 	{
 		let sql = `INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${con.escape(guild.name)},${Date.now()})`;
-			  con.query(sql, function (err, result) {
+		pool.query(sql, function (err, result) {
 				if (err) throw err;
 				console.log(`[Bot] Joined ${guild.name} (${guild.id})`); })
 });
 client.on('guildUpdate', (oldGuild, newGuild) =>
 	{
 		let sql = `UPDATE bot SET SERVERNAME = ${con.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`;
-			  con.query(sql, function (err, result) {
+		pool.query(sql, function (err, result) {
 				if (err) throw err;
 				console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`);
 })});
@@ -239,7 +244,7 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 	client.on('guildDelete', guild =>
 	{
 		let sql = `DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`;
-			  con.query(sql, function (err, result) {
+		pool.query(sql, function (err, result) {
 				if (err) throw err;
 				console.log(`[Bot] Left ${guild.name} (${guild.id})`);
 })});

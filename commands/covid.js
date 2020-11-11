@@ -4,13 +4,15 @@ const axios = require('axios');
 module.exports = {
 	name: 'covid',
   description: 'Covid19',
-  usage: '<country> [cooldown]',
+  usage: '<country> [timer]',
 	execute(message, args) {
         let countdown= 20
         function days(today,days)
         {
-          return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
+		    if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
+        else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
         }
+
         async function lol(ro, args)
         {
           try{
@@ -20,9 +22,7 @@ module.exports = {
           {
             response = await axios.get(`https://datelazi.ro/latestData.json`);
             today=response.data["currentDayStats"];
-            console.log(today);
             historicalData = response.data["historicalData"];
-            console.log(historicalData[days(today,1)]);
           }
           else 
           {
@@ -70,7 +70,6 @@ module.exports = {
           { name: 'Today', value: data[0]['deaths']-data[i]['deaths'] ,inline: true},{ name: 'Last week', value: data[0]['deaths']-data[i+6]['deaths'] ,inline: true},{ name: 'All Time', value: data[0]['deaths'] ,inline: true},
           { name: '\u200B', value: '\u200B'},
           { name: 'Last update', value:  data[0]['last_update']}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};}
-        message.delete();
         let Embed = new Discord.MessageEmbed(EmbedText);
         setTimeout(() =>
         {
@@ -99,7 +98,6 @@ module.exports = {
           { name: 'Last update', value:  data[0]['last_update']}],timestamp: new Date(), footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};}
           Embed = new Discord.MessageEmbed(EmbedText);
           msg.edit(Embed);
-       // console.log(`Time:${new Date()} | ${countdown}`)
       }
             },5000)
             msg.delete({ timeout: timeout });
@@ -110,11 +108,32 @@ module.exports = {
         {
         console.error(error);
         }};
-        if(args[0].toUpperCase()=='RO') lol(true ,args);
-        else if(args[0].toUpperCase()!='UK'&& args[0].length==2 && args[0].match(/[a-zA-Z]{2}/) && (typeof args[1]=='undefined'|| args[1]>5)) lol(false, args);
+        async function incidence(args)
+        {
+          let today,historicalData,jud=args[1].toUpperCase();
+
+        await axios.get(`https://datelazi.ro/latestData.json`).then(response => {
+           today = response.data["currentDayStats"];
+           historicalData = response.data["historicalData"];}).then(() =>{
+          EmbedText = {title:`Covid19 RO`,color: '#ff0000', fields: [{name: '\u200B',value:`**Cases (${jud}) :**`},
+          { name: 'Today', value: today.countyInfectionsNumbers[jud]-historicalData[days(today,1)].countyInfectionsNumbers[jud] ,inline: true},{name: 'Yesterday', value: historicalData[days(today,1)].countyInfectionsNumbers[jud]-historicalData[days(today,2)].countyInfectionsNumbers[jud] ,inline: true},{ name: 'Last week', value: today.countyInfectionsNumbers[jud]-historicalData[days(today,7)].countyInfectionsNumbers[jud] ,inline: true},
+          {name: '\u200B',value:`**Incidence (${jud}) :**`},
+          { name: 'Today', value: today.incidence[jud] ,inline: true},,{name: 'Yesterday', value: historicalData[days(today,1)].incidence[jud],inline: true},{ name: '7 days ago', value: historicalData[days(today,7)].incidence[jud] ,inline: true},
+          //{ name: '\u200B', value: '\u200B',inline: true},{ name: '2 Weeks', value: historicalData[days(today,14)].incidence[jud] ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},
+          { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
+          let Embed = new Discord.MessageEmbed(EmbedText);
+          message.channel.send(Embed).then(msg => {
+            msg.delete({ timeout: 30000 });
+          });
+        })
+       
+        }
+        message.delete();
+        if (args[0].toUpperCase()=='INC') incidence(args);
+        else if(args[0].toUpperCase()=='RO')lol(true ,args);
+        else if(args[0].toUpperCase()!='UK'&&  args[0].length==2 && args[0].match(/[a-zA-Z]{2}/) && (typeof args[1]=='undefined'|| args[1]>5)) lol(false, args);
         else
         {
-            message.delete();
             const Embed= new Discord.MessageEmbed().setTitle("Error").setDescription("Invalid country or API not avaliable").setColor(`#ff0000`)
             .setTimestamp().setFooter(`${message.author.username}#${message.author.discriminator}`);
             message.channel.send(Embed)
