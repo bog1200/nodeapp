@@ -164,17 +164,19 @@ async function update(){
 	client.on('message', async message => {
 		const date = new Date;
 		let sql;
+		if (message.mentions.has(client.user.id)) prefix = " <@!476441249738653706>";
+		else{
 		pool.getConnection(function(err, con) {
 		if  (message.guild!==null){
 		sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;}
 		else {sql = `SELECT * FROM bot WHERE SERVERID = 'DM'`;}
 		con.query(sql, function (err, result) {
+			con.release();
 			if (err)
 				throw err;
 			else 
 			{
-			if (message.mentions.has(client.user.id)) prefix = " <@!476441249738653706>";
-			else prefix = result[0]['PREFIX'];
+				prefix = result[0]['PREFIX'];
 		const args = message.content.slice(prefix.length).split(/ +/);
 		let command = args.shift().toLowerCase();
 		if (command==='2fa') command='validate';
@@ -201,7 +203,7 @@ try {
 	message.reply('there was an error trying to execute that command!');
 }
 }});})
-});
+}});
 
 function UpdateStatus(){
 	//console.log(client.guilds.cache)
