@@ -5,7 +5,9 @@
 1. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
 2. YouTube Data API v3 Key **[Guide](https://developers.google.com/youtube/v3/getting-started)** 
 3. MySQL Database **[Guide](https://dev.mysql.com/doc/refman/5.7/en/windows-installation.html#windows-installation-simple)**
-3. Node.js v12.0.0 or newer
+4. Node.js v12.0.0 or newer
+5. Create the database table  **[Guide](https://github.com/Bog12555/nodeapp/wiki/Prepare-the-database-table-for-the-bot)**
+
 
 ## 🚀 Getting Started
 ```
@@ -18,7 +20,7 @@ After installation finishes you can use `node index.js` to start the bot.
 
 ## ⚙️ Configuration
 
-Create a file `.env` and fill out the values:
+Create a file named `.env` and fill out the values:
 
 ⚠️ **Note: Never commit or share your token or api keys publicly** ⚠️
 
