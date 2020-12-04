@@ -23,14 +23,12 @@ Create a file `.env` and fill out the values:
 ⚠️ **Note: Never commit or share your token or api keys publicly** ⚠️
 
 ```env
-{
 DISCORD_KEY=
 MYSQL_HOST=
 MYSQL_USER=
 MYSQL_PORT=
 MYSQL_PASS=
 MYSQL_DB=
-}
 ```
 
 ## 📝 Features & Commands
