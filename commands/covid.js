@@ -1,17 +1,13 @@
 const Discord = require('discord.js');
 const moment = require('moment')
 const axios = require('axios');
+const main = require('../index');
 module.exports = {
 	name: 'covid',
   description: 'Covid19',
   usage: '<country> [timer]',
 	execute(message, args) {
         let countdown= 20
-        function days(today,days)
-        {
-		    if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
-        else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
-        }
 
         async function lol(ro, args)
         {
@@ -49,10 +45,10 @@ module.exports = {
           if (ro)
           {
            EmbedText = {title:`Covid19 RO`,color: '#ff0000', fields: [{name: '\u200B',value:'**Cases:**'},
-          { name: 'Today', value: today.numberInfected-historicalData[days(today,1)].numberInfected ,inline: true},{name: 'Yesterday', value: historicalData[days(today,1)].numberInfected-historicalData[days(today,2)].numberInfected ,inline: true},{ name: 'Last week', value: today.numberInfected-historicalData[days(today,7)].numberInfected ,inline: true},
-          { name: '2 Weeks', value: today.numberInfected-historicalData[days(today,14)].numberInfected ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},{ name: 'All Time', value: today.numberInfected ,inline: true},
+          { name: 'Today', value: today.numberInfected-historicalData[main.days(today,1)].numberInfected ,inline: true},{name: 'Yesterday', value: historicalData[main.days(today,1)].numberInfected-historicalData[main.days(today,2)].numberInfected ,inline: true},{ name: 'Last week', value: today.numberInfected-historicalData[main.days(today,7)].numberInfected ,inline: true},
+          { name: '2 Weeks', value: today.numberInfected-historicalData[main.days(today,14)].numberInfected ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},{ name: 'All Time', value: today.numberInfected ,inline: true},
           { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
-          { name: 'Today', value: today.numberDeceased-historicalData[days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
+          { name: 'Today', value: today.numberDeceased-historicalData[main.days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[main.days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
           { name: '\u200B', value: '\u200B'},
           { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
           }
@@ -81,10 +77,10 @@ module.exports = {
               else {countdown=countdown-5;
                 if (ro){
                   EmbedText = {title:`Covid19 RO`,color: '#ff0000', fields: [{name: '\u200B',value:'**Cases:**'},
-                  { name: 'Today', value: today.numberInfected-historicalData[days(today,1)].numberInfected ,inline: true},{name: 'Yesterday', value: historicalData[days(today,1)].numberInfected-historicalData[days(today,2)].numberInfected ,inline: true},{ name: 'Last week', value: today.numberInfected-historicalData[days(today,7)].numberInfected ,inline: true},
-                  { name: '2 Weeks', value: today.numberInfected-historicalData[days(today,14)].numberInfected ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},{ name: 'All Time', value: today.numberInfected ,inline: true},
+                  { name: 'Today', value: today.numberInfected-historicalData[main.days(today,1)].numberInfected ,inline: true},{name: 'Yesterday', value: historicalData[main.days(today,1)].numberInfected-historicalData[main.days(today,2)].numberInfected ,inline: true},{ name: 'Last week', value: today.numberInfected-historicalData[main.days(today,7)].numberInfected ,inline: true},
+                  { name: '2 Weeks', value: today.numberInfected-historicalData[main.days(today,14)].numberInfected ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},{ name: 'All Time', value: today.numberInfected ,inline: true},
                   { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
-                  { name: 'Today', value: today.numberDeceased-historicalData[days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
+                  { name: 'Today', value: today.numberDeceased-historicalData[main.days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[main.days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
                   { name: '\u200B', value: '\u200B'},
                   { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
                 }
@@ -108,29 +104,8 @@ module.exports = {
         {
         console.error(error);
         }};
-        async function incidence(args)
-        {
-          let today,historicalData,jud=args[1].toUpperCase();
-
-        await axios.get(`https://datelazi.ro/latestData.json`).then(response => {
-           today = response.data["currentDayStats"];
-           historicalData = response.data["historicalData"];}).then(() =>{
-          EmbedText = {title:`Covid19 RO`,color: '#ff0000', fields: [{name: '\u200B',value:`**Cases (${jud}) :**`},
-          { name: 'Today', value: today.countyInfectionsNumbers[jud]-historicalData[days(today,1)].countyInfectionsNumbers[jud] ,inline: true},{name: 'Yesterday', value: historicalData[days(today,1)].countyInfectionsNumbers[jud]-historicalData[days(today,2)].countyInfectionsNumbers[jud] ,inline: true},{ name: 'Last week', value: today.countyInfectionsNumbers[jud]-historicalData[days(today,7)].countyInfectionsNumbers[jud] ,inline: true},
-          {name: '\u200B',value:`**Incidence (${jud}) :**`},
-          { name: 'Today', value: today.incidence[jud] ,inline: true},,{name: 'Yesterday', value: historicalData[days(today,1)].incidence[jud],inline: true},{ name: '7 days ago', value: historicalData[days(today,7)].incidence[jud] ,inline: true},
-          //{ name: '\u200B', value: '\u200B',inline: true},{ name: '2 Weeks', value: historicalData[days(today,14)].incidence[jud] ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},
-          { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
-          let Embed = new Discord.MessageEmbed(EmbedText);
-          message.channel.send(Embed).then(msg => {
-            msg.delete({ timeout: 30000 });
-          });
-        })
-       
-        }
         message.delete();
-        if (args[0].toUpperCase()=='INC') incidence(args);
-        else if(args[0].toUpperCase()=='RO')lol(true ,args);
+        if(args[0].toUpperCase()=='RO')lol(true ,args);
         else if(args[0].toUpperCase()!='UK'&&  args[0].length==2 && args[0].match(/[a-zA-Z]{2}/) && (typeof args[1]=='undefined'|| args[1]>5)) lol(false, args);
         else
         {
