@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const axios = require('axios');
+const main = require('../index.js');
 
 module.exports = {
 	name: 'subs',
 	description: 'Search channel subscribers',
-	execute(message, args, g_token) {
+	execute(message, args) {
+    const g_token=main.g_token;
 	message.delete();	  
     const Embed = new Discord.MessageEmbed().setTitle('Youtube Subscriber Count').setTimestamp().setFooter(`${message.author.username}#${message.author.discriminator}`);
     //if (typeof args[0]==='undefined') 
