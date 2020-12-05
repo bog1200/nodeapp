@@ -38,7 +38,7 @@ module.exports = {
              const googleparse= await google(args.slice(1).join(' '));
             songInfo = await ytdl.getInfo(googleparse);
             }
-           // else  {songInfo = await ytdl.getInfo(args[1]);}
+            else  {songInfo = await ytdl.getInfo(args[1]);}
             console.log(songInfo);
             const song = {
               title: songInfo.videoDetails.title,
