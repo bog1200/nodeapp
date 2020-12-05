@@ -18,7 +18,7 @@
     "mysql": "^2.18.1",
     "opusscript": "0.0.7",
     "totp-generator": "0.0.7",
-    "ytdl-core": "^4.0.3"
+    "ytdl-core": "^4.1.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
