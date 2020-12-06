@@ -52,7 +52,7 @@ module.exports = {
             if (reaction.emoji.name!=='✅' && reaction.emoji.name!=='❌' ) {reaction.users.remove(reactionCollector.id); return;}
             if (votes.includes(reactionCollector.id)) {reaction.users.remove(reactionCollector.id); vote_status='blocked'}
             else {votes.push(reactionCollector.id); vote_status='received'}
-            console.log(`[Poll] Vote ${vote_status}: \nPoll ID: ${id}\nUser ID: ${user_id}\nTimestamp: ${Date.now()}\nVote: ${reaction.emoji.name}`);
+            console.log(`[Poll] Vote ${vote_status}: \nPoll ID: ${id}\nUser ID: ${user_id}\nTimestamp: ${Date.now()}`);
        });
       /* collector.on('remove',(reaction,reactionCollector) =>
        {

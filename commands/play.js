@@ -1,7 +1,6 @@
 const ytdl = require("ytdl-core");
 const axios = require('axios');
 const main = require("../index.js");
-  
 module.exports = {
 	name: 'play',
 	description: 'Play',
@@ -39,7 +38,6 @@ module.exports = {
             songInfo = await ytdl.getInfo(googleparse);
             }
             else  {songInfo = await ytdl.getInfo(args[1]);}
-            console.log(songInfo);
             const song = {
               title: songInfo.videoDetails.title,
               url: songInfo.videoDetails.video_url
