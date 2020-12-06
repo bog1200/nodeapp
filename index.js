@@ -94,13 +94,13 @@ console.log("[Google] API Key refreshed!");
 }
 });
 }
-function days(today,days)
+function days_calculator(today,days)
         {
 		  if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
           else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
-        }
-
+		};
 let today, historicalData, jud, cov_str, c_out, cdf=0, alm_msg, alm_subs=-1;
+exports.days = ((today,days) => {return days_calculator(today,days);});;
 async function update(){
 	await axios.all([
 		axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
@@ -118,7 +118,7 @@ async function update(){
 				//console.log(c_out[0]['cases']);
 					//setTimeout(() => {
 						jud=today.incidence;
-						cdf=today.numberInfected-historicalData[days(today,1)].numberInfected;
+						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;	
 					//}, 1000);
 					
@@ -169,7 +169,7 @@ async function update(){
 		pool.getConnection(function(err, con) {
 		if  (message.guild!==null){
 		sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;}
-		else {sql = `SELECT * FROM bot WHERE SERVERID = 'DM'`;}
+		else {sql = `SELECT * FROM bot WHERE SERVERID = '0'`;}
 		con.query(sql, function (err, result) {
 			con.release();
 			if (err)
@@ -276,27 +276,27 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 	process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
 	process.on('SIGINT',function(){
 	client.destroy();
-	connection.end(function(err) {
+	pool.end(function(err) {
 		console.error(err);
 	  });
 });
 	process.on('SIGUSR1',function (){
 		console.log('Goodbye!');
 		client.destroy();
-		connection.end(function(err) {
+		pool.end(function(err) {
 			console.error(err);
 		  });
 	});
 	process.on('SIGUSR2',function (){
 		console.log('Goodbye!');
-		connection.end(function(err) {
+		pool.end(function(err) {
 			console.error(err);
 		  });
 		client.destroy();
 	});
 	process.on('exit', function (){
 		console.log('Goodbye!');
-		connection.end(function(err) {
+		pool.end(function(err) {
 			console.error(err);
 		  });
 		client.destroy();

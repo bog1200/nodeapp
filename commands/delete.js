@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 module.exports = {
-	name: 'clear',
+	name: 'delete',
 	description: 'Delete Messages',
 	execute(message, args) {
         const Embed = new Discord.MessageEmbed().setTitle("Delete Messages").setTimestamp()
