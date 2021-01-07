@@ -97,6 +97,7 @@ console.log("[Google] API Key refreshed!");
 function days_calculator(today,days)
         {
 		  if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
+		  else if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2021-01-05") return "2020-01-05";
           else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
 		};
 let today, historicalData, jud, cov_str, c_out, cdf=0, alm_msg, alm_subs=-1;
