@@ -86,7 +86,7 @@ const token = new Promise ((resolve,reject) =>
 }
  function refreshKey(){
 
- jwtClient.refreshAccessToken((err, tokens) => {
+ jwtClient.getAccessToken((err, tokens) => {
  if (err) {console.error(err);}
  else{
 google_token=tokens.access_token;
