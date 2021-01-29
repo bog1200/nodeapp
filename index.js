@@ -96,11 +96,11 @@ console.log("[Google] API Key refreshed!");
 }
 function days_calculator(today,days)
         {
-		  if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
-		  else if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2021-01-05") return "2020-01-05";
-          else return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
+		  //if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
+		  //else if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2021-01-05") return "2020-01-05";
+          return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
 		};
-let today, historicalData, jud, cov_str, c_out, cdf=0, alm_msg, alm_subs=-1;
+let today, historicalData, jud, cov_str,cov_vac, c_out, cdf=0, alm_msg, alm_subs=-1;
 exports.days = ((today,days) => {return days_calculator(today,days);});;
 async function update(){
 	await axios.all([
@@ -115,10 +115,18 @@ async function update(){
 		  .then( () => {
 			try{
 				alm_msg="Abonati: "+`${alm_subs}`;
+				let i=0;
 				//console.log("Alm: "+`${alm_subs}`);
 				//console.log(c_out[0]['cases']);
 					//setTimeout(() => {
 						jud=today.incidence;
+						cov_vac=today.vaccines.pfizer.immunized;
+						do
+						{
+							i=i+1;
+							cov_vac+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized;
+						}
+						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;	
 					//}, 1000);
@@ -219,7 +227,8 @@ function UpdateStatus(){
 					client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
 					if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
 					{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
-
+					if (result[0]['COVVACID']!=null)
+					{client.channels.fetch(result[0]['COVVACID']).then(channel => channel.setName(`Cipuri: ${cov_vac}`)).catch(error => console.error(error));}
 			  }});
 	}
 	
