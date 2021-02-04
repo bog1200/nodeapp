@@ -96,41 +96,30 @@ console.log("[Google] API Key refreshed!");
 }
 function days_calculator(today,days)
         {
-		  //if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2020-11-07") return "2018-11-07";
-		  //else if (moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD")=="2021-01-05") return "2020-01-05";
           return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
 		};
-let today, historicalData, jud, cov_str,cov_vac, c_out, cdf=0, alm_msg, alm_subs=-1;
+let today, historicalData, jud, cov_str,cov_vac, c_out, cdf=0;
 exports.days = ((today,days) => {return days_calculator(today,days);});;
 async function update(){
-	await axios.all([
-		axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC73wv11MF_jm6v7iz3kuO8Q&part=statistics&fields=items/statistics/subscriberCount&access_token=${google_token}`),
-		axios.get('https://datelazi.ro/latestData.json')
-	]).then(axios.spread((response1, response2) => {
-	   alm_subs=response1.data.items[0].statistics.subscriberCount;
-	  c_out=response2.data;
+	await axios.get('https://datelazi.ro/latestData.json').then((response) => {
+	  c_out=response.data;
 		  today=c_out["currentDayStats"];
 		historicalData = c_out["historicalData"];
-	}))
+	})
 		  .then( () => {
 			try{
-				alm_msg="Abonati: "+`${alm_subs}`;
 				let i=0;
-				//console.log("Alm: "+`${alm_subs}`);
-				//console.log(c_out[0]['cases']);
-					//setTimeout(() => {
 						jud=today.incidence;
-						cov_vac=today.vaccines.pfizer.immunized;
+						cov_vac=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized;
 						do
 						{
 							i=i+1;
-							cov_vac+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized;
+							cov_vac+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+
+							historicalData[days_calculator(today,i)].vaccines.moderna.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
-						cov_str=`Cazuri: ${today.numberInfected}`;	
-					//}, 1000);
-					
+						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
 			catch(error){
 				console.error(error);
@@ -146,16 +135,10 @@ async function update(){
 	setTimeout(UpdateStatus, 3000);
 	//
 	}
-	/*async function loginSql(log){
-		  con.connect( err => {
-			if (err) console.error(err);})
-			if(log) console.log("[SQL] Database Successfully Connected!");
-	}*/
 	async function load()
 	{
 		google_token= await getkey();
 		const D_Log_out = await loginDiscord();
-		//const sqlstart = await loginSql(true);
 		//console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
@@ -166,7 +149,6 @@ async function update(){
 	pool.on('error', err =>
 	{
 		console.log(`[SQL] : ${err}`)
-		//if(err.code === 'PROTOCOL_CONNECTION_LOST') { con.release(); loginSql(false);} 
 	});
 	const queue = new Map();
 	exports.queue = queue;
@@ -190,7 +172,6 @@ async function update(){
 		let command = args.shift().toLowerCase();
 		if (command==='2fa') command='validate';
 		if (command==='update' && message.author.id==="239136395665342474") {update(); message.delete(); return}
-		//client.channels.resolve(message.channel.id.toString()).messages.fetch(message.content.toString()).then((message => {message.delete()}));
 		if (!client.commands.has(command)) return;
 try {
 	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
@@ -215,7 +196,6 @@ try {
 }});
 
 function UpdateStatus(){
-	//console.log(client.guilds.cache)
 	for (let i=0;i<client.guilds.cache.size;i=i+1)
 	{
 		let sql = `SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`;
@@ -228,13 +208,9 @@ function UpdateStatus(){
 					if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
 					{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
 					if (result[0]['COVVACID']!=null)
-					{client.channels.fetch(result[0]['COVVACID']).then(channel => channel.setName(`Cipuri: ${cov_vac}`)).catch(error => console.error(error));}
+					{client.channels.fetch(result[0]['COVVACID']).then(channel => channel.setName(`Vaccinati: ${cov_vac}`)).catch(error => console.error(error));}
 			  }});
 	}
-	
-	///AlmostIce
-	client.channels.fetch("700813443111977021").then(channel => channel.setName(alm_msg)).catch(error => console.error(error));
-	  setTimeout(update, 1200000);
 	
 	}
 	
@@ -260,30 +236,8 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 				if (err) throw err;
 				console.log(`[Bot] Left ${guild.name} (${guild.id})`);
 })});
-
-
-	
-        //Romail.ml
-		client.on('guildMemberAdd', member => {
-			// To compare, we need to load the current invite list.
-			member.guild.fetchInvites().then(guildInvites => {
-				// This is the *existing* invites for the guild.
-				const ei = invites[member.guild.id];
 		
-				// Update the cached invites
-				invites[member.guild.id] = guildInvites;
-		
-				// Look through the invites, find the one for which the uses went up.
-				const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
-		
-				console.log(invite.code)
-		
-				if (invite.code === "xg44stZ") {
-					return member.addRole(member.guild.roles.find(role => role.name === "bog1200"));
-				}
-			})});
-		
-	process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
+    process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
 	process.on('SIGINT',function(){
 	client.destroy();
 	pool.end(function(err) {
