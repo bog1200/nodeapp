@@ -110,12 +110,12 @@ async function update(){
 			try{
 				let i=0;
 						jud=today.incidence;
-						cov_vac=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized;
+						cov_vac=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
 						do
 						{
 							i=i+1;
 							cov_vac+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+
-							historicalData[days_calculator(today,i)].vaccines.moderna.immunized;
+							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
