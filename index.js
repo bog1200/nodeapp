@@ -216,14 +216,14 @@ function UpdateStatus(){
 	
 	client.on('guildCreate', guild =>
 	{
-		let sql = `INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${con.escape(guild.name)},${Date.now()})`;
+		let sql = `INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${pool.escape(guild.name)},${Date.now()})`;
 		pool.query(sql, function (err, result) {
 				if (err) throw err;
 				console.log(`[Bot] Joined ${guild.name} (${guild.id})`); })
 });
 client.on('guildUpdate', (oldGuild, newGuild) =>
 	{
-		let sql = `UPDATE bot SET SERVERNAME = ${con.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`;
+		let sql = `UPDATE bot SET SERVERNAME = ${pool.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`;
 		pool.query(sql, function (err, result) {
 				if (err) throw err;
 				console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`);
