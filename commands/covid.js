@@ -50,7 +50,7 @@ module.exports = {
           { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
           { name: 'Today', value: today.numberDeceased-historicalData[main.days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[main.days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
           { name: '\u200B', value: '\u200B'},
-          { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
+          { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
           }
           else  {
             do
@@ -82,7 +82,7 @@ module.exports = {
                   { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
                   { name: 'Today', value: today.numberDeceased-historicalData[main.days(today,1)].numberDeceased ,inline: true},{ name: 'Last week', value: today.numberDeceased-historicalData[main.days(today,7)].numberDeceased ,inline: true},{ name: 'All Time', value: today.numberDeceased ,inline: true},
                   { name: '\u200B', value: '\u200B'},
-                  { name: 'Last update', value:  moment(today.parsedOn*1000).format('lll')}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
+                  { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date(),footer: { text: `${countdown} | ${message.author.username}#${message.author.discriminator}`},};
                 }
                 else {
             EmbedText= {title:`Covid19 ${data[0]['country']}`,color: '#ff0000', fields: [{name: '\u200B',value:'**Cases:**'},
