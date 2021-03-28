@@ -211,7 +211,7 @@ function UpdateStatus(){
 					{client.channels.fetch(result[0]['COVVACID']).then(channel => channel.setName(`Vaccinati: ${cov_vac}`)).catch(error => console.error(error));}
 			  }});
 	}
-	
+	setTimeout(update, 60000*120);
 	}
 	
 	client.on('guildCreate', guild =>
