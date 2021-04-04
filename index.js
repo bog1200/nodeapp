@@ -111,15 +111,19 @@ async function update(){
 				let i=0;
 				let cov_vac1,cov_vac2;
 						jud=today.incidence;
+						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered;
 						cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
 						do
 						{
 							i=i+1;
+							cov_vac1+=historicalData[days_calculator(today,i)].vaccines.pfizer.total_administered+
+							historicalData[days_calculator(today,i)].vaccines.moderna.total_administered+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.total_administered;
+
 							cov_vac2+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+
 							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
-						cov_vac1=`${Math.trunc(((today.numberTotalDosesAdministered-cov_vac2)/1000000)*100)/100} M`;
+						cov_vac1=`${Math.trunc(((cov_vac1-cov_vac2)/1000000)*100)/100} M`;
 						cov_vac=`${cov_vac1} | ${Math.trunc(((cov_vac2)/1000000)*100)/100} M`;
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
