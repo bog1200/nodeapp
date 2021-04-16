@@ -21,10 +21,10 @@ module.exports = {
         else if (args[0].toLowerCase()==='prefix' && message.member.hasPermission("MANAGE_GUILD"))  {sql=`UPDATE bot SET PREFIX = '${args[1].substring(0,1)}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription(`Prefix set to ${args[1].substring(0,1)}`)}
         else if (args[0].toLowerCase()==='reset' && message.member.hasPermission("MANAGE_GUILD"))  {sql=`UPDATE bot SET PREFIX = '.',COVCHID = NULL ,COVNEWID = NULL, COVJUDID = NULL, COVJUD = NULL WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('Settings Cleared');}
         else if (args[0].toLowerCase()==='cov' && message.member.hasPermission("MANAGE_CHANNELS"))
-          {if (args[1]=="clear") {sql=`UPDATE bot SET COVCHID = NULL ,COVNEWID = NULL, COVJUDID = NULL, COVJUD = NULL WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription('Setting Updated');}
-          else if (args[1]=="jud") {sql=`UPDATE bot SET  COVJUDID = '${args[2]}', COVJUD = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription('Setting Updated');}
-          else if (args[1]==='id')  {sql=`UPDATE bot SET COVCHID = '${args[2]}',COVNEWID = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('Setting Updated');}
-          else if (args[1]==='vac')  {sql=`UPDATE bot SET COVVACID = '${args[2]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('Setting Updated');}
+          {if (args[1]=="clear") {sql=`UPDATE bot SET COVCHID = NULL ,COVNEWID = NULL, COVJUDID = NULL, COVJUD = NULL WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription('Channels cleared');}
+          else if (args[1]=="jud") {sql=`UPDATE bot SET  COVJUDID = '${args[2]}', COVJUD = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription(`COVID incidence for ${args[3]} set to ${args[2]}`);}
+          else if (args[1]==='id')  {sql=`UPDATE bot SET COVCHID = '${args[2]}',COVNEWID = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('COVID:').addField(`Total count set to:`, args[2], true).addField("\u200b","\u200b",true).addField(`Total new set to:`, args[3], true);}
+          else if (args[1]==='vac')  {sql=`UPDATE bot SET COVVACID = '${args[2]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription(`COVID vaccines set to ${args[2]}`);}
         }
         if (perm==false) Embed.setColor('ff0000').setDescription('Wrong command or missing permissions');
         else if (query==true){

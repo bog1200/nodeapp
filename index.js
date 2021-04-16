@@ -101,7 +101,7 @@ function days_calculator(today,days)
 let today, historicalData, jud, cov_str,cov_vac, c_out, cdf=0;
 exports.days = ((today,days) => {return days_calculator(today,days);});;
 async function update(){
-	await axios.get('https://datelazi.ro/latestData.json').then((response) => {
+	await axios.get('https://d35p9e4fm9h3wo.cloudfront.net/latestData.json').then((response) => {
 	  c_out=response.data;
 		  today=c_out["currentDayStats"];
 		historicalData = c_out["historicalData"];
@@ -123,7 +123,7 @@ async function update(){
 							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
-						cov_vac1=`${Math.trunc(((cov_vac1-cov_vac2)/1000000)*100)/100} M`;
+						cov_vac1=`${Math.trunc(((cov_vac1-2*cov_vac2)/1000000)*100)/100} M`;
 						cov_vac=`${cov_vac1} | ${Math.trunc(((cov_vac2)/1000000)*100)/100} M`;
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
@@ -137,7 +137,7 @@ async function update(){
 		
 	.catch(error => {
 		console.error(error);
-	  refreshKey();
+	  //refreshKey();
 	});
 	setTimeout(UpdateStatus, 3000);
 	//
