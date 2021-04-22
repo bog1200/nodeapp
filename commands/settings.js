@@ -25,6 +25,7 @@ module.exports = {
           else if (args[1]=="jud") {sql=`UPDATE bot SET  COVJUDID = '${args[2]}', COVJUD = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`;query=true;perm=true; Embed.setColor('#00ff00').setDescription(`COVID incidence for ${args[3]} set to ${args[2]}`);}
           else if (args[1]==='id')  {sql=`UPDATE bot SET COVCHID = '${args[2]}',COVNEWID = '${args[3]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription('COVID:').addField(`Total count set to:`, args[2], true).addField("\u200b","\u200b",true).addField(`Total new set to:`, args[3], true);}
           else if (args[1]==='vac')  {sql=`UPDATE bot SET COVVACID = '${args[2]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription(`COVID vaccines set to ${args[2]}`);}
+          else if (args[1]==='%')  {sql=`UPDATE bot SET COVVACPRID = '${args[2]}' WHERE bot.SERVERID = '${message.guild.id}'`; query=true;perm=true;Embed.setColor('#00ff00').setDescription(`COVID vaccine % set to ${args[2]}`);}
         }
         if (perm==false) Embed.setColor('ff0000').setDescription('Wrong command or missing permissions');
         else if (query==true){
