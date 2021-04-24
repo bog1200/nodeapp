@@ -1,6 +1,7 @@
 .env
 .vscode
 *.cmd
+/nodebot.db
 /privatekey.json
 node_modules/
 

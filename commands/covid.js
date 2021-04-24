@@ -16,7 +16,7 @@ module.exports = {
           let response,today,historicalData;
           if (ro)
           {
-            response = await axios.get(`https://datelazi.ro/latestData.json`);
+            response = await axios.get(`https://d35p9e4fm9h3wo.cloudfront.net/latestData.json`);
             today=response.data["currentDayStats"];
             historicalData = response.data["historicalData"];
           }
