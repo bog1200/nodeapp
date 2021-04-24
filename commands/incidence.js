@@ -13,7 +13,7 @@ module.exports = {
           let today,historicalData;
           let county=args[0].toUpperCase();
          
-        await axios.get(`https://datelazi.ro/latestData.json`).then(response => {
+        await axios.get(`https://d35p9e4fm9h3wo.cloudfront.net/latestData.json`).then(response => {
            today = response.data["currentDayStats"];
            historicalData = response.data["historicalData"];})
         .then(() =>{

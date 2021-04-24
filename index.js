@@ -1,5 +1,7 @@
 //
-const mysql = require('mysql');
+require('dotenv').config();
+const db = require("./utils/db")
+
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
@@ -8,26 +10,15 @@ const moment = require('moment');
 let axios = require('axios');
 const privatekey = require("./privatekey.json");
 const wait = require('util').promisify(setTimeout);
-
 ///
 ///
-
 const Discord = require('discord.js');
-require('dotenv').config();
 let prefix;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 let cooldowns = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const sql_info={
-	host: process.env.MYSQL_HOST,
-	port: process.env.MYSQL_PORT,
-	user: process.env.MYSQL_USER,
-	password: process.env.MYSQL_PASS,
-	database: process.env.MYSQL_DB
-  }
-var pool= mysql.createPool(sql_info);
-module.exports.pool = pool;
+
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
@@ -36,8 +27,6 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`;
-let invites = {};
-
 
 client.on('ready', () => {
  client.user.setActivity(stream_status);
@@ -98,7 +87,7 @@ function days_calculator(today,days)
         {
           return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
 		};
-let today, historicalData, jud, cov_str,cov_vac, c_out ,cov_prc, cdf=0;
+let today, historicalData, jud, cov_str,cov_vac_d2, c_out ,cov_vac_d1, cdf=0;
 exports.days = ((today,days) => {return days_calculator(today,days);});;
 async function update(){
 	await axios.get('https://d35p9e4fm9h3wo.cloudfront.net/latestData.json').then((response) => {
@@ -123,8 +112,8 @@ async function update(){
 							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
-						cov_prc=`${Math.round(((cov_vac1-2*cov_vac2)*100/19414458+Number.EPSILON)*10)/10}% | ${Math.round((cov_vac2*100/19414458+Number.EPSILON)*10)/10}%`;
-						cov_vac=`${Math.trunc(((cov_vac1-2*cov_vac2)/1000000)*100)/100} M | ${Math.trunc(((cov_vac2)/1000000)*100)/100} M`
+						cov_vac_d1=`${Math.trunc(((cov_vac1-2*cov_vac2)/1000000)*100)/100} M (${Math.round(((cov_vac1-2*cov_vac2)*100/19414458+Number.EPSILON)*10)/10}%)`;
+						cov_vac_d2=`${Math.trunc(((cov_vac2)/1000000)*100)/100} M (${Math.round((cov_vac2*100/19414458+Number.EPSILON)*10)/10}%)`
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
@@ -145,7 +134,7 @@ async function update(){
 	async function load()
 	{
 		google_token= await getkey();
-		const D_Log_out = await loginDiscord();
+		await loginDiscord();
 		//console.log("[Google] Token: "+`${google_token}`);
 		console.log("[Google] API Successfully connected!");
 		exports.g_token = google_token;
@@ -153,28 +142,17 @@ async function update(){
 		update();
 	}
 	load();
-	pool.on('error', err =>
-	{
-		console.log(`[SQL] : ${err}`)
-	});
+	
 	const queue = new Map();
 	exports.queue = queue;
 	client.on('message', async message => {
 		const date = new Date;
-		let sql;
+		let result;
 		if (message.mentions.has(client.user.id)) prefix = " <@!476441249738653706>";
 		else{
-		pool.getConnection(function(err, con) {
-		if  (message.guild!==null){
-		sql = `SELECT * FROM bot WHERE SERVERID = ${message.guild.id}`;}
-		else {sql = `SELECT * FROM bot WHERE SERVERID = '0'`;}
-		con.query(sql, function (err, result) {
-			con.release();
-			if (err)
-				throw err;
-			else 
-			{
-				prefix = result[0]['PREFIX'];
+		if  (message.guild!==null){result = await db.query(`SELECT PREFIX FROM bot WHERE SERVERID = ${message.guild.id}`);}
+		else {result = await db.query(`SELECT PREFIX FROM bot WHERE SERVERID = '0'`);}
+		prefix = result[0]['PREFIX'];
 		const args = message.content.slice(prefix.length).split(/ +/);
 		let command = args.shift().toLowerCase();
 		if (command==='2fa') command='validate';
@@ -198,53 +176,43 @@ try {
 } catch (error) {
 	console.error(error);
 	message.reply('there was an error trying to execute that command!');
-}
-}});})
+};
 }});
 
-function UpdateStatus(){
+async function UpdateStatus(){
 	for (let i=0;i<client.guilds.cache.size;i=i+1)
 	{
-		let sql = `SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`;
-		
-			  pool.query(sql, function (err, result) {
-				if (err) throw err;
-				else if(result[0]['COVCHID']!=null) {
-					client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
-					client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
-					if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
-					{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
-					if (result[0]['COVVACID']!=null)
-					{client.channels.fetch(result[0]['COVVACID']).then(channel => channel.setName(`Vaccin: ${cov_vac}`)).catch(error => console.error(error));}
-					if (result[0]['COVVACPRID']!=null)
-					{client.channels.fetch(result[0]['COVVACPRID']).then(channel => channel.setName(`Vaccin%: ${cov_prc}`)).catch(error => console.error(error));}
-			  }});
-	}
+		let result = await db.query(`SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`)
+		if(result[0]['COVCHID']!=null) {
+				client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
+				client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
+				if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
+				{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
+				if (result[0]['COVVAC1ID']!=null)
+				{client.channels.fetch(result[0]['COVVAC1ID']).then(channel => channel.setName(`Vaccin_1: ${cov_vac_d1}`)).catch(error => console.error(error));
+				client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
+		  }};					
 	setTimeout(update, 60000*120);
 	}
 	
 	client.on('guildCreate', guild =>
 	{
-		let sql = `INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${pool.escape(guild.name)},${Date.now()})`;
-		pool.query(sql, function (err, result) {
-				if (err) throw err;
-				console.log(`[Bot] Joined ${guild.name} (${guild.id})`); })
-});
+		db.query(`INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${db.escape(guild.name)},${Date.now()})`);
+		console.log(`[Bot] Joined ${guild.name} (${guild.id})`); 
+	});
+	
+	
 client.on('guildUpdate', (oldGuild, newGuild) =>
-	{
-		let sql = `UPDATE bot SET SERVERNAME = ${pool.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`;
-		pool.query(sql, function (err, result) {
-				if (err) throw err;
-				console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`);
-})});
+{
+	db.query(`UPDATE bot SET SERVERNAME = ${db.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`);
+	console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`); 
+});
 
 	client.on('guildDelete', guild =>
 	{
-		let sql = `DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`;
-		pool.query(sql, function (err, result) {
-				if (err) throw err;
-				console.log(`[Bot] Left ${guild.name} (${guild.id})`);
-})});
+		db.query(`DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`);
+		console.log(`[Bot] Left ${guild.name} (${guild.id})`);
+});
 		
     process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
 	process.on('SIGINT',function(){
@@ -255,22 +223,19 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 });
 	process.on('SIGUSR1',function (){
 		console.log('Goodbye!');
+		sql.end();
 		client.destroy();
-		pool.end(function(err) {
-			console.error(err);
-		  });
+		
 	});
 	process.on('SIGUSR2',function (){
 		console.log('Goodbye!');
-		pool.end(function(err) {
-			console.error(err);
-		  });
+		sql.end();
 		client.destroy();
+		
 	});
 	process.on('exit', function (){
 		console.log('Goodbye!');
-		pool.end(function(err) {
-			console.error(err);
-		  });
+		sql.end();
 		client.destroy();
+		
 	});
