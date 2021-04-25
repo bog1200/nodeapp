@@ -27,17 +27,9 @@ DISCORD_KEY=
 #VALID VALUES FOR DATABASE_TYPE: mysql, sqlite 
 DATABASE_TYPE=
 ```
-## Aditional requirements for MySQL
-1. Prepare the database  **[Guide](https://github.com/Bog12555/nodeapp/wiki/Prepare-MYSQL-Database)**
-2. Add the following entries to `.env`:
-```env
-#VALUES BELOW REQUIRED ONLY IF DATABASE_TYPE IS mysql
-MYSQL_HOST=
-MYSQL_USER=
-MYSQL_PORT=
-MYSQL_PASS=
-MYSQL_DB=
-```
+
+> [Aditional requirements for MySQL](https://github.com/Bog12555/nodeapp/wiki/Aditional-MySQL-requirements)
+
 ## 📝 Features & Commands
 
 > Note: The default prefix is '.'
