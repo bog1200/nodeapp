@@ -9,7 +9,8 @@ function query(query)
 {
     return new Promise((resolve, reject) => {
         db.all(query,[],(err, rows ) => {
-        resolve(rows);   
+        if (err) reject(err);
+        else resolve(rows);   
     });
 })
 

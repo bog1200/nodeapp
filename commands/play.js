@@ -1,19 +1,22 @@
 const ytdl = require("ytdl-core");
 const axios = require('axios');
-const main = require("../index.js");
+const queue = new Map();
+
+const yt= require("../utils/google")
+let g_token; 
 module.exports = {
 	name: 'play',
 	description: 'Play',
 	 execute(message, args) {
-     let queue=main.queue;
-     let g_token=main.g_token;
-        const serverQueue = queue.get(message.guild.id);
+
+        async function runCommand()
+        {
+          const serverQueue = queue.get(message.guild.id);
         execute(message, serverQueue);
         async function google (title)
         {
         const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${title}&access_token=${g_token}`)
-        console.log(`VT: ${title}`);
-        console.log(`VID: ${response.data.items[0].id.videoId}`)
+        console.log(`[Bot] Playing music: [${title}] -> ${response.data.items[0].id.videoId}`);
           return `https://www.youtube.com/watch?v=${response.data.items[0].id.videoId}`;
         }
         
@@ -90,5 +93,17 @@ module.exports = {
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
             serverQueue.textChannel.send(`Start playing: **${song.title}**`);
           }
-}
+        }
+        
+
+          async function load()
+          {   
+              g_token=await yt.getkey();
+              if(g_token) await runCommand();
+              else message.channel.send("Music command is not available");
+             
+          }
+          load();
+        }
 };
+module.exports.queue = queue;

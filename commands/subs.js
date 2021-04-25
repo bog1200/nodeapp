@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
 const axios = require('axios');
-const main = require('../index.js');
+const yt = require('../utils/google');
+let g_token;
 
 module.exports = {
 	name: 'subs',
 	description: 'Search channel subscribers',
 	execute(message, args) {
-    const g_token=main.g_token;
 	message.delete();	  
     const Embed = new Discord.MessageEmbed().setTitle('Youtube Subscriber Count').setTimestamp().setFooter(`${message.author.username}#${message.author.discriminator}`);
     //if (typeof args[0]==='undefined') 
@@ -35,7 +35,9 @@ module.exports = {
     }
     async function load()
     {   
-        const output=await runCommand();
+        g_token=await yt.getkey();
+        if(g_token) await runCommand();
+        else Embed.setDescription("Command disabled").setColor("#ff0000")
         //console.log(`Output: ${output}`);
         message.channel.send(Embed)
         .then(msg => {

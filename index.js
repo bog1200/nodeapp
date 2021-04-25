@@ -1,14 +1,11 @@
 //
 require('dotenv').config();
 const db = require("./utils/db")
-
+const google = require("./utils/google")
 const fs = require('fs');
 const readline = require('readline');
-const {google} = require('googleapis');
-const googleAuth = require('google-auth-library');
 const moment = require('moment');
 let axios = require('axios');
-const privatekey = require("./privatekey.json");
 const wait = require('util').promisify(setTimeout);
 ///
 ///
@@ -49,40 +46,7 @@ const login = new Promise ((resolve,reject) =>
 })
 }
 ///
-let google_token;
 
-// If modifying these scopes, delete your previously saved credentials
-// at ~/.credentials/google-apis-nodejs-quickstart.json
-let jwtClient = new google.auth.JWT(
-	privatekey.client_email,
-	null,
-	privatekey.private_key,
-	['https://www.googleapis.com/auth/youtube.readonly']);
-function getkey()
-{
-//authenticate request
-const token = new Promise ((resolve,reject) =>
-{
-	jwtClient.authorize((err, tokens) => {
- 	if (err) {
-   	console.log(err);
-   	reject(err);
- } else {
-	resolve(tokens.access_token);
-    }
- })})
- return token;
-}
- function refreshKey(){
-
- jwtClient.getAccessToken((err, tokens) => {
- if (err) {console.error(err);}
- else{
-google_token=tokens.access_token;
-console.log("[Google] API Key refreshed!");
-}
-});
-}
 function days_calculator(today,days)
         {
           return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
@@ -122,8 +86,7 @@ async function update(){
 				cdf="-1";
 				cov_str="Cazuri: -1";	}
 		  })
-	  
-		
+
 	.catch(error => {
 		console.error(error);
 	  //refreshKey();
@@ -133,18 +96,12 @@ async function update(){
 	}
 	async function load()
 	{
-		google_token= await getkey();
 		await loginDiscord();
-		//console.log("[Google] Token: "+`${google_token}`);
-		console.log("[Google] API Successfully connected!");
-		exports.g_token = google_token;
+		await google.getkey();
 		exports.client= client;
 		update();
 	}
 	load();
-	
-	const queue = new Map();
-	exports.queue = queue;
 	client.on('message', async message => {
 		const date = new Date;
 		let result;
