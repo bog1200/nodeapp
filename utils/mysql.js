@@ -22,7 +22,6 @@ function query(query)
 				if (err)
 					throw err;
 				else
-				console.log(`MYSQL: ${result}`)
 					resolve(result);
 				})
 		});	
