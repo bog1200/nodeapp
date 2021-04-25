@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+
 module.exports = {
 	name: 'poll',
   description: 'Poll System',
@@ -27,12 +28,13 @@ module.exports = {
         let countdown_format;      
         async function lol(message)
         {
+          let init_countdown=countdown/1800;
           if (countdown<60) countdown_format=`${countdown}s`
           else if (countdown<3600) countdown_format=`${Math.floor(countdown/60)}m`
           else if (countdown%3600==0) countdown_format=countdown_format=`${Math.floor(countdown/3600)}h`
           else countdown_format=countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
           
-          console.log(`[Poll] Poll started: \nPoll ID: ${id} | time: ${countdown_format}`);
+          console.log(`[Bot] Poll started | Poll ID: ${id} | time: ${countdown_format}`);
           
         message.delete();
         message.channel.send(new Discord.MessageEmbed({title:`Poll`,color: '#fff000',description: `${poll}`, fields: [
@@ -50,7 +52,7 @@ module.exports = {
             if (reaction.emoji.name!=='✅' && reaction.emoji.name!=='❌' ) {reaction.users.remove(reactionCollector.id); return;}
             if (votes.includes(reactionCollector.id)) {reaction.users.remove(reactionCollector.id); vote_status='blocked'}
             else {votes.push(reactionCollector.id); vote_status='received'}
-            console.log(`[Poll] Vote ${vote_status}: \nPoll ID: ${id}\nUser ID: ${user_id}\nTimestamp: ${Date.now()}`);
+            console.log(`[Bot] Poll Vote ${vote_status} | PID: ${id} | UID: ${user_id} | Timestamp: ${Date.now()}`);
         });
         /* collector.on('remove',(reaction,reactionCollector) =>
         {
@@ -65,7 +67,7 @@ module.exports = {
               countdown=countdown-1;
                     if ((countdown%5==0 && countdown<=60) || (countdown%60==0 && countdown>60 && countdown<=300)|| (countdown%300==0 && countdown>300 && countdown<=3600) ||(countdown%1800==0 && countdown > 3600))
                {
-                 if (countdown<60) countdown_format=`${countdown}s`
+                 if (countdown<60 && init_countdown<1) countdown_format=`${countdown}s`
                  else if (countdown<3600) countdown_format=`${Math.floor(countdown/60)}m`
                  else if (countdown%3600==0) countdown_format=countdown_format=`${Math.floor(countdown/3600)}h`
                  else  countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
@@ -76,6 +78,7 @@ module.exports = {
 
         collector.on('end', collected =>
         {
+        clearInterval(timer);
         let votes = Array.from(collected.entries());
         yes=votes[0][1]['count']-1;
         no=votes[1][1]['count']-1;
@@ -83,7 +86,7 @@ module.exports = {
         if (yes>no) {result = "✅"; color="#00FF00"}
         else if (yes==no) {result = "Draw"; color="FFF000"}
         else {result="❌"; color="#FF0000"}
-        console.log(`[Poll] Poll finished: \nPoll ID: ${id} | Y: ${yes} | N: ${no} | result: ${result}`)
+        console.log(`[Bot] Poll finished | PID: ${id} | Y: ${yes} | N: ${no} | result: ${result}`)
         msg.edit(new Discord.MessageEmbed({title:`Poll`,color: color, description: `${poll}`, fields: [
               { name: 'Winner', value: `${result} (${yes} - ${no})`,inline: true },],
                 timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`}})); msg.reactions.removeAll();
