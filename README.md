@@ -3,10 +3,8 @@
 ## Requirements
 
 1. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
-2. YouTube Data API v3 Key **[Guide](https://developers.google.com/youtube/v3/getting-started)** 
-3. MySQL Database **[Guide](https://dev.mysql.com/doc/refman/5.7/en/windows-installation.html#windows-installation-simple)**
-4. Node.js v12.0.0 or newer
-5. Create the database table  **[Guide](https://github.com/Bog12555/nodeapp/wiki/Prepare-the-database-table-for-the-bot)**
+2. Node.js v12.0.0 or newer
+
 
 
 ## 🚀 Getting Started
@@ -26,13 +24,20 @@ Create a file named `.env` and fill out the values:
 
 ```env
 DISCORD_KEY=
+#VALID VALUES FOR DATABASE_TYPE: mysql, sqlite 
+DATABASE_TYPE=
+```
+## Aditional requirements for MySQL
+1. Prepare the database  **[Guide](https://github.com/Bog12555/nodeapp/wiki/Prepare-MYSQL-Database)**
+2. Add the following entries to `.env`:
+```env
+#VALUES BELOW REQUIRED ONLY IF DATABASE_TYPE IS mysql
 MYSQL_HOST=
 MYSQL_USER=
 MYSQL_PORT=
 MYSQL_PASS=
 MYSQL_DB=
 ```
-
 ## 📝 Features & Commands
 
 > Note: The default prefix is '.'
@@ -55,7 +60,9 @@ MYSQL_DB=
 ```
 .subs PewDiePie
 ```
+> Note: The commands above require a GCP service account with access to YouTube Data API v3 [**[Guide](https://cloud.google.com/docs/authentication)**,**[Guide](https://developers.google.com/youtube/v3/getting-started)**]
 
+> The credentials file MUST be saved as privatekey.json
 ---
 * 😷 Find data about COVID-19 cases around the world
 ```
