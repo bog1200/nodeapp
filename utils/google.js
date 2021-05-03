@@ -1,10 +1,11 @@
 const fs = require('fs');
 const {google} = require('googleapis');
 const { get } = require('http');
+const path = require("path");
 let privatekey, google_token, jwtClient, last_update;
 let enabled = true;
-if (fs.existsSync("../privatekey.json")) {
-    privatekey = require("../privatekey.json");
+if (fs.existsSync(path.resolve(__dirname,"../privatekey.json"))) {
+    privatekey = require(path.resolve(__dirname,"../privatekey.json"));
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/google-apis-nodejs-quickstart.json
      jwtClient = new google.auth.JWT(
