@@ -1,7 +1,7 @@
 //
 require('dotenv').config();
-const db = require("./utils/db")
-const google = require("./utils/google")
+const db = require("./utils/db");
+const google = require("./utils/google");
 const fs = require('fs');
 const readline = require('readline');
 const moment = require('moment');
@@ -172,27 +172,10 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 });
 		
     process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
-	process.on('SIGINT',function(){
-	client.destroy();
-	pool.end(function(err) {
-		console.error(err);
-	  });
-});
-	process.on('SIGUSR1',function (){
-		console.log('Goodbye!');
+
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal => process.on(signal, () => {
+    console.log('Goodbye!');
 		sql.end();
 		client.destroy();
-		
-	});
-	process.on('SIGUSR2',function (){
-		console.log('Goodbye!');
-		sql.end();
-		client.destroy();
-		
-	});
-	process.on('exit', function (){
-		console.log('Goodbye!');
-		sql.end();
-		client.destroy();
-		
-	});
+    process.exit();
+  }));
