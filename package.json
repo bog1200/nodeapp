@@ -1,10 +1,15 @@
 {
   "name": "romail.ml",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "main": "index.js",
+  "license": "GPL-3.0",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bog12555/nodeapp.git"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -22,8 +27,5 @@
   "optionalDependencies": {
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
   }
 }
