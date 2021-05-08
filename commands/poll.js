@@ -36,7 +36,6 @@ module.exports = {
           
           console.log(`[Bot] Poll started | Poll ID: ${id} | time: ${countdown_format}`);
           
-        message.delete();
         message.channel.send(new Discord.MessageEmbed({title:`Poll`,color: '#fff000',description: `${poll}`, fields: [
           { name: 'Yes', value: `✅`,inline: true },{name: "\u200B",value: '\u200B',inline: true},{name: "No",value: '❌',inline: true},],
         timestamp: new Date(),footer: { text: `${countdown_format} | ${message.author.username}#${message.author.discriminator}`},}))

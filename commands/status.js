@@ -5,7 +5,6 @@ module.exports = {
 	execute(message, args) {
       const start = Date.now();
       const client = message.client;
-        message.delete(); 
         let alive_string, alive=((client.uptime)/1000).toFixed(0);
         if (alive <=60) 
         (alive_string=`${(alive)} s`)
@@ -21,9 +20,6 @@ module.exports = {
           ],timestamp: new Date(), footer: { text: `${message.author.username}#${message.author.discriminator}`},};
         const Embed = new Discord.MessageEmbed(EmbedText);  
         message.channel.send(Embed)
-        .then(msg => {
-            msg.delete({ timeout: 15000 });
-          })
         .catch(error => console.err(error)); 
     }
 }

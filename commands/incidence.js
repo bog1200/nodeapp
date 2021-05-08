@@ -24,9 +24,7 @@ module.exports = {
           { name: '3 days ago', value: historicalData[days(today,3)].incidence[county] ,inline: true},,{name: '7 days ago', value: historicalData[days(today,7)].incidence[county],inline: true},{ name: '14 days ago', value: historicalData[days(today,14)].incidence[county] ,inline: true},
           { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date(),footer: { text: `${message.author.username}#${message.author.discriminator}`},};
           let Embed = new Discord.MessageEmbed(EmbedText);
-          message.channel.send(Embed).then(msg => {
-            msg.delete({ timeout: 30000 });
-          })
+          message.channel.send(Embed);
         })
        
         }

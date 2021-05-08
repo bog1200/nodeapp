@@ -23,12 +23,7 @@ module.exports = {
         else if (query==true){
         db.query(sql, function (err, result) {
             if (err) console.error(err);});}
-        
-        message.delete();
         message.channel.send(Embed)
-        .then(msg => {
-            msg.delete({ timeout: 15000 });
-          })
         .catch(error => console.error(error));
     }
 }

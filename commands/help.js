@@ -12,7 +12,6 @@ module.exports = {
         const Embed = new Discord.MessageEmbed().setTitle("Help").setTimestamp()
         .setFooter(`${message.author.username}#${message.author.discriminator}`);
         const { commands } = message.client;
-        message.delete();
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');
             data.push(commands.map(command => command.name).join(', '));
@@ -24,9 +23,6 @@ module.exports = {
                     //message.reply('I\'ve sent you a DM with all my commands!');
                     Embed.setDescription('I\'ve sent you a DM with all my commands!')
                     message.channel.send(Embed)
-        .then(msg => {
-            msg.delete({ timeout: 7000 });
-          })
         .catch(error => console.err(error));
                 })
                 .catch(error => {
@@ -50,9 +46,6 @@ module.exports = {
     //data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
     message.channel.send(data, { split: true })
-    .then(message => {
-        message.delete({ timeout: 7000 });
-      })
     .catch(error => console.error(error));
 
 // ...

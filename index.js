@@ -112,8 +112,6 @@ async function update(){
 		prefix = result[0]['PREFIX'];
 		const args = message.content.slice(prefix.length).split(/ +/);
 		let command = args.shift().toLowerCase();
-		if (command==='2fa') command='validate';
-		if (command==='update' && message.author.id==="239136395665342474") {update(); message.delete(); return}
 		if (!client.commands.has(command)) return;
 try {
 	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};

@@ -6,8 +6,7 @@ let g_token;
 module.exports = {
 	name: 'subs',
 	description: 'Search channel subscribers',
-	execute(message, args) {
-	message.delete();	  
+	execute(message, args) {	  
     const Embed = new Discord.MessageEmbed().setTitle('Youtube Subscriber Count').setTimestamp().setFooter(`${message.author.username}#${message.author.discriminator}`);
     //if (typeof args[0]==='undefined') 
     async function runCommand() {
@@ -40,9 +39,6 @@ module.exports = {
         else Embed.setDescription("Command disabled").setColor("#ff0000")
         //console.log(`Output: ${output}`);
         message.channel.send(Embed)
-        .then(msg => {
-            msg.delete({ timeout: 15000 });
-          })
         .catch(error => console.err(error));     
         }
     load();
