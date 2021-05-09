@@ -16,17 +16,17 @@ module.exports = {
             historicalData = response.data["historicalData"];
               let i=0;
               let cov_vac1,cov_vac2;
-                      cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered;
-                      cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
-                      do
-                      {
-                          i=i+1;
-                          cov_vac1+=historicalData[main.days(today,i)].vaccines.pfizer.total_administered+
-                          historicalData[main.days(today,i)].vaccines.moderna.total_administered+historicalData[main.days(today,i)].vaccines.astra_zeneca.total_administered;
-
-                          cov_vac2+=historicalData[main.days(today,i)].vaccines.pfizer.immunized+
-                          historicalData[main.days(today,i)].vaccines.moderna.immunized+historicalData[main.days(today,i)].vaccines.astra_zeneca.immunized;
-                      }
+              cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered+today.vaccines.johnson_and_johnson.total_administered;
+              cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
+              do
+              {
+                i=i+1;
+                cov_vac1+=historicalData[main.days(today,i)].vaccines.pfizer.total_administered+historicalData[main.days(today,i)].vaccines.johnson_and_johnson.total_administered+
+                historicalData[main.days(today,i)].vaccines.moderna.total_administered+historicalData[main.days(today,i)].vaccines.astra_zeneca.total_administered;
+  
+                cov_vac2+=historicalData[main.days(today,i)].vaccines.pfizer.immunized+historicalData[main.days(today,i)].vaccines.johnson_and_johnson.immunized+
+                historicalData[main.days(today,i)].vaccines.moderna.immunized+historicalData[main.days(today,i)].vaccines.astra_zeneca.immunized;
+              }
                       while(historicalData[main.days(today,i)].parsedOnString!="2020-12-27");
                       message.channel.send(new Discord.MessageEmbed(
                           {title:`Covid19 Vaccines RO`,color: '#ff0000', fields: [,
