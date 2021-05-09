@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.4.4-a",
+  "version": "1.4.5-a",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {

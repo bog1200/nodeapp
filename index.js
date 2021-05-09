@@ -64,15 +64,15 @@ async function update(){
 				let i=0;
 				let cov_vac1,cov_vac2;
 						jud=today.incidence;
-						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered;
+						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered+today.vaccines.johnson_and_johnson.total_administered;
 						cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
 						do
 						{
 							i=i+1;
-							cov_vac1+=historicalData[days_calculator(today,i)].vaccines.pfizer.total_administered+
+							cov_vac1+=historicalData[days_calculator(today,i)].vaccines.pfizer.total_administered+historicalData[days_calculator(today,i)].vaccines.johnson_and_johnson.total_administered+
 							historicalData[days_calculator(today,i)].vaccines.moderna.total_administered+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.total_administered;
 
-							cov_vac2+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+
+							cov_vac2+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+historicalData[days_calculator(today,i)].vaccines.johnson_and_johnson.immunized+
 							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
