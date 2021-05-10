@@ -76,7 +76,7 @@ async function update(){
 							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
 						}
 						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
-						cov_vac_d1=`${Math.trunc(((cov_vac1-2*cov_vac2)/1000000)*100)/100} M (${Math.round(((cov_vac1-2*cov_vac2)*100/16091562+Number.EPSILON)*10)/10}%)`;
+						cov_vac_d1=`${Math.trunc(((cov_vac1-cov_vac2)/1000000)*100)/100} M (${Math.round(((cov_vac1-cov_vac2)*100/16091562+Number.EPSILON)*10)/10}%)`;
 						cov_vac_d2=`${Math.trunc(((cov_vac2)/1000000)*100)/100} M (${Math.round((cov_vac2*100/16091562+Number.EPSILON)*10)/10}%)`
 						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
