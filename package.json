@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
@@ -14,15 +14,15 @@
   "dependencies": {
     "axios": "^0.21.1",
     "discord.js": "^12.5.3",
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "fs": "^0.0.2",
-    "google-auth-library": "^7.0.3",
-    "googleapis": "^70.0.0",
+    "google-auth-library": "^7.1.2",
+    "googleapis": "^78.0.0",
     "mime": "^2.5.2",
     "moment": "^2.29.1",
     "opusscript": "0.0.8",
     "totp-generator": "0.0.9",
-    "ytdl-core": "^4.5.0"
+    "ytdl-core": "^4.8.2"
   },
   "optionalDependencies": {
     "mysql": "^2.18.1",
