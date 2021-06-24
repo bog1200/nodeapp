@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
+const path = require("path");
 module.exports = {
 	name: 'status',
 	description: 'Shows bot status',
 	execute(message, args) {
       const start = Date.now();
       const client = message.client;
+      const version = require(path.resolve(__dirname,"../package.json")).version;
         message.delete(); 
         let alive_string, alive=((client.uptime)/1000).toFixed(0);
         if (alive <=60) 
@@ -17,7 +19,7 @@ module.exports = {
         
         EmbedText = {title:`Bot Status`,color: '#ffff00', fields: [
           { name: 'Start time', value: client.readyAt ,inline: false},
-          { name: 'Uptime', value: alive_string ,inline: true},{ name: '\u200B', value: '\u200B',inline: true},{ name: 'Ping', value: `${client.ws.ping} ms | ${Date.now()-start} ms` ,inline: true},
+          { name: 'Uptime', value: alive_string ,inline: true},{ name: 'Ping', value: `${client.ws.ping} ms | ${Date.now()-start} ms` ,inline: true},{ name: 'Version', value: `${version}`,inline: true},
           ],timestamp: new Date(), footer: { text: `${message.author.username}#${message.author.discriminator}`},};
         const Embed = new Discord.MessageEmbed(EmbedText);  
         message.channel.send(Embed)
