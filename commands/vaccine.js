@@ -9,7 +9,7 @@ module.exports = {
 
         async function command()
         {
-          const eligible_population=16091562;
+          const eligible_population=16941562;
           let response,today,historicalData;
             response = await axios.get(`https://d35p9e4fm9h3wo.cloudfront.net/latestData.json`);
             today=response.data["currentDayStats"];
