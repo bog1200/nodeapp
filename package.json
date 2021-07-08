@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "base45": "^3.0.0",
+    "cbor": "^7.0.5",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "fs": "^0.0.2",
