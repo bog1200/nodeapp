@@ -1,15 +1,18 @@
 const axios = require("axios");
 const Discord = require("discord.js");
-const main = require("../index.js")
+const yt = require('../utils/google');
+let g_token;
 module.exports = {
 	name: 'pvc',
 	description: 'PewDiePie vs CocoMelon subs count',
 	execute(message, args) {
             message.delete();
+  async function runCommand()
+  {
             let pvt,winn,pew_subs,co_subs;
         axios.all([
-            axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&part=statistics&fields=items/statistics/subscriberCount&access_token=${main.g_token}`),
-            axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UCbCmjCuTUZos6Inko4u57UQ&part=statistics&fields=items/statistics/subscriberCount&access_token=${main.g_token}`)
+            axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&part=statistics&fields=items/statistics/subscriberCount&access_token=${g_token}`),
+            axios.get(`https://www.googleapis.com/youtube/v3/channels?id=UCbCmjCuTUZos6Inko4u57UQ&part=statistics&fields=items/statistics/subscriberCount&access_token=${g_token}`)
           ]).then(axios.spread((response1, response2) => {
              pew_subs=response1.data.items[0].statistics.subscriberCount;
              co_subs=response2.data.items[0].statistics.subscriberCount;
@@ -29,4 +32,17 @@ module.exports = {
             message.delete({timeout: 15000});
              })
         }));
+      }
+        async function load()
+    {   
+        g_token=await yt.getkey();
+        if(g_token) await runCommand();
+        else {//console.log(`Output: ${output}`);
+        message.channel.send(new Discord.MessageEmbed().setDescription("Command disabled").setColor("#ff0000"))
+        .then(msg => {
+            msg.delete({ timeout: 15000 });
+          })
+        .catch(error => console.err(error));     
+        }}
+    load()
 }};
