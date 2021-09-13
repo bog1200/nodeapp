@@ -12,7 +12,7 @@
     "url": "https://github.com/bog12555/nodeapp.git"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "base45": "^3.0.0",
     "cbor": "^7.0.5",
     "discord.js": "^12.5.3",
