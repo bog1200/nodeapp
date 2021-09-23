@@ -1,0 +1,32 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const {MessageEmbed} = require("discord.js");
+module.exports = {
+	data: new SlashCommandBuilder()
+    .setName('presence')
+	.setDescription('Change bot presence')
+    .addStringOption(option => option.setName("message").setDescription("Bot activity message").setRequired(true))
+    .addStringOption(option => option.setName("type").setDescription("Bot activity type").addChoice('Playing', 'PLAYING').addChoice('Streaming', 'STREAMING').setRequired(true))
+        .addStringOption(option => option.setName("status").setDescription("Bot status").addChoice('Online', 'online').addChoice('DND', 'dnd').addChoice('Idle', 'idle').addChoice('Offline', 'offline').setRequired(true))
+        .addStringOption(option => option.setName("link").setDescription("Twitch live link")),
+	async execute(interaction) {
+        await interaction.deferReply({ephemeral: true});
+        if (interaction.user=="239136395665342474")
+        {
+        const message=interaction.options.getString('message');
+        const type=interaction.options.getString('type');
+        const status=interaction.options.getString('status');
+        const link=interaction.options.getString('link');
+        if (link) {interaction.client.user.setPresence({ activities: [{ name: message,type: type,url:link, status: status }]})}
+        else {interaction.client.user.setPresence({ activities: [{ name: message,type: type, status: status }]})}
+        const Embed = new MessageEmbed().setTitle("Bot Presence").setTimestamp()
+        .setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)
+        .addField("Presence",message);
+        if (type)Embed.addField("Type",type);
+        if (status)Embed.addField("Status",status);
+        if (link)Embed.addField("Link", link);
+        
+        interaction.editReply({ embeds: [Embed], ephemeral: true})
+        
+        }
+    }
+}
