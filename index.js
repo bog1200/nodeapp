@@ -3,40 +3,33 @@ require('dotenv').config();
 const db = require("./utils/db");
 const google = require("./utils/google");
 const fs = require('fs');
-const readline = require('readline');
-const moment = require('moment');
+const {days} = require("./utils/days");
 let axios = require('axios');
 const wait = require('util').promisify(setTimeout);
 ///
 ///
-const Discord = require('discord.js');
-let prefix;
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-let cooldowns = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const { Client, Collection, Intents } = require('discord.js');
+const intents = new Intents([Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]);
+const client = new Client({ intents: intents});
+client.interactions = new Collection();
+const interactionFiles = fs.readdirSync('./interactions').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+for (const file of interactionFiles) {
+	const interaction = require(`./interactions/${file}`);
 
 	// set a new item in the Collection
-	// with the key as the command name and the value as the exported module
-	client.commands.set(command.name, command);
+	// with the key as the interaction name and the value as the exported module
+	client.interactions.set(interaction.data.name, interaction);
 }
 let stream_status=`Now with ${Math.floor(Math.random()*100)}% more bananas...`;
 
-client.on('ready', () => {
+client.once('ready', () => {
  client.user.setActivity(stream_status);
 console.log("[Discord] API Successfully connected!");
 });
-wait(2000);
+//wait(2000);
 
- exports.update = ((arg0,arg1='PLAYING',arg2='online', arg3) => {console.log(`1:${arg0}, 2:${arg1}, 3:${arg2}, 4:${arg3}`);
 
-if (arg3!==undefined) {client.user.setPresence({ activity: { name: `${arg0}`,type: `${arg1}`,url:`${arg3}` }, status: `${arg2}` });}
-else {client.user.setPresence({ activity: { name: `${arg0}`,type: `${arg1}`}, status: `${arg2}` });}
-
-});
 
 async function loginDiscord()
 {
@@ -46,13 +39,8 @@ const login = new Promise ((resolve,reject) =>
 })
 }
 ///
-
-function days_calculator(today,days)
-        {
-          return moment(today.parsedOnString, "YYYY-MM-DD").subtract(days, 'days').format("YYYY-MM-DD");
-		};
 let today, historicalData, jud, cov_str,cov_vac_d2, c_out ,cov_vac_d1, cdf=0;
-exports.days = ((today,days) => {return days_calculator(today,days);});;
+
 async function update(){
 	await axios.get('https://d35p9e4fm9h3wo.cloudfront.net/latestData.json').then((response) => {
 	  c_out=response.data;
@@ -64,21 +52,24 @@ async function update(){
 				let i=0;
 				let cov_vac1,cov_vac2;
 						jud=today.incidence;
-						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered+today.vaccines.johnson_and_johnson.total_administered;
+						let johnson_and_johnson=today.vaccines.johnson_and_johnson.total_administered;
+						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered;
 						cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
 						do
 						{
 							i=i+1;
-							cov_vac1+=historicalData[days_calculator(today,i)].vaccines.pfizer.total_administered+historicalData[days_calculator(today,i)].vaccines.johnson_and_johnson.total_administered+
-							historicalData[days_calculator(today,i)].vaccines.moderna.total_administered+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.total_administered;
+							cov_vac1+=historicalData[days(today,i)].vaccines.pfizer.total_administered+historicalData[days(today,i)].vaccines.moderna.total_administered+
+							historicalData[days(today,i)].vaccines.astra_zeneca.total_administered;
 
-							cov_vac2+=historicalData[days_calculator(today,i)].vaccines.pfizer.immunized+historicalData[days_calculator(today,i)].vaccines.johnson_and_johnson.immunized+
-							historicalData[days_calculator(today,i)].vaccines.moderna.immunized+historicalData[days_calculator(today,i)].vaccines.astra_zeneca.immunized;
+							cov_vac2+=historicalData[days(today,i)].vaccines.pfizer.immunized+historicalData[days(today,i)].vaccines.moderna.immunized+
+							historicalData[days(today,i)].vaccines.astra_zeneca.immunized;
+
+							johnson_and_johnson+=historicalData[days(today,i)].vaccines.johnson_and_johnson.total_administered;
 						}
-						while(historicalData[days_calculator(today,i)].parsedOnString!="2020-12-27");
-						cov_vac_d1=`${Math.trunc(((cov_vac1-cov_vac2)/1000000)*100)/100} M (${Math.round(((cov_vac1-cov_vac2)*100/16941562+Number.EPSILON)*10)/10}%)`;
-						cov_vac_d2=`${Math.trunc(((cov_vac2)/1000000)*100)/100} M (${Math.round((cov_vac2*100/16941562+Number.EPSILON)*10)/10}%)`
-						cdf=today.numberInfected-historicalData[days_calculator(today,1)].numberInfected;
+						while(historicalData[days(today,i)].parsedOnString!="2020-12-27");
+						cov_vac_d1=`${Math.trunc(((cov_vac1-cov_vac2+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac1-cov_vac2+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`;
+						cov_vac_d2=`${Math.trunc(((cov_vac2+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac2+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`
+						cdf=today.numberInfected-historicalData[days(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
 			catch(error){
@@ -98,43 +89,24 @@ async function update(){
 	{
 		await loginDiscord();
 		await google.getkey();
-		exports.client= client;
 		update();
 	}
 	load();
-	client.on('message', async message => {
-		const date = new Date;
-		let result;
-		if (message.mentions.has(client.user.id)) prefix = " <@!476441249738653706>";
-		else{
-		if  (message.guild!==null){result = await db.query(`SELECT PREFIX FROM bot WHERE SERVERID = ${message.guild.id}`);}
-		else {result = await db.query(`SELECT PREFIX FROM bot WHERE SERVERID = '0'`);}
-		prefix = result[0]['PREFIX'];
-		const args = message.content.slice(prefix.length).split(/ +/);
-		let command = args.shift().toLowerCase();
-		if (command==='2fa') command='validate';
-		if (command==='update' && message.author.id==="239136395665342474") {update(); message.delete(); return}
-		if (!client.commands.has(command)) return;
-try {
-	if (message.content.substr(0,1)!==prefix && !(message.mentions.has(client.user.id))) {return;};
-	
-	if (cooldowns.has(message.author.id)){return;}
-	else cooldowns.set(message.author.id, Date.now());
-	setTimeout(() => cooldowns.delete(message.author.id), 3000);
-	if  (message.guild!==null){
-		 client.commands.get(command).execute(message, args);
-	console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (#${message.channel.name} on ${message.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
-}
-	else {message.reply('Bot commands are unavailable on DMs').then(msg => {
-		msg.delete({ timeout: 7000 });
-	  })
-	.catch(error => console.err(error));
-	 console.log(`[Bot] triggered with "${message.content}" by ${message.author.username}#${message.author.discriminator} (DM) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);}
-} catch (error) {
-	console.error(error);
-	message.reply('there was an error trying to execute that command!');
-};
-}});
+
+	client.on('interactionCreate', interaction => {
+		if (interaction.isButton()) console.log(interaction);
+		if (!interaction.isCommand()) return;
+
+	const { commandName } = interaction;
+	const date = new Date;
+	console.log(`[Bot] "${commandName}" interaction triggered by ${interaction.user.username}#${interaction.user.discriminator} (#${interaction.channel.name} on ${interaction.guild.name}) at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `);
+	client.interactions.get(commandName).execute(interaction);
+	});
+
+	// client.on('interactionCreate', interaction => {
+	// 	if (!interaction.isButton()) return;
+	// 	console.log(interaction);
+	// });
 
 async function UpdateStatus(){
 	for (let i=0;i<client.guilds.cache.size;i=i+1)
@@ -152,11 +124,11 @@ async function UpdateStatus(){
 	setTimeout(update, 60000*120);
 	}
 	
-	client.on('guildCreate', guild =>
-	{
-		db.query(`INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${db.escape(guild.name)},${Date.now()})`);
-		console.log(`[Bot] Joined ${guild.name} (${guild.id})`); 
-	});
+client.on('guildCreate', guild =>
+{
+	db.query(`INSERT INTO bot (SERVERID, SERVERNAME, JOINTIME) VALUES (${guild.id}, ${db.escape(guild.name)},${Date.now()})`);
+	console.log(`[Bot] Joined ${guild.name} (${guild.id})`); 
+});
 	
 	
 client.on('guildUpdate', (oldGuild, newGuild) =>
@@ -165,17 +137,17 @@ client.on('guildUpdate', (oldGuild, newGuild) =>
 	console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`); 
 });
 
-	client.on('guildDelete', guild =>
-	{
-		db.query(`DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`);
-		console.log(`[Bot] Left ${guild.name} (${guild.id})`);
+client.on('guildDelete', guild =>
+{
+	db.query(`DELETE FROM bot WHERE bot.SERVERID = ${guild.id}`);
+	console.log(`[Bot] Left ${guild.name} (${guild.id})`);
 });
 		
-    process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
+process.on('unhandledRejection', error => console.error('Caught Promise Rejection', error));
 
 ['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal => process.on(signal, () => {
     console.log('Goodbye!');
-		sql.end();
+		db.end();
 		client.destroy();
     process.exit();
   }));
