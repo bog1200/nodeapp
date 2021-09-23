@@ -1,14 +1,17 @@
-const Discord = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const {MessageEmbed} = require("discord.js");
 const base45 = require('base45');
 const zlib=require("zlib");
 const cbor = require("cbor");
 const moment = require("moment");
-const { resolve } = require('path');
 module.exports = {
-	name: 'decode',
-	description: 'Decode COV19 EU Certificate',
-	execute(message, args) {
-        let code = message.content.substr(8);//substr(10).slice(0, -2);;
+	data: new SlashCommandBuilder()
+		.setName('decode')
+		.setDescription('Decode COVID19 EU Certificate')
+        .addStringOption(option => option.setName("certificate").setDescription("Green Pass to decode").setRequired(true)),
+	async execute(interaction) {
+	
+        let code = interaction.options.getString("certificate");//substr(10).slice(0, -2);;
         if (code.substr(0,4)=="HC1:") code=code.substr(4);
         const b45encoded = base45.decode(code)
         zlib.inflate(b45encoded, (error, buffer) => {
@@ -19,9 +22,9 @@ module.exports = {
                 // error != null if there was an error
                 // obj is the unpacked object
                 if(error)console.error(error);
-                const CBORmessage=obj[0];
-                const content = CBORmessage.value[2];
-                const rgbProtected=CBORmessage.value[0];
+                const CBORinteraction=obj[0];
+                const content = CBORinteraction.value[2];
+                const rgbProtected=CBORinteraction.value[0];
 
                  cbor.decodeAll(content, (error, obj) =>
                  {
@@ -47,15 +50,15 @@ module.exports = {
                      if (time < issued || time > expires || type == "INVALID") {color="#ff0000"; valid="Invalid";}
                      else if (partial==1) {color="#ffff00", valid="Incomplete"}
                      else {color="#00ff00"; valid="Valid"}
-                     const result = new Discord.MessageEmbed({title:`**EU Certificate Decoder**`,description: `${valid} Certificate Detected:`,color: color, thumbnail: {url: `https://www.countryflags.io/${certBasic.get(1)}/flat/64.png`},fields: 
+                     const result = new MessageEmbed({title:`**EU Certificate Decoder**`,description: `${valid} Certificate Detected:`,color: color, thumbnail: {url: `https://www.countryflags.io/${certBasic.get(1)}/flat/64.png`},fields: 
                      [
                      { name: 'First name', value:  certFull.nam.gn ,inline: true},{name: 'Last Name', value: certFull.nam.fn ,inline: true},{ name: 'Date of Birth', value: certFull.dob ,inline: true},
                      { name: 'Type:', value: type ,inline: true},{ name: 'Valid From', value: moment(issued).format("HH:mm:ss DD.MM.YYYY"),inline: true},{ name: 'Valid Until ', value: moment(expires).format("HH:mm:ss DD.MM.YYYY") ,inline: true},
                      { name: 'Issued By', value: certFull[_type][0].is ,inline: true},{ name: 'Country', value: certBasic.get(1) ,inline: true},{ name: 'Serial Number ', value: certFull[_type][0].ci ,inline: true},
-                     { name: doses, value: `More info about certificates: [here](https://reopen.europa.eu/en)` ,inline: true}],timestamp: new Date(), footer: { text: `${message.author.username}#${message.author.discriminator}`}
+                     { name: doses, value: `More info about certificates: [here](https://reopen.europa.eu/en)` ,inline: true}],timestamp: new Date(), footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}
                  });
-                 message.delete().then(message => message.channel.send(result));
-                //const rgbUnprotected=CBORmessage.value[1];
+                 interaction.reply({embeds: [result]});
+                //const rgbUnprotected=CBORinteraction.value[1];
              });
          })}
     })
