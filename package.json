@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
@@ -9,25 +9,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bog12555/nodeapp.git"
+    "url": "https://github.com/bog1200/nodeapp.git"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "@discordjs/opus": "^0.6.0",
+    
+    "@discordjs/voice": "^0.6.0",
+    "axios": "^0.21.4",
     "base45": "^3.0.0",
-    "cbor": "^7.0.5",
-    "discord.js": "^12.5.3",
+    "cbor": "^8.0.0",
+    "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
+    "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.2",
-    "google-auth-library": "^7.1.2",
-    "googleapis": "^78.0.0",
+    "google-auth-library": "^7.9.2",
+    "googleapis": "^87.0.0",
     "mime": "^2.5.2",
     "moment": "^2.29.1",
-    "opusscript": "0.0.8",
+    "tweetnacl": "^1.0.3",
     "totp-generator": "0.0.9",
-    "ytdl-core": "^4.8.2"
+    "ytdl-core": "^4.9.1"
   },
   "optionalDependencies": {
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0"
   }
 }
