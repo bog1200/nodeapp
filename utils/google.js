@@ -20,8 +20,6 @@ if (fs.existsSync(path.resolve(__dirname,"../privatekey.json"))) {
     {
     //authenticate request
     if (enabled){
-    return new Promise ((resolve, reject) =>
-    {
         if(!google_token)
         {
                 jwtClient.authorize((err, tokens) => {
@@ -30,6 +28,7 @@ if (fs.existsSync(path.resolve(__dirname,"../privatekey.json"))) {
             } else {
                 console.log("[Google] API Successfully connected!");
                 google_token=tokens.access_token;
+                module.exports.g_token=google_token
                 last_update = Date.now();
                 }
             })
@@ -45,12 +44,14 @@ if (fs.existsSync(path.resolve(__dirname,"../privatekey.json"))) {
                     });}
                 
             }
-            resolve(google_token);
-    })}
+            //while(!google_token) wait(500); 
+            //resolve(google_token);
+    }
     else {
         console.log("[BOT] Google API not enabled");
         return null;
     }
+    setTimeout(() => {getkey()}, 3600000);
     }
     
 
