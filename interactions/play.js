@@ -2,10 +2,7 @@ const ytdl = require("ytdl-core");
 const axios = require('axios');
 const queue = new Map();
 const fs = require("fs");
-
-const yt= require("../utils/google")
-let g_token; 
-
+const {spotifyApi} = require("../utils/spotify");
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { AudioPlayerStatus, createAudioPlayer, createAudioResource, joinVoiceChannel } = require('@discordjs/voice');
@@ -16,11 +13,12 @@ module.exports = {
 		.setDescription('Play music from YouTube')
     .addStringOption(option => option.setName("song").setDescription("The name or url of the song").setRequired(true)),
 	async execute(interaction) {
+    const {g_token}= require("../utils/google")
     await interaction.deferReply();
         async function google (title)
         {
         const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${title}&access_token=${g_token}`)
-        console.log(`[Bot] Playing music: [${title}] -> ${response.data.items[0].id.videoId}`);
+        console.log(`[Bot] Playing music: [${decodeURI(title)}] -> ${response.data.items[0].id.videoId}`);
           return `https://www.youtube.com/watch?v=${response.data.items[0].id.videoId}`;
         }
 
@@ -44,7 +42,16 @@ module.exports = {
             }
            
             let songInfo;
-            if (!(song_input.startsWith("https://"))) {
+            if (song_input.match(/[\bhttps://open.\b]*spotify[\b.com\b]*[/:]*track[/:]*[A-Za-z0-9?=]+/))
+            {
+              const sp_id=song_input.slice(31,53);
+              const {body} = await spotifyApi.getTrack(sp_id);
+              const sp_nam= await google(encodeURI(`${body.name} ${body.artists[0].name}`));
+              songInfo = await ytdl.getInfo(sp_nam);
+              
+              }   
+             else if (!(song_input.startsWith("https://"))) {
+              
              const googleparse= await google(song_input);
             songInfo = await ytdl.getInfo(googleparse);
             }
@@ -97,11 +104,13 @@ module.exports = {
             queue.delete(interaction.guild.id);
             }
           })
+
+          player.on('error', error => {
+            console.error(`${error}`);})
         }
 
           async function load()
           {   
-              g_token=await yt.getkey();
               if(g_token) await runCommand();
               else interaction.editReply("Music command is not available");
              
