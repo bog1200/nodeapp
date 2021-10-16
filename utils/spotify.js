@@ -8,7 +8,6 @@ const spotifyApi = new SpotifyWebApi({
     function(data) {
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body['access_token']);
-      spotifyApi.setRefreshToken(data.body['refresh_token']);
       console.log("[Spotify] API Successfully connected!")
     },
     function(err) {
@@ -17,13 +16,11 @@ const spotifyApi = new SpotifyWebApi({
   );
   setInterval(() =>
   {
-    spotifyApi.refreshAccessToken().then(
+    spotifyApi.clientCredentialsGrant().then(
       function(data) {
-        console.log('[Spotify] The access token has been refreshed!');
-    
         // Save the access token so that it's used in future calls
         spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
+        console.log('[Spotify] The access token has been refreshed!');
       },
       function(err) {
         console.log('[Spotify] Could not refresh access token', err);

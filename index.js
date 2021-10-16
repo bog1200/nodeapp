@@ -39,10 +39,11 @@ const login = new Promise ((resolve,reject) =>
 })
 }
 ///
-let today, historicalData, jud, cov_str,cov_vac_d2, c_out ,cov_vac_d1, cdf=0;
+let today, historicalData, jud, cov_str,cov_vac_d2, c_out, cdf=0;
 
 async function update(){
-	await axios.get('https://d35p9e4fm9h3wo.cloudfront.net/latestData.json').then((response) => {
+	
+	await axios.get('https://d35p9e4fm9h3wo.cloudfront.net/smallData.json').then((response) => {
 	  c_out=response.data;
 		  today=c_out["currentDayStats"];
 		historicalData = c_out["historicalData"];
@@ -50,25 +51,20 @@ async function update(){
 		  .then( () => {
 			try{
 				let i=0;
-				let cov_vac1,cov_vac2;
+				let cov_vac;
 						jud=today.incidence;
 						let johnson_and_johnson=today.vaccines.johnson_and_johnson.total_administered;
-						cov_vac1=today.vaccines.pfizer.total_administered+today.vaccines.moderna.total_administered+today.vaccines.astra_zeneca.total_administered;
-						cov_vac2=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
+						cov_vac=today.vaccines.pfizer.immunized+today.vaccines.moderna.immunized+today.vaccines.astra_zeneca.immunized;
 						do
 						{
 							i=i+1;
-							cov_vac1+=historicalData[days(today,i)].vaccines.pfizer.total_administered+historicalData[days(today,i)].vaccines.moderna.total_administered+
-							historicalData[days(today,i)].vaccines.astra_zeneca.total_administered;
-
-							cov_vac2+=historicalData[days(today,i)].vaccines.pfizer.immunized+historicalData[days(today,i)].vaccines.moderna.immunized+
+							cov_vac+=historicalData[days(today,i)].vaccines.pfizer.immunized+historicalData[days(today,i)].vaccines.moderna.immunized+
 							historicalData[days(today,i)].vaccines.astra_zeneca.immunized;
 
 							johnson_and_johnson+=historicalData[days(today,i)].vaccines.johnson_and_johnson.total_administered;
 						}
 						while(historicalData[days(today,i)].parsedOnString!="2020-12-27");
-						cov_vac_d1=`${Math.trunc(((cov_vac1-cov_vac2+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac1-cov_vac2+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`;
-						cov_vac_d2=`${Math.trunc(((cov_vac2+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac2+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`
+						cov_vac_d2=`${Math.trunc(((cov_vac+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`
 						cdf=today.numberInfected-historicalData[days(today,1)].numberInfected;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
@@ -107,7 +103,13 @@ async function update(){
 	// 	if (!interaction.isButton()) return;
 	// 	console.log(interaction);
 	// });
-
+function incd_find(result)
+{
+	delete require.cache[require.resolve("./incd_api/latest.min.json")];
+    const incd = require("./incd_api/latest.min.json");
+	let loc= Object.values(incd["incidenta"].find(item => item.name == result[0]["COVLOC"] && item.county == result[0]["COVLOCJUD"]));
+	return Math.trunc(loc[loc.length-1]*100)/100;
+}
 async function UpdateStatus(){
 	for (let i=0;i<client.guilds.cache.size;i=i+1)
 	{
@@ -117,8 +119,10 @@ async function UpdateStatus(){
 				client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
 				if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
 				{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
+				if (result[0]['COVLOCID']!=null  && result[0]['COVLOC'] !=null)
+				{client.channels.fetch(result[0]['COVLOCID']).then(channel => channel.setName(`INCD: ${incd_find(result)}`)).catch(error => console.error(error));}
 				if (result[0]['COVVAC1ID']!=null)
-				{client.channels.fetch(result[0]['COVVAC1ID']).then(channel => channel.setName(`Vaccin_1: ${cov_vac_d1}`)).catch(error => console.error(error));
+				{client.channels.fetch(result[0]['COVVAC1ID']).then(channel => channel.setName(`Vaccin_1: N/A`)).catch(error => console.error(error));
 				client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
 		  }};					
 	setTimeout(update, 60000*120);

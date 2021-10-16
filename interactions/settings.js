@@ -18,6 +18,10 @@ const db = require("../utils/db");
         .addSubcommand(subcommand =>subcommand.setName('cases').setDescription('Change Covid19 Cases channels (RO)')
           .addChannelOption(option => option.setName('new').setDescription('The channel for new daily cases').setRequired(true))
           .addChannelOption(option => option.setName('total').setDescription('The channel for all cases').setRequired(true)))
+        .addSubcommand(subcommand =>subcommand.setName('incidence').setDescription('Change Covid19 Incidence channels (RO)')
+          .addStringOption(option => option.setName('town').setDescription('The place to get data').setRequired(true))
+          .addStringOption(option => option.setName('county').setDescription('The county to change to').setRequired(true))
+          .addChannelOption(option => option.setName('channel').setDescription('The channel for incidence').setRequired(true)))
         ),
     async execute(interaction) {
       await interaction.deferReply();
@@ -52,6 +56,12 @@ const db = require("../utils/db");
             {
               sql=`UPDATE bot SET COVCHID = '${interaction.options.getChannel('total').id}',COVNEWID = '${interaction.options.getChannel('new').id}' WHERE bot.SERVERID = '${interaction.guild.id}'`;
               Embed.setColor('#00ff00').setDescription('COVID:').addField(`Total count set to:`, `${interaction.options.getChannel('total')}`, true).addField("\u200b","\u200b",true).addField(`Total new set to:`, `${interaction.options.getChannel('new')}`, true);
+              break;
+            }
+          case 'incidence':
+            {
+              sql=`UPDATE bot SET COVLOCID = '${interaction.options.getChannel('channel').id}',COVLOC = '${interaction.options.getString('town').toUpperCase()}', COVLOCJUD = '${interaction.options.getString('county').toUpperCase()}' WHERE bot.SERVERID = '${interaction.guild.id}'`;
+              Embed.setColor('#00ff00').setDescription('COVID Incidence').addField(`Channel set to:`, `${interaction.options.getChannel('channel')}`, true).addField("Place set to:",`${interaction.options.getString('town')}`,true).addField(`County set to:`, `${interaction.options.getString('county')}`, true);
               break;
             }
           }

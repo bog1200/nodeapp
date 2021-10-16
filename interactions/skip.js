@@ -12,7 +12,7 @@ module.exports = {
             if (serverQueue.songs[1])
             {     serverQueue.songs.shift();
 				  serverQueue.player.stop();
-                  serverQueue.player.play(createAudioResource(ytdl(serverQueue.songs[0].url)));
+                  serverQueue.player.play(createAudioResource(ytdl(serverQueue.songs[0].url,{filter: 'audioonly',quality: 'lowestaudio',highWaterMark: 1<<25})));
 				  return interaction.reply("Song skipped");
             }
 			else return interaction.reply("No song to skip to!");
