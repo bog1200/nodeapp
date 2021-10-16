@@ -3,8 +3,9 @@
 ## Requirements
 
 1. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
-2. Node.js v16.0.0 or newer
+2. Node.js v16.6.0 or newer
 3. (Optional) YouTube Data API v3 Key (some commands will not work without this)
+4. (Optional) Spotify API Key
 
 
 
@@ -33,25 +34,25 @@ DATABASE_TYPE=
 
 ## 📝 Features & Commands
 
-> Note: The default prefix is '.'
+> Note: This bot uses slash commands (/)
 
 * 🎶 Play music from YouTube via url or search query
 
 ```
-.play https://www.youtube.com/watch?v=fJ9rUzIMcZQ
-.play bohemian rhapsody
+/play https://www.youtube.com/watch?v=fJ9rUzIMcZQ
+/play bohemian rhapsody
 ```
 * 🎶 Control played music
 ```
-.skip  (Skip to next song in queue)
-.stop  (Stop playing and clear the queue)
+/skip  (Skip to next song in queue)
+/stop  (Stop playing and clear the queue)
 ```
 
 ---
 * 🔎 Find youtube channel subscriber count
 
 ```
-.subs PewDiePie
+/subs PewDiePie
 ```
 > Note: The commands above require a GCP service account with access to YouTube Data API v3 [**[Guide](https://cloud.google.com/docs/authentication)**,**[Guide](https://developers.google.com/youtube/v3/getting-started)**]
 
@@ -59,20 +60,20 @@ DATABASE_TYPE=
 ---
 * 😷 Find data about COVID-19 cases around the world
 ```
-.covid RO
-.incidence IF (Only available for Romania counties)
+/covid RO
+/incidence IF (Only available for Romania counties)
 ```
 
 ---
 *  💬 Delete messages in bulk
 ```
-.delete 45
+/delete 45
 ```
 
 ---
 * 📊 Create a poll
 ```
-.poll 1h Question?
+/poll 1h Question?
 ```
 <details>
 <summary>Poll</summary>
@@ -82,7 +83,7 @@ DATABASE_TYPE=
 ---
 🎲 Roll a dice with customizable number of sides
 ```
-.roll 6
+/roll 6
 ```
 
 ---

@@ -44,8 +44,7 @@ module.exports = {
             let songInfo;
             if (song_input.match(/[\bhttps://open.\b]*spotify[\b.com\b]*[/:]*track[/:]*[A-Za-z0-9?=]+/))
             {
-              const sp_id=song_input.slice(31,53);
-              const {body} = await spotifyApi.getTrack(sp_id);
+              const {body} = await spotifyApi.getTrack(song_input.slice(31,53));
               const sp_nam= await google(encodeURI(`${body.name} ${body.artists[0].name}`));
               songInfo = await ytdl.getInfo(sp_nam);
               
@@ -80,7 +79,7 @@ module.exports = {
               queue.set(interaction.guild.id, queueContruct);
           
               queueContruct.songs.push(song);
-              player.play(createAudioResource(ytdl(queueContruct.songs[0].url)));
+              player.play(createAudioResource(ytdl(queueContruct.songs[0].url, {filter: 'audioonly',quality: 'lowestaudio',highWaterMark: 1<<25})));
             }
             else {
               serverQueue.songs.push(song);
@@ -94,7 +93,7 @@ module.exports = {
             const serverQueue = queue.get(interaction.guild.id);
             if (serverQueue.songs[1])
             {     serverQueue.songs.shift();
-                  player.play(createAudioResource(ytdl(serverQueue.songs[0].url)));
+                  player.play(createAudioResource(ytdl(serverQueue.songs[0].url,{filter: 'audioonly',quality: 'lowestaudio',highWaterMark: 1<<25})));
                 
             }
             else 
