@@ -1,4 +1,4 @@
-//
+"use strict";
 require('dotenv').config();
 const db = require("./utils/db");
 const google = require("./utils/google");
@@ -33,7 +33,7 @@ console.log("[Discord] API Successfully connected!");
 
 async function loginDiscord()
 {
-const login = new Promise ((resolve,reject) =>
+return new Promise ((resolve,reject) =>
 {
 	client.login(process.env.DISCORD_KEY).then(res => resolve(res)).catch(error => reject(error));
 })
@@ -65,7 +65,7 @@ async function update(){
 						}
 						while(historicalData[days(today,i)].parsedOnString!="2020-12-27");
 						cov_vac_d2=`${Math.trunc(((cov_vac+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`
-						cdf=today.numberInfected-historicalData[days(today,1)].numberInfected;
+						cdf=`Noi: +${today.numberInfected-historicalData[days(today,1)].numberInfected} | -${today.numberDeceased-historicalData[days(today,1)].numberDeceased}`;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
 			catch(error){
@@ -116,7 +116,7 @@ async function UpdateStatus(){
 		let result = await db.query(`SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`)
 		if(result[0]['COVCHID']!=null) {
 				client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
-				client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(`Noi: ${cdf}`)).catch(error => console.error(error));
+				client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(cdf)).catch(error => console.error(error));
 				if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
 				{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
 				if (result[0]['COVLOCID']!=null  && result[0]['COVLOC'] !=null)
@@ -124,7 +124,7 @@ async function UpdateStatus(){
 				if (result[0]['COVVAC1ID']!=null)
 				{client.channels.fetch(result[0]['COVVAC1ID']).then(channel => channel.setName(`Vaccin_1: N/A`)).catch(error => console.error(error));
 				client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
-		  }};					
+		  }}					
 	setTimeout(update, 60000*120);
 	}
 	
