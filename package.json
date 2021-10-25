@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
@@ -22,7 +22,7 @@
     "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.2",
     "google-auth-library": "^7.10.1",
-    "googleapis": "^88.2.0",
+    "googleapis": "^89.0.0",
     "mime": "^2.5.2",
     "moment": "^2.29.1",
     "tweetnacl": "^1.0.3",

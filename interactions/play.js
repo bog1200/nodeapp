@@ -25,8 +25,8 @@ module.exports = {
         async function runCommand()
         {
           let player;
-         if (AudioPlayerStatus.Idle) player = createAudioPlayer();
-            const serverQueue = queue.get(interaction.guild.id);
+         if (AudioPlayerStatus.Idle) {player = createAudioPlayer();}
+            let serverQueue = queue.get(interaction.guild.id);
             const song_input=interaction.options.getString('song');
           
             const voiceChannel = interaction.member.voice.channel;
@@ -90,7 +90,7 @@ module.exports = {
           });
 
           player.on(AudioPlayerStatus.Idle, () =>{
-            const serverQueue = queue.get(interaction.guild.id);
+             serverQueue = queue.get(interaction.guild.id);
             if (serverQueue.songs[1])
             {     serverQueue.songs.shift();
                   player.play(createAudioResource(ytdl(serverQueue.songs[0].url,{filter: 'audioonly',quality: 'lowestaudio',highWaterMark: 1<<25})));
