@@ -64,7 +64,7 @@ async function update(){
 							johnson_and_johnson+=historicalData[days(today,i)].vaccines.johnson_and_johnson.total_administered;
 						}
 						while(historicalData[days(today,i)].parsedOnString!="2020-12-27");
-						cov_vac_d2=`${Math.trunc(((cov_vac+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac+johnson_and_johnson)*100/16941562+Number.EPSILON)*10)/10}%)`
+						cov_vac_d2=`${Math.trunc(((cov_vac+johnson_and_johnson)/1000000)*100)/100} M (${Math.round(((cov_vac+johnson_and_johnson)*100/19068495+Number.EPSILON)*10)/10}%)`
 						cdf=`Noi: +${today.numberInfected-historicalData[days(today,1)].numberInfected} | -${today.numberDeceased-historicalData[days(today,1)].numberDeceased}`;
 						cov_str=`Cazuri: ${today.numberInfected}`;						
 		}
@@ -121,9 +121,8 @@ async function UpdateStatus(){
 				{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
 				if (result[0]['COVLOCID']!=null  && result[0]['COVLOC'] !=null)
 				{client.channels.fetch(result[0]['COVLOCID']).then(channel => channel.setName(`INCD: ${incd_find(result)}`)).catch(error => console.error(error));}
-				if (result[0]['COVVAC1ID']!=null)
-				{client.channels.fetch(result[0]['COVVAC1ID']).then(channel => channel.setName(`Vaccin_1: N/A`)).catch(error => console.error(error));
-				client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
+				if (result[0]['COVVAC2ID']!=null)
+				{client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
 		  }}					
 	setTimeout(update, 60000*120);
 	}

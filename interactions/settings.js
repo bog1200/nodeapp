@@ -13,8 +13,7 @@ const db = require("../utils/db");
           .addChannelOption(option => option.setName('county_channel').setDescription('The channel for county incidence').setRequired(true))
           .addStringOption(option => option.setName('county').setDescription('The county to change to').setRequired(true)))
         .addSubcommand(subcommand =>subcommand.setName('vaccine').setDescription('Change Covid19 Vaccine channels (RO)')
-          .addChannelOption(option => option.setName('channel1').setDescription('The channel for first dose').setRequired(true))
-          .addChannelOption(option => option.setName('channel2').setDescription('The channel for second dose').setRequired(true)))
+          .addChannelOption(option => option.setName('channel').setDescription('The channel for full dose').setRequired(true)))
         .addSubcommand(subcommand =>subcommand.setName('cases').setDescription('Change Covid19 Cases channels (RO)')
           .addChannelOption(option => option.setName('new').setDescription('The channel for new daily cases').setRequired(true))
           .addChannelOption(option => option.setName('total').setDescription('The channel for all cases').setRequired(true)))
@@ -48,8 +47,8 @@ const db = require("../utils/db");
             }
           case 'vaccine':
             {
-              sql=`UPDATE bot SET COVVAC1ID = '${interaction.options.getChannel('channel1').id}',COVVAC2ID = '${interaction.options.getChannel('channel2').id}' WHERE bot.SERVERID = '${interaction.guild.id}'`;
-              Embed.setColor('#00ff00').setDescription(`COVID vaccines`).addField(`Dose 1 set to:`, `${interaction.options.getChannel('channel1')}`, true).addField("\u200b","\u200b",true).addField(`Dose 2 set to:`, `${interaction.options.getChannel('channel2')}`, true);
+              sql=`UPDATE bot SET COVVAC2ID = '${interaction.options.getChannel('channel2').id}' WHERE bot.SERVERID = '${interaction.guild.id}'`;
+              Embed.setColor('#00ff00').setDescription(`COVID vaccines`).addField(`Channel set to:`, `${interaction.options.getChannel('channel')}`, true);
               break;
             }
           case 'cases':
