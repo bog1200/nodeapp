@@ -36,7 +36,7 @@ module.exports = {
                           {title:`Covid19 Vaccines RO`,color: '#ff0000', fields: [,
           {name: 'At least 1 dose', value: '\u200B' ,inline: true},{ name: 'Dose 1 only', value: "(excluding J&J)" ,inline: true},{ name: 'Fully vaccinated', value: '\u200B',inline: true},
           {name: `${Math.trunc(((cov_vac1-cov_vac2+johnson_and_johnson)/1000000)*100)/100} M`, value: `(${Math.round(((cov_vac1-cov_vac2+johnson_and_johnson)*100/eligible_population+Number.EPSILON)*10)/10}%)`,inline: true},{ name: `${Math.trunc(((cov_vac1-2*cov_vac2)/1000000)*100)/100} M`, value: `(${Math.round(((cov_vac1-2*cov_vac2)*100/eligible_population+Number.EPSILON)*10)/10}%)` ,inline: true}, { name: `${Math.trunc(((cov_vac2+johnson_and_johnson)/1000000)*100)/100} M`, value: `(${Math.round(((cov_vac2+johnson_and_johnson)*100/eligible_population+Number.EPSILON)*10)/10}%)` ,inline: true},
-          { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date(),footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}})
+          { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date()})
                       ]});
         }
 }
