@@ -3,5 +3,5 @@
 *.cmd
 /nodebot.db
 /privatekey.json
-node_modules/
-incd_api/
+node_modules
+incd_api
