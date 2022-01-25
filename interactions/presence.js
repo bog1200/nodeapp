@@ -19,7 +19,6 @@ module.exports = {
         if (link) {interaction.client.user.setPresence({ activities: [{ name: message,type: type,url:link, status: status }]})}
         else {interaction.client.user.setPresence({ activities: [{ name: message,type: type, status: status }]})}
         const Embed = new MessageEmbed().setTitle("Bot Presence").setTimestamp()
-        .setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)
         .addField("Presence",message);
         if (type)Embed.addField("Type",type);
         if (status)Embed.addField("Status",status);

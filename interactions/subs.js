@@ -16,7 +16,7 @@ module.exports = {
     })
         else {
             const channel=interaction.options.getString('channel');
-            const Embed = new MessageEmbed().setTitle('Youtube Subscriber Count').setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`);
+            const Embed = new MessageEmbed().setTitle('Youtube Subscriber Count').setTimestamp();
             let ch_id='undefined';
             let ch_name='undefined';
             let subs=-1;

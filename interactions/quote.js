@@ -6,6 +6,6 @@ module.exports = {
 		.setDescription('Shows quote-formatted message')
         .addStringOption(option => option.setName("quote").setDescription("The text to quote").setRequired(true)),
 	async execute(interaction) { 
-        interaction.reply({ embeds: [new MessageEmbed().setColor('#ff00ff').setTitle('Quote').setDescription(interaction.options.getString('quote')).setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)]});
+        interaction.reply({ embeds: [new MessageEmbed().setColor('#ff00ff').setTitle('Quote').setDescription(interaction.options.getString('quote')).setTimestamp()]});
     }
 }

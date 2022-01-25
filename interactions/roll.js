@@ -7,6 +7,6 @@ module.exports = {
 		.addIntegerOption(option => option.setName("faces").setDescription("The number of faces on the die")),
 	async execute(interaction) {
 	const faces=interaction.options.getInteger('faces')||6;
-    interaction.reply({ embeds: [new MessageEmbed().setColor('#ff00ff').setTitle(`Roll (${faces} sides die)`).setDescription(`${Math.floor(Math.random()*faces)+1}`).setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)]})
+    interaction.reply({ embeds: [new MessageEmbed().setColor('#ff00ff').setTitle(`Roll (${faces} sides die)`).setDescription(`${Math.floor(Math.random()*faces)+1}`).setTimestamp()]})
   }
 }

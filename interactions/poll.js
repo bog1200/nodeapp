@@ -14,7 +14,7 @@ module.exports = {
     else if (time.slice(-1).toLowerCase()==='m') countdown=parseInt(time.substring(0,2))*60;
     else if (time.slice(-1).toLowerCase()==='h') countdown=parseInt(time.substring(0,2))*3600;
     else {
-      interaction.reply({ embeds: [new MessageEmbed().setTitle("Error").setColor("#ff0000").setDescription("Invalid arguments").setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)]});
+      interaction.reply({ embeds: [new MessageEmbed().setTitle("Error").setColor("#ff0000").setDescription("Invalid arguments").setTimestamp()]});
       return;
     }
         const id=interaction.id;
@@ -49,7 +49,7 @@ module.exports = {
           embeds: [
             new MessageEmbed({title:`Poll`,color: '#fff000',description: `${question}`, fields: [
           { name: 'Yes', value: `✅`,inline: true },{name: "\u200B",value: '\u200B',inline: true},{name: "No",value: '❌',inline: true},],
-        timestamp: new Date(),footer: { text: `${countdown_format} | ${interaction.user.username}#${interaction.user.discriminator}`},})
+        timestamp: new Date(),footer: { text: `${countdown_format}`},})
                   ], //components: [row]
          })
       const response = await interaction.fetchReply();
@@ -80,7 +80,7 @@ module.exports = {
                  else  countdown_format=`${Math.floor(countdown/3600)}h ${Math.floor(countdown/60)-Math.floor(countdown/3600)*60}m`
           response.edit({embeds: [new MessageEmbed({title:`Poll`,color: '#fff000',description: `${question}`, fields: [
             { name: 'Yes', value: `✅`,inline: true },{name: "\u200B",value: '\u200B',inline: true},{name: "No",value: '❌',inline: true},],
-              timestamp: new Date(),footer: { text: `${countdown_format} | ${interaction.user.username}#${interaction.user.discriminator}`},})]});
+              timestamp: new Date(),footer: { text: `${countdown_format}`}})]});
         }},1000)
 
         collector.on('end', collected =>
@@ -97,7 +97,7 @@ module.exports = {
         
         response.edit({embeds: [new MessageEmbed({title:`Poll`,color: color, description: `${question}`, fields: [
           { name: 'Winner', value: `${result} (${yes} - ${no})`,inline: true },],
-            timestamp: new Date(),footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}})]}); response.reactions.removeAll();
+            timestamp: new Date()})]}); response.reactions.removeAll();
         });
 	},
 };
