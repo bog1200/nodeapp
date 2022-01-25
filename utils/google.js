@@ -1,62 +1,43 @@
 const fs = require('fs');
 const {google} = require('googleapis');
-const { get } = require('http');
 const path = require("path");
-let privatekey, google_token, jwtClient, last_update;
-let enabled = true;
-if (fs.existsSync(path.resolve(__dirname,"../privatekey.json"))) {
-    privatekey = require(path.resolve(__dirname,"../privatekey.json"));
+let privatekey, google_token, jwtClient;
+const keyfile=path.resolve(__dirname,"../privatekey.json");
+if (fs.existsSync(keyfile)) {
+    privatekey = require(keyfile);
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/google-apis-nodejs-quickstart.json
-     jwtClient = new google.auth.JWT(
+    jwtClient = new google.auth.JWT(
         privatekey.client_email,
         null,
         privatekey.private_key,
         ['https://www.googleapis.com/auth/youtube.readonly']);
-} else {enabled=false;}
+    get_loop();
     
-    
-        function getkey()
-    {
-    //authenticate request
-    if (enabled){
+}else {
+    console.log("[BOT] Google API not enabled");
+}
+function get_loop() {
+    jwtClient.authorize((err, tokens) => {
+    if (err) {
+        console.log(err);
+    } else {
         if(!google_token)
         {
-                jwtClient.authorize((err, tokens) => {
-                if (err) {
-                    console.log(err);
-            } else {
-                console.log("[Google] API Successfully connected!");
-                google_token=tokens.access_token;
-                module.exports.g_token=google_token
-                last_update = Date.now();
-                }
-            })
-        }else{
-                if (Date.now() - last_update > 360000)
-                {
-                    jwtClient.getAccessToken((err, tokens) => {
-                    if (err) {console.error(err);}
-                    else{
-                    google_token=tokens.access_token;
-                    console.log("[Google] API Key refreshed!");
-                    }
-                    });}
-                
-            }
-            //while(!google_token) wait(500); 
-            //resolve(google_token);
-    }
-    else {
-        console.log("[BOT] Google API not enabled");
-        return null;
-    }
-    setTimeout(() => {getkey()}, 3600000);
-    }
-    
+        console.log("[Google] API Successfully connected!");
+        } else {
+            console.log("[Google] API Key refreshed!");
+        }
+        google_token=tokens.access_token;
+        setTimeout(get_loop, tokens.expiry_date-Date.now()); 
+        }
+    })          
+}
 
-
-
-
-module.exports.enabled = enabled;
+async function getkey(){
+    return new Promise((resolve, reject) => {
+        if (google_token) resolve(google_token);
+        else reject("No token available");
+    })
+}
 module.exports.getkey = getkey;

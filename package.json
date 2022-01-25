@@ -1,6 +1,6 @@
 {
   "name": "romail.ml",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
@@ -26,7 +26,8 @@
     "mime": "^3.0.0",
     "moment": "^2.29.1",
     "tweetnacl": "^1.0.3",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.10.0",
+    "ytpl": "^2.2.3"
   },
   "optionalDependencies": {
     "mysql": "^2.18.1",
