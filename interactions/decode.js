@@ -55,7 +55,7 @@ module.exports = {
                      { name: 'First name', value:  certFull.nam.gn ,inline: true},{name: 'Last Name', value: certFull.nam.fn ,inline: true},{ name: 'Date of Birth', value: certFull.dob ,inline: true},
                      { name: 'Type:', value: type ,inline: true},{ name: 'Valid From', value: moment(issued).format("HH:mm:ss DD.MM.YYYY"),inline: true},{ name: 'Valid Until ', value: moment(expires).format("HH:mm:ss DD.MM.YYYY") ,inline: true},
                      { name: 'Issued By', value: certFull[_type][0].is ,inline: true},{ name: 'Country', value: certBasic.get(1) ,inline: true},{ name: 'Serial Number ', value: certFull[_type][0].ci ,inline: true},
-                     { name: doses, value: `More info about certificates: [here](https://reopen.europa.eu/en)` ,inline: true}],timestamp: new Date(), footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}
+                     { name: doses, value: `More info about certificates: [here](https://reopen.europa.eu/en)` ,inline: true}],timestamp: new Date()
                  });
                  interaction.reply({embeds: [result]});
                 //const rgbUnprotected=CBORinteraction.value[1];

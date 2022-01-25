@@ -6,7 +6,7 @@ module.exports = {
 		.setDescription('Shows link to invite bot'),
 	async execute(interaction) {
         interaction.reply({ 
-            embeds: [new MessageEmbed().setColor('#e87a13').setTitle('Invite').setDescription('[Click here to invite bot](https://bot.romail.ml/invite)').setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)],
+            embeds: [new MessageEmbed().setColor('#e87a13').setTitle('Invite').setDescription('[Click here to invite bot](https://bot.romail.ml/invite)').setTimestamp()],
             ephemeral: true
     });
 }}
