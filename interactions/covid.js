@@ -25,12 +25,12 @@ module.exports = {
         { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
         { name: 'Today', value: `${today.numberDeceased-historicalData[days(today,1)].numberDeceased}` ,inline: true},{ name: 'Last week', value: `${today.numberDeceased-historicalData[days(today,7)].numberDeceased}` ,inline: true},{ name: 'All Time', value: `${today.numberDeceased}` ,inline: true},
         { name: '\u200B', value: '\u200B'},
-        { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date(),footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}}]})
+        { name: 'Last update', value: `${moment(today.parsedOnString).format('ll')} 1:00 PM`}],timestamp: new Date()}]})
       }
 
       else 
       {
-        let Embed= new MessageEmbed().setTitle("Error").setColor(`#ff0000`).setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`)
+        let Embed= new MessageEmbed().setTitle("Error").setColor(`#ff0000`).setTimestamp();
         if(country.toUpperCase()!='UK' && country.match(/[a-zA-Z]{2}$/))
       {
         Embed.setDescription("API not avaliable")
@@ -51,7 +51,7 @@ module.exports = {
       //         { name: '\u200B', value: '\u200B'},{name: '\u200B',value:'**Deaths:**'},
       //         { name: 'Today', value: `${data[0]['deaths']-data[i]['deaths']}` ,inline: true},{ name: 'Last week', value: `${data[0]['deaths']-data[i+6]['deaths']}` ,inline: true},{ name: 'All Time', value: `${data[0]['deaths']}` ,inline: true},
       //         { name: '\u200B', value: '\u200B'},
-      //         { name: 'Last update', value: `${ data[0]['last_update']}`}],timestamp: new Date(),footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`}})
+      //         { name: 'Last update', value: `${ data[0]['last_update']}`}],timestamp: new Date()})
       // ]});
       }
       else

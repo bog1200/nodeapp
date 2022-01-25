@@ -24,7 +24,7 @@ module.exports = {
           EmbedText = {title:`Bot Status`,color: '#ffff00', fields: [
             { name: 'Start time', value: `${client.readyAt}` ,inline: true},{ name: '\u200b', value: '\u200b' ,inline: true},{ name: 'Response time', value: `${Date.now()- interaction.createdTimestamp} ms` ,inline: true},
             { name: 'Uptime', value: alive_string ,inline: true},{ name: 'Ping', value: `${client.ws.ping} ms | ${new Date()-start} ms` ,inline: true},{ name: 'Version', value: `${version}`,inline: true},
-            ],timestamp: new Date(), footer: { text: `${interaction.user.username}#${interaction.user.discriminator}`},};
+            ],timestamp: new Date()};
           const Embed = new MessageEmbed(EmbedText);  
           interaction.reply({ embeds: [Embed]})
           .catch(error => console.error(error));

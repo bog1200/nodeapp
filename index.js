@@ -115,15 +115,18 @@ async function UpdateStatus(){
 	{
 		let result = await db.query(`SELECT * FROM bot WHERE SERVERID = ${Array.from(client.guilds.cache)[i][0]}`)
 		if(result[0]['COVCHID']!=null) {
-				client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
-				client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(cdf)).catch(error => console.error(error));
-				if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null)
-				{client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
-				if (result[0]['COVLOCID']!=null  && result[0]['COVLOC'] !=null)
-				{client.channels.fetch(result[0]['COVLOCID']).then(channel => channel.setName(`INCD: ${incd_find(result)}`)).catch(error => console.error(error));}
-				if (result[0]['COVVAC2ID']!=null)
-				{client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
-		  }}					
+			client.channels.fetch(result[0]['COVCHID']).then(channel => channel.setName(cov_str)).catch(error => console.error(error));
+		}
+		if(result[0]['COVNEWID']!=null) {
+			client.channels.fetch(result[0]['COVNEWID']).then(channel => channel.setName(cdf)).catch(error => console.error(error));
+		}
+		if (result[0]['COVJUDID']!=null  && result[0]['COVJUD'] !=null){
+			client.channels.fetch(result[0]['COVJUDID']).then(channel => channel.setName(`${result[0]['COVJUD']}: ${jud[result[0]['COVJUD']]}`)).catch(error => console.error(error));}
+		if (result[0]['COVLOCID']!=null  && result[0]['COVLOC'] !=null){
+			client.channels.fetch(result[0]['COVLOCID']).then(channel => channel.setName(`INCD: ${incd_find(result)}`)).catch(error => console.error(error));}
+		if (result[0]['COVVAC2ID']!=null){
+			client.channels.fetch(result[0]['COVVAC2ID']).then(channel => channel.setName(`Vaccin_2: ${cov_vac_d2}`)).catch(error => console.error(error));}
+	}					
 	setTimeout(update, 60000*120);
 	}
 	
@@ -136,8 +139,11 @@ client.on('guildCreate', guild =>
 	
 client.on('guildUpdate', (oldGuild, newGuild) =>
 {
-	db.query(`UPDATE bot SET SERVERNAME = ${db.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`);
-	console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`); 
+	if (oldGuild.name != newGuild.name)
+	{
+		db.query(`UPDATE bot SET SERVERNAME = ${db.escape(newGuild.name)} WHERE bot.SERVERID = ${oldGuild.id};`);
+		console.log(`[Bot] Server name changed: \nOld: ${oldGuild.name} \nNew: ${newGuild.name} \nID: ${oldGuild.id}`); 
+	}
 });
 
 client.on('guildDelete', guild =>

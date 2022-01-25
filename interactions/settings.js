@@ -25,10 +25,10 @@ const db = require("../utils/db");
     async execute(interaction) {
       await interaction.deferReply();
         if (!interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) 
-          {interaction.reply({ embeds: [new MessageEmbed().setTitle('Settings').setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`).setColor('ff0000').setDescription('Missing permissions')]});
+          {interaction.reply({ embeds: [new MessageEmbed().setTitle('Settings').setTimestamp().setColor('ff0000').setDescription('Missing permissions')]});
             return;
           }
-        const Embed=new MessageEmbed().setTitle('Settings').setTimestamp().setFooter(`${interaction.user.username}#${interaction.user.discriminator}`);
+        const Embed=new MessageEmbed().setTitle('Settings').setTimestamp();
         let sql;
         const command=interaction.options.getSubcommand();
         switch(command)
