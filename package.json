@@ -12,7 +12,7 @@
     "url": "https://github.com/bog1200/nodeapp.git"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.7.0",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/voice": "^0.7.5",
     "axios": "^0.24.0",
     "base45": "^3.0.0",
