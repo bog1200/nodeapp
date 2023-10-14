@@ -85,6 +85,7 @@ module.exports = {
                 await interaction.channel.messages.fetch(`${todo[0].snowflake}`).then(
                     message => { message.unpin(); message.delete(); });
                 await interaction.editReply({ content: '✅ ToDo cleared', ephemeral: true });
+                db.query(`DELETE FROM todo_items WHERE todo_id = ${todo[0].id}`);
                 // delete from db
                 db.query(`DELETE FROM todo WHERE channel_id = ${interaction.channel.id}`);
 
